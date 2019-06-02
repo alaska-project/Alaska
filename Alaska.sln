@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4C244443-600C-4A13-99C3-C7397631907B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{D5D2356E-9403-496D-8A66-548FC0DE67D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{6A392584-3E07-410C-BBE2-82A54DC01D18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{F4347E1C-0DF6-486B-B41E-D2065B0A78A0}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D5D2356E-9403-496D-8A66-548FC0DE67D2} = {4C244443-600C-4A13-99C3-C7397631907B}
+		{6A392584-3E07-410C-BBE2-82A54DC01D18} = {4C244443-600C-4A13-99C3-C7397631907B}
+		{F4347E1C-0DF6-486B-B41E-D2065B0A78A0} = {4C244443-600C-4A13-99C3-C7397631907B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0964F183-CA85-4A78-9685-F1EA65B270E3}
+	EndGlobalSection
+EndGlobal

@@ -31,11 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\..\libs\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,7 +53,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstractions\FieldAdapter.cs" />
+    <Compile Include="Abstractions\IFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\CheckboxFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\DefaultFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\ImageFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\LinkFieldAdapter.cs" />
+    <Compile Include="Adapters\FieldAdaptersCollection.cs" />
+    <Compile Include="Controllers\ContentsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\ItemQueries.cs" />
+    <Compile Include="Services\FieldAdapterService.cs" />
+    <Compile Include="Services\ItemAdapterService.cs" />
+    <Compile Include="Services\ItemSearchService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj">
@@ -52,5 +73,9 @@
       <Name>Alaska.Services.Contents.Domain</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

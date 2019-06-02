@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alaska.Services.Contents.Domain.Models
+namespace Alaska.Services.Contents.Domain.Models.Items
 {
     public class ContentItemInfo
     {

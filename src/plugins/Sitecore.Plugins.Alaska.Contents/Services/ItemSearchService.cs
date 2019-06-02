@@ -28,7 +28,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
             if (item == null)
                 return null;
 
-            switch (search.Depth)
+            switch (search.GetDepth())
             {
                 case ContentsSearchDepth.Item:
                     return _adapter.AdaptItem(item);

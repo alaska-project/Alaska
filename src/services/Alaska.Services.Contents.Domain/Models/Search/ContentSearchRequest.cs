@@ -13,7 +13,9 @@ namespace Alaska.Services.Contents.Domain.Models.Search
         public string Id { get; set; }
 
         [JsonProperty("depth")]
-        public ContentsSearchDepth Depth { get; set; }
+        public string Depth { get; set; }
+
+        public ContentsSearchDepth GetDepth() => (ContentsSearchDepth)Enum.Parse(typeof(ContentsSearchDepth), Depth, true);
 
         [JsonProperty("publishingTarget")]
         public string PublishingTarget { get; set; }

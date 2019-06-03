@@ -77,6 +77,7 @@
     <Compile Include="Services\FieldAdapterService.cs" />
     <Compile Include="Services\ItemAdapterService.cs" />
     <Compile Include="Services\ItemSearchService.cs" />
+    <Compile Include="Utils\StringHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj">

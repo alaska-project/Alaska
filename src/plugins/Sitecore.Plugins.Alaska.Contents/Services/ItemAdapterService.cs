@@ -1,6 +1,7 @@
 ﻿using Alaska.Services.Contents.Domain.Models.Items;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using Sitecore.Plugins.Alaska.Contents.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
         private ContentItemFields GetItemFields(Item item)
         {
             var fields = GetValidFields(item);
-            return new ContentItemFields(fields.ToDictionary(x => x.Name, x => _fieldAdapter.AdaptField(x)));
+            return new ContentItemFields(fields.ToDictionary(x => GetNormalizedFieldName(x), x => _fieldAdapter.AdaptField(x)));
         }
 
         private ContentItemInfo GetItemInfo(Item item)
@@ -70,6 +71,11 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
         }
 
         private bool IsSystemField(Field field) => field.Name.StartsWith("__");
+
+        private string GetNormalizedFieldName(Field field)
+        {
+            return StringHelpers.ToCamelCase(field.Name);
+        }
 
         private IEnumerable<string> GetPathSegments(string path) => path
             .Split('/')

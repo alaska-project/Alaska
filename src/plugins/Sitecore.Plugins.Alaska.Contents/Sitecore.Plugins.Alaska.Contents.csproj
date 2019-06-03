@@ -64,11 +64,14 @@
     <Compile Include="Adapters\Concrete\DefaultFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\ImageFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\IntFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\LinkedItemFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\LinkedItemsFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\LinkFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\DecimalFieldAdapter.cs" />
     <Compile Include="Adapters\FieldAdaptersCollection.cs" />
     <Compile Include="Controllers\ContentsController.cs" />
     <Compile Include="Pipelines\RegisterAlaskaApi.cs" />
+    <Compile Include="Pipelines\RegisterFieldAdapters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\ItemQueries.cs" />
     <Compile Include="Services\FieldAdapterService.cs" />

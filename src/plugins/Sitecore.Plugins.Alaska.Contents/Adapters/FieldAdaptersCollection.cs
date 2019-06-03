@@ -33,9 +33,9 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters
 
         public void Add(string fieldType, IFieldAdapter adapter)
         {
-            if (_adapters.ContainsKey(fieldType))
+            if (_adapters.ContainsKey(fieldType.ToLower()))
                 throw new InvalidOperationException($"Field type {fieldType} already registered");
-            _adapters.Add(fieldType, adapter);
+            _adapters.Add(fieldType.ToLower(), adapter);
         }
 
         public void Remove(string fieldType)

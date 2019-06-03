@@ -1,4 +1,5 @@
-﻿using Sitecore.Plugins.Alaska.Contents.Abstractions;
+﻿using Sitecore.Data.Fields;
+using Sitecore.Plugins.Alaska.Contents.Abstractions;
 using Sitecore.Plugins.Alaska.Contents.Adapters.Concrete;
 using System;
 using System.Collections.Generic;
@@ -13,26 +14,31 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters
         private static readonly FieldAdaptersCollection _Instance = new FieldAdaptersCollection();
         public static FieldAdaptersCollection Current => _Instance;
 
-        private Dictionary<Type, IFieldAdapter> _adapters = new Dictionary<Type, IFieldAdapter>();
+        private Dictionary<string, IFieldAdapter> _adapters = new Dictionary<string, IFieldAdapter>();
         private IFieldAdapter _defaultAdapter;
 
         private FieldAdaptersCollection()
         { }
 
-        public void Add<T>(FieldAdapter<T> adapter)
-            where T : class
+        public void Add(IDictionary<string, IFieldAdapter> adapters)
         {
-            Add(adapter.FieldType, adapter);
+            adapters.ToList().ForEach(x => Add(x.Key.ToLower(), x.Value));
         }
 
-        public void Add(Type fieldType, IFieldAdapter adapter)
+        public void Add<T>(string fieldType, FieldAdapter<T> adapter)
+            where T : class
+        {
+            Add(fieldType, adapter);
+        }
+
+        public void Add(string fieldType, IFieldAdapter adapter)
         {
             if (_adapters.ContainsKey(fieldType))
-                throw new InvalidOperationException($"Field type {fieldType.FullName} already registered");
+                throw new InvalidOperationException($"Field type {fieldType} already registered");
             _adapters.Add(fieldType, adapter);
         }
 
-        public void Remove(Type fieldType)
+        public void Remove(string fieldType)
         {
             _adapters.Remove(fieldType);
         }
@@ -42,10 +48,10 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters
             _defaultAdapter = adapter;
         }
 
-        public IFieldAdapter GetAdapter(Type fieldType)
+        public IFieldAdapter GetAdapter(string fieldType)
         {
-            return _adapters.ContainsKey(fieldType) ?
-                _adapters[fieldType] :
+            return _adapters.ContainsKey(fieldType.ToLower()) ?
+                _adapters[fieldType.ToLower()] :
                 _defaultAdapter;
         }
     }

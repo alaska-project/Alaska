@@ -19,12 +19,17 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.Image,
-                Value = new ItemImageField
-                {
-                    Alt = GetField(field).Alt,
-                    Class = GetField(field).Class,
-                    Url = GetImageUrl(field),
-                },
+                Value = string.IsNullOrEmpty(field.Value) ? null : GetImageData(field),
+            };
+        }
+
+        private ItemImageField GetImageData(ImageField field)
+        {
+            return new ItemImageField
+            {
+                Alt = field.Alt,
+                Class = field.Class,
+                Url = GetImageUrl(field),
             };
         }
 

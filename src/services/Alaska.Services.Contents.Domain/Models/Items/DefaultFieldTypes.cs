@@ -11,6 +11,9 @@ namespace Alaska.Services.Contents.Domain.Models.Items
         public const string Html = "html";
         public const string Link = "link";
         public const string Image = "image";
+        public const string Decimal = "decimal";
+        public const string Integer = "int";
+        public const string DateTime = "datetime";
 
     }
 }

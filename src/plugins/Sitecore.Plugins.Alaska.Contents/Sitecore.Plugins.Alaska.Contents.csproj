@@ -60,9 +60,12 @@
     <Compile Include="Abstractions\FieldAdapter.cs" />
     <Compile Include="Abstractions\IFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\CheckboxFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\DateTimeFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\DefaultFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\ImageFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\IntFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\LinkFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\DecimalFieldAdapter.cs" />
     <Compile Include="Adapters\FieldAdaptersCollection.cs" />
     <Compile Include="Controllers\ContentsController.cs" />
     <Compile Include="Pipelines\RegisterAlaskaApi.cs" />

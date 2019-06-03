@@ -1,4 +1,5 @@
 ﻿using Alaska.Services.Contents.Domain.Models.Items;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,8 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
 
         private ContentItemFields GetItemFields(Item item)
         {
-            return new ContentItemFields(item.Fields.ToDictionary(x => x.Name, x => _fieldAdapter.AdaptField(x)));
+            var fields = GetValidFields(item);
+            return new ContentItemFields(fields.ToDictionary(x => x.Name, x => _fieldAdapter.AdaptField(x)));
         }
 
         private ContentItemInfo GetItemInfo(Item item)
@@ -55,9 +57,24 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
             {
                 Id = item.ID.ToString(),
                 TemplateId = item.TemplateID.ToString(),
-                Path = item.Paths.Path.Split('/').ToList(),
-                IdPath = item.Paths.LongID.Split('/').ToList(),
+                Path = GetPathSegments(item.Paths.Path).ToList(),
+                IdPath = GetPathSegments(item.Paths.LongID).ToList(),
             };
         }
+
+        private IEnumerable<Field> GetValidFields(Item item)
+        {
+            return item.Fields
+                .Where(x => !IsSystemField(x))
+                .ToList();
+        }
+
+        private bool IsSystemField(Field field) => field.Name.StartsWith("__");
+
+        private IEnumerable<string> GetPathSegments(string path) => path
+            .Split('/')
+            .Where(x => !string.IsNullOrEmpty(x))
+            .Select(x => x.ToLower())
+            .ToList();
     }
 }

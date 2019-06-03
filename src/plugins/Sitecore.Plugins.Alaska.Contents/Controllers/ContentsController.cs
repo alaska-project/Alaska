@@ -10,13 +10,11 @@ using System.Web.Http.Description;
 
 namespace Sitecore.Plugins.Alaska.Contents.Controllers
 {
-    [Route("alaska/api/contents")]
     public class ContentsController : ApiController
     {
         private readonly ItemSearchService _searchService = new ItemSearchService();
 
         [HttpGet]
-        [ActionName("getContents")]
         [ResponseType(typeof(ContentSearchResult))]
         public IHttpActionResult GetContents([FromUri]ContentsSearchRequest searchRequest)
         {

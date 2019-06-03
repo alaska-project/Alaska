@@ -13,6 +13,15 @@ namespace Sitecore.Plugins.Alaska.Contents.Query
     {
         public Item GetItem(string id, string language, string database)
         {
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentException($"{nameof(id)} cannot be null");
+
+            if (string.IsNullOrEmpty(language))
+                throw new ArgumentException($"{nameof(language)} cannot be null");
+
+            if (string.IsNullOrEmpty(database))
+                throw new ArgumentException($"{nameof(database)} cannot be null");
+
             return GetDatabase(database).GetItem(id, Language.Parse(language));
         }
 

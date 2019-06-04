@@ -19,8 +19,8 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
                 Type = DefaultFieldTypes.Link,
                 Value = new ItemLinkField
                 {
-                    Target = GetField(field).Target,
-                    Text = GetField(field).Text,
+                    Target = GetField(field)?.Target,
+                    Text = GetField(field)?.Text,
                     Url = GetUrl(field),
                 },
             };
@@ -31,9 +31,9 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             switch (link.LinkType.ToLower())
             {
                 case "internal":
-                    return Sitecore.Links.LinkManager.GetItemUrl(link.TargetItem);
+                    return link.TargetItem != null ? Sitecore.Links.LinkManager.GetItemUrl(link.TargetItem) : null;
                 case "media":
-                    return link.TargetItem != null ? Sitecore.Resources.Media.MediaManager.GetMediaUrl(link.TargetItem) : string.Empty;
+                    return link.TargetItem != null ? Sitecore.Resources.Media.MediaManager.GetMediaUrl(link.TargetItem) : null;
                 case "anchor":
                     return $"#{link.Url}";
                 case "external":

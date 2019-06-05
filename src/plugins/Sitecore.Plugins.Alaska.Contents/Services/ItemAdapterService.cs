@@ -74,7 +74,8 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
 
         private string GetNormalizedFieldName(Field field)
         {
-            return StringHelpers.ToCamelCase(field.Name);
+            return StringHelpers.ToCamelCase(field.Name)
+                .Replace(" ", string.Empty);
         }
 
         private IEnumerable<string> GetPathSegments(string path) => path

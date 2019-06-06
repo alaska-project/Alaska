@@ -20,6 +20,11 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             };
         }
 
+        public void UpdateField(ContentItemField value, Field field)
+        {
+            throw new NotImplementedException();
+        }
+
         private decimal? ParseValue(string value)
         {
             if (decimal.TryParse(value, out decimal result))

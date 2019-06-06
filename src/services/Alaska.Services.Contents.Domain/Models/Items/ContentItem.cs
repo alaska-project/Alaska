@@ -12,8 +12,5 @@ namespace Alaska.Services.Contents.Domain.Models.Items
 
         [JsonProperty("fields")]
         public ContentItemFields Fields { get; set; }
-
-        [JsonProperty("children")]
-        public List<ContentItem> Children { get; set; }
     }
 }

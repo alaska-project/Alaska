@@ -19,6 +19,12 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
             return fieldAdapter.AdaptField(field);
         }
 
+        public void UpdateField(ContentItemField value, Field field)
+        {
+            var fieldAdapter = FieldAdaptersCollection.Current.GetAdapter(GetFieldType(field));
+            fieldAdapter.UpdateField(value, field);
+        }
+
         private string GetFieldType(Field field) => field.TypeKey;
     }
 }

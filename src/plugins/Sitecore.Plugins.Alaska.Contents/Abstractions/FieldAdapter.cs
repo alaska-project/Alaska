@@ -15,5 +15,6 @@ namespace Sitecore.Plugins.Alaska.Contents.Abstractions
         public TField GetField(Field field) => field as TField;
 
         public abstract ContentItemField AdaptField(Field field);
+        public abstract void UpdateField(ContentItemField value, Field field);
     }
 }

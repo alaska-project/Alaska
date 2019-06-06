@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\..\libs\Sitecore.Kernel.dll</HintPath>
@@ -69,7 +69,10 @@
     <Compile Include="Adapters\Concrete\LinkFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\DecimalFieldAdapter.cs" />
     <Compile Include="Adapters\FieldAdaptersCollection.cs" />
+    <Compile Include="Commands\UpdateItemCommand.cs" />
+    <Compile Include="Commands\UpdateItemCommandHandler.cs" />
     <Compile Include="Controllers\ContentsController.cs" />
+    <Compile Include="Filters\SitecoreEditorAuthorize.cs" />
     <Compile Include="Pipelines\RegisterAlaskaApi.cs" />
     <Compile Include="Pipelines\RegisterFieldAdapters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

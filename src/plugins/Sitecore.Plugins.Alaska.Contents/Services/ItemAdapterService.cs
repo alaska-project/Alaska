@@ -13,28 +13,36 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
     internal class ItemAdapterService
     {
         private readonly FieldAdapterService _fieldAdapter = new FieldAdapterService();
-
-        public ContentItem AdaptItem(Item item)
+        
+        public ContentItemResult AdaptItem(Item item)
         {
             return AdaptItemWithChildren(item, null);
         }
 
-        public ContentItem AdaptItemWithChildren(Item item, IEnumerable<Item> children)
+        public ContentItemResult AdaptItemWithChildren(Item item, IEnumerable<Item> children)
         {
             return AdaptItemWithDescendantNodes(item, children);
         }
 
-        public ContentItem AdaptItemWithDescendants(Item item, IEnumerable<Item> descendants)
+        public ContentItemResult AdaptItemWithDescendants(Item item, IEnumerable<Item> descendants)
         {
             return AdaptItemWithDescendantNodes(item, descendants);
         }
 
-        private ContentItem AdaptItemWithDescendantNodes(Item item, IEnumerable<Item> descendants)
+        private ContentItemResult AdaptItemWithDescendantNodes(Item item, IEnumerable<Item> descendants)
+        {
+            return new ContentItemResult
+            {
+                Value = AdaptContentItemValue(item),
+                Children = GetDirectChildren(item, descendants)?.Select(x => AdaptItemWithDescendantNodes(x, descendants)).ToList(),
+            };
+        }
+
+        private ContentItem AdaptContentItemValue(Item item)
         {
             return new ContentItem
             {
                 Info = GetItemInfo(item),
-                Children = GetDirectChildren(item, descendants)?.Select(x => AdaptItemWithDescendantNodes(x, descendants)).ToList(),
                 Fields = GetItemFields(item),
             };
         }
@@ -57,6 +65,8 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
             return new ContentItemInfo
             {
                 Id = item.ID.ToString(),
+                Language = item.Language.Name,
+                PublishingTarget = item.Database.Name,
                 TemplateId = item.TemplateID.ToString(),
                 Path = GetPathSegments(item.Paths.Path).ToList(),
                 IdPath = GetPathSegments(item.Paths.LongID).ToList(),

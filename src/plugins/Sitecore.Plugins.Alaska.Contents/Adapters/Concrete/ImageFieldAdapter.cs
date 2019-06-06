@@ -23,6 +23,11 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             };
         }
 
+        public override void UpdateField(ContentItemField value, Field field)
+        {
+            throw new NotImplementedException();
+        }
+
         private ItemImageField GetImageData(ImageField field)
         {
             return new ItemImageField

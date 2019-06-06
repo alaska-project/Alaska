@@ -9,6 +9,6 @@ namespace Alaska.Services.Contents.Domain.Models.Search
     public class ContentSearchResult
     {
         [JsonProperty("item")]
-        public ContentItem Item { get; set; }
+        public ContentItemResult Item { get; set; }
     }
 }

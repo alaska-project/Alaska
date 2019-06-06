@@ -20,6 +20,11 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             };
         }
 
+        public void UpdateField(ContentItemField value, Field field)
+        {
+            throw new NotImplementedException();
+        }
+
         private int? ParseValue(string value)
         {
             if (int.TryParse(value, out int result))

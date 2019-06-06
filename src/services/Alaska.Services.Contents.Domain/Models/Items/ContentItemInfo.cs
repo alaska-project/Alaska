@@ -10,6 +10,12 @@ namespace Alaska.Services.Contents.Domain.Models.Items
         [JsonProperty("id")]
         public string Id { get; set; }
 
+        [JsonProperty("language")]
+        public string Language { get; set; }
+
+        [JsonProperty("publishingTarget")]
+        public string PublishingTarget { get; set; }
+
         [JsonProperty("templateId")]
         public string TemplateId { get; set; }
 

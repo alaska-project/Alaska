@@ -22,7 +22,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
             };
         }
 
-        public ContentItem SearchItems(ContentsSearchRequest search)
+        public ContentItemResult SearchItems(ContentsSearchRequest search)
         {
             var item = _query.GetItem(search.Id, search.Language, search.PublishingTarget);
             if (item == null)

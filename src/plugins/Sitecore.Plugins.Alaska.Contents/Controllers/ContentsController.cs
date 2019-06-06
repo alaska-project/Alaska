@@ -1,4 +1,7 @@
-﻿using Alaska.Services.Contents.Domain.Models.Search;
+﻿using Alaska.Services.Contents.Domain.Models.Items;
+using Alaska.Services.Contents.Domain.Models.Search;
+using Sitecore.Plugins.Alaska.Contents.Commands;
+using Sitecore.Plugins.Alaska.Contents.Filters;
 using Sitecore.Plugins.Alaska.Contents.Services;
 using System;
 using System.Collections.Generic;
@@ -19,6 +22,16 @@ namespace Sitecore.Plugins.Alaska.Contents.Controllers
         public IHttpActionResult GetContents([FromUri]ContentsSearchRequest searchRequest)
         {
             return Ok(_searchService.Search(searchRequest));
+        }
+
+        [HttpPost]
+        [SitecoreEditorAuthorize]
+        [ResponseType(typeof(ContentItem))]
+        public IHttpActionResult UpdateContent([FromBody]ContentItem item)
+        {
+            var command = new UpdateItemCommand(item);
+            var result = new UpdateItemCommandHandler().Handle(command);
+            return Ok(result);
         }
     }
 }

@@ -26,6 +26,11 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             };
         }
 
+        public override void UpdateField(ContentItemField value, Field field)
+        {
+            throw new NotImplementedException();
+        }
+
         private string GetUrl(LinkField link)
         {
             switch (link.LinkType.ToLower())

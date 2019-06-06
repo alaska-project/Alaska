@@ -24,7 +24,12 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             };
         }
 
-        private ContentItem GetLinkedItem(Field field)
+        public void UpdateField(ContentItemField value, Field field)
+        {
+            throw new NotImplementedException();
+        }
+
+        private ContentItemResult GetLinkedItem(Field field)
         {
             var item = GetLinkedSitecoreItem(field);
             return item == null ? 

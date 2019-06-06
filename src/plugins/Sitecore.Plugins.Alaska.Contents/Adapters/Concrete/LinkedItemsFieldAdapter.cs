@@ -24,7 +24,12 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             };
         }
 
-        private IEnumerable<ContentItem> GetLinkedItems(Field field)
+        public void UpdateField(ContentItemField value, Field field)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IEnumerable<ContentItemResult> GetLinkedItems(Field field)
         {
             var items = GetLinkedSitecoreItems(field);
 

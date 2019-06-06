@@ -11,5 +11,6 @@ namespace Sitecore.Plugins.Alaska.Contents.Abstractions
     public interface IFieldAdapter
     {
         ContentItemField AdaptField(Field field);
+        void UpdateField(ContentItemField value, Field field);
     }
 }

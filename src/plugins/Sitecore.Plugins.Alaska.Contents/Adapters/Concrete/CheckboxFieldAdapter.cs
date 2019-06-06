@@ -19,5 +19,10 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
                 Value = ((CheckboxField)field).Checked,
             };
         }
+
+        public override void UpdateField(ContentItemField value, Field field)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

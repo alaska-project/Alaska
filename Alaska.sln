@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{F434
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Services.Contents", "src\services\Alaska.Services.Contents\Alaska.Services.Contents.csproj", "{EEE01FF5-C04D-49F4-930C-65CBF32639C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Services.Contents.Domain", "src\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj", "{53C489A3-A39B-4020-9EA3-F054432FAD29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Services.Contents.Domain", "src\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj", "{53C489A3-A39B-4020-9EA3-F054432FAD29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Plugins.Alaska.Contents", "src\plugins\Sitecore.Plugins.Alaska.Contents\Sitecore.Plugins.Alaska.Contents.csproj", "{1F67093A-6009-4F7D-926C-3974395796CD}"
 EndProject

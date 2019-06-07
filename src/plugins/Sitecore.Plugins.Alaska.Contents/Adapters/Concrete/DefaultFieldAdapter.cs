@@ -22,7 +22,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
 
         public void UpdateField(ContentItemField value, Field field)
         {
-            throw new NotImplementedException();
+            field.Value = (string)value.Value;
         }
     }
 }

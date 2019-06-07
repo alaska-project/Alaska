@@ -16,13 +16,13 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.Bool,
-                Value = ((CheckboxField)field).Checked,
+                Value = GetField(field).Checked,
             };
         }
 
         public override void UpdateField(ContentItemField value, Field field)
         {
-            throw new NotImplementedException();
+            GetField(field).Checked = (bool)value.Value;
         }
     }
 }

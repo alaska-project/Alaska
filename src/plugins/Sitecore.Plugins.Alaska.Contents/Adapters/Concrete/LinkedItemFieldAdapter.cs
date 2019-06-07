@@ -26,7 +26,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
 
         public void UpdateField(ContentItemField value, Field field)
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
         private ContentItemResult GetLinkedItem(Field field)

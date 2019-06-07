@@ -7,6 +7,9 @@ namespace Alaska.Services.Contents.Domain.Models.Fields
 {
     public class ItemLinkField
     {
+        [JsonProperty("linkType")]
+        public string LinkType { get; set; }
+
         [JsonProperty("url")]
         public string Url { get; set; }
 

@@ -22,7 +22,10 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
 
         public override void UpdateField(ContentItemField value, Field field)
         {
-            throw new NotImplementedException();
+            var dateTime = (DateTime?)value.Value;
+            field.Value = dateTime.HasValue ?
+                DateUtil.ToIsoDate(dateTime.Value) :
+                string.Empty;
         }
 
         private DateTime? GetDateTime(Field field)

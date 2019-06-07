@@ -19,6 +19,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
                 Type = DefaultFieldTypes.Link,
                 Value = new ItemLinkField
                 {
+                    LinkType = GetField(field)?.LinkType,
                     Target = GetField(field)?.Target,
                     Text = GetField(field)?.Text,
                     Url = GetUrl(field),
@@ -28,7 +29,9 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
 
         public override void UpdateField(ContentItemField value, Field field)
         {
-            throw new NotImplementedException();
+            var linkField = GetField(field);
+            linkField.LinkType = GetLinkValue(value)?.LinkType;
+            //TODO
         }
 
         private string GetUrl(LinkField link)
@@ -45,6 +48,11 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
                 default:
                     return link.Url;
             }
+        }
+
+        private ItemLinkField GetLinkValue(ContentItemField value)
+        {
+            return (ItemLinkField)value?.Value;
         }
     }
 }

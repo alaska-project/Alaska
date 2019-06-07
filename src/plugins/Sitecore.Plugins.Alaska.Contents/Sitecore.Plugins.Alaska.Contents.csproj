@@ -73,6 +73,7 @@
     <Compile Include="Commands\UpdateItemCommandHandler.cs" />
     <Compile Include="Controllers\ContentsController.cs" />
     <Compile Include="Filters\SitecoreEditorAuthorize.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Pipelines\RegisterAlaskaApi.cs" />
     <Compile Include="Pipelines\RegisterFieldAdapters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

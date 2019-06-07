@@ -62,6 +62,7 @@
     <Compile Include="Adapters\Concrete\CheckboxFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\DateTimeFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\DefaultFieldAdapter.cs" />
+    <Compile Include="Adapters\Concrete\HtmlFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\ImageFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\IntFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\LinkedItemFieldAdapter.cs" />

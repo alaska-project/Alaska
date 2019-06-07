@@ -43,5 +43,10 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             var image = new MediaItem(imageField.MediaItem);
             return StringUtil.EnsurePrefix('/', MediaManager.GetMediaUrl(image));
         }
+
+        public override ImageField GetField(Field field)
+        {
+            return (ImageField)field;
+        }
     }
 }

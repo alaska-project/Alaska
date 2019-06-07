@@ -35,5 +35,10 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
 
             return GetField(field).DateTime;
         }
+
+        public override DateField GetField(Field field)
+        {
+            return (DateField)field;
+        }
     }
 }

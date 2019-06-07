@@ -54,5 +54,10 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
         {
             return (ItemLinkField)value?.Value;
         }
+
+        public override LinkField GetField(Field field)
+        {
+            return (LinkField)field;
+        }
     }
 }

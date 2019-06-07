@@ -20,6 +20,11 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             };
         }
 
+        public override CheckboxField GetField(Field field)
+        {
+            return (CheckboxField)field;
+        }
+
         public override void UpdateField(ContentItemField value, Field field)
         {
             GetField(field).Checked = (bool)value.Value;

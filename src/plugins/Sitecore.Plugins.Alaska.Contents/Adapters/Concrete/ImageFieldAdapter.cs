@@ -3,6 +3,8 @@ using Alaska.Services.Contents.Domain.Models.Items;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 using Sitecore.Plugins.Alaska.Contents.Abstractions;
+using Sitecore.Plugins.Alaska.Contents.Settings;
+using Sitecore.Plugins.Alaska.Contents.Utils;
 using Sitecore.Resources.Media;
 using System;
 using System.Collections.Generic;
@@ -34,8 +36,17 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
             {
                 Alt = field.Alt,
                 Class = field.Class,
-                Url = GetImageUrl(field),
+                Url = GetImageAbsoluteUrl(field),
             };
+        }
+
+        private string GetImageAbsoluteUrl(ImageField imageField)
+        {
+            var url = GetImageUrl(imageField);
+            if (UriHelper.IsAbsoluteUrl(url))
+                return url;
+
+            return UriHelper.BuildAbsoluteUrl(ContentsSettings.Current.DefaultAbsolutePath, url);
         }
 
         private string GetImageUrl(ImageField imageField)

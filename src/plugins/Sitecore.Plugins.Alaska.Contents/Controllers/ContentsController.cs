@@ -9,10 +9,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace Sitecore.Plugins.Alaska.Contents.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ContentsController : ApiController
     {
         private readonly ItemSearchService _searchService = new ItemSearchService();

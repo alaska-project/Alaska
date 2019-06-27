@@ -22,5 +22,8 @@ namespace Alaska.Services.Contents.Domain.Models.Search
 
         [JsonProperty("language")]
         public string Language { get; set; }
+
+        [JsonProperty("includeInfo")]
+        public bool IncludeInfo { get; set; }
     }
 }

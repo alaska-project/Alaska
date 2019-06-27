@@ -76,6 +76,8 @@
     <Compile Include="Adapters\Concrete\LinkFieldAdapter.cs" />
     <Compile Include="Adapters\Concrete\DecimalFieldAdapter.cs" />
     <Compile Include="Adapters\FieldAdaptersCollection.cs" />
+    <Compile Include="Commands\PublishItemCommand.cs" />
+    <Compile Include="Commands\PublishItemCommandHandler.cs" />
     <Compile Include="Commands\UpdateItemCommand.cs" />
     <Compile Include="Commands\UpdateItemCommandHandler.cs" />
     <Compile Include="Controllers\ContentsController.cs" />

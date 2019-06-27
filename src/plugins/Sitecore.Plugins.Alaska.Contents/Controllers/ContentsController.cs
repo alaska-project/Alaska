@@ -1,4 +1,5 @@
 ﻿using Alaska.Services.Contents.Domain.Models.Items;
+using Alaska.Services.Contents.Domain.Models.Publishing;
 using Alaska.Services.Contents.Domain.Models.Search;
 using Sitecore.Plugins.Alaska.Contents.Commands;
 using Sitecore.Plugins.Alaska.Contents.Filters;
@@ -34,6 +35,16 @@ namespace Sitecore.Plugins.Alaska.Contents.Controllers
             var command = new UpdateItemCommand(item);
             var result = new UpdateItemCommandHandler().Handle(command);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [SitecoreEditorAuthorize]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PublishContent([FromUri]PublishContentRequest publishingRequest)
+        {
+            var command = new PublishItemCommand(publishingRequest);
+            new PublishItemCommandHandler().Handle(command);
+            return Ok();
         }
     }
 }

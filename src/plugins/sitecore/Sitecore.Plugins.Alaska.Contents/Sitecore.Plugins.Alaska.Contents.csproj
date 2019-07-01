@@ -95,7 +95,7 @@
     <Compile Include="Utils\UriHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj">
+    <ProjectReference Include="..\..\..\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj">
       <Project>{53c489a3-a39b-4020-9ea3-f054432fad29}</Project>
       <Name>Alaska.Services.Contents.Domain</Name>
     </ProjectReference>

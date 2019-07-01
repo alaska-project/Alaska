@@ -15,13 +15,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Services.Contents", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Services.Contents.Domain", "src\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj", "{53C489A3-A39B-4020-9EA3-F054432FAD29}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "contentful", "contentful", "{6099E74E-02FA-4B23-8221-D522B390FBB6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sitecore", "sitecore", "{ACAFE17F-506C-4BBD-83FC-1ACA80935C8F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Plugins.Alaska.Contents", "src\plugins\sitecore\Sitecore.Plugins.Alaska.Contents\Sitecore.Plugins.Alaska.Contents.csproj", "{1F67093A-6009-4F7D-926C-3974395796CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Plugins.Alaska.Contents.UnitTests", "src\plugins\sitecore\Sitecore.Plugins.Alaska.Contents.UnitTests\Sitecore.Plugins.Alaska.Contents.UnitTests.csproj", "{327B8576-B98A-4F23-B9A9-DBDEA9413139}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extensions", "extensions", "{87C6B212-6A32-4ED1-9C2E-88DF4D1123F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "contentful", "contentful", "{34EFAEC6-3DDA-4502-B9A1-06FB0575281A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Extensions.Contents.Contentful", "src\extensions\contentful\Alaska.Extensions.Contents.Contentful\Alaska.Extensions.Contents.Contentful.csproj", "{9C075B59-FC1A-471B-BFEF-A4BD27E46C19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Services.Contents.Infrastructure.Abstractions", "src\services\Alaska.Services.Contents.Infrastructure.Abstractions\Alaska.Services.Contents.Infrastructure.Abstractions.csproj", "{38DCBDD5-3C61-4C29-B39E-E79B49F51573}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,14 @@ Global
 		{327B8576-B98A-4F23-B9A9-DBDEA9413139}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{327B8576-B98A-4F23-B9A9-DBDEA9413139}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{327B8576-B98A-4F23-B9A9-DBDEA9413139}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C075B59-FC1A-471B-BFEF-A4BD27E46C19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C075B59-FC1A-471B-BFEF-A4BD27E46C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C075B59-FC1A-471B-BFEF-A4BD27E46C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C075B59-FC1A-471B-BFEF-A4BD27E46C19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38DCBDD5-3C61-4C29-B39E-E79B49F51573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38DCBDD5-3C61-4C29-B39E-E79B49F51573}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38DCBDD5-3C61-4C29-B39E-E79B49F51573}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38DCBDD5-3C61-4C29-B39E-E79B49F51573}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,10 +69,13 @@ Global
 		{F4347E1C-0DF6-486B-B41E-D2065B0A78A0} = {4C244443-600C-4A13-99C3-C7397631907B}
 		{EEE01FF5-C04D-49F4-930C-65CBF32639C7} = {6A392584-3E07-410C-BBE2-82A54DC01D18}
 		{53C489A3-A39B-4020-9EA3-F054432FAD29} = {6A392584-3E07-410C-BBE2-82A54DC01D18}
-		{6099E74E-02FA-4B23-8221-D522B390FBB6} = {F4347E1C-0DF6-486B-B41E-D2065B0A78A0}
 		{ACAFE17F-506C-4BBD-83FC-1ACA80935C8F} = {F4347E1C-0DF6-486B-B41E-D2065B0A78A0}
 		{1F67093A-6009-4F7D-926C-3974395796CD} = {ACAFE17F-506C-4BBD-83FC-1ACA80935C8F}
 		{327B8576-B98A-4F23-B9A9-DBDEA9413139} = {ACAFE17F-506C-4BBD-83FC-1ACA80935C8F}
+		{87C6B212-6A32-4ED1-9C2E-88DF4D1123F3} = {4C244443-600C-4A13-99C3-C7397631907B}
+		{34EFAEC6-3DDA-4502-B9A1-06FB0575281A} = {87C6B212-6A32-4ED1-9C2E-88DF4D1123F3}
+		{9C075B59-FC1A-471B-BFEF-A4BD27E46C19} = {34EFAEC6-3DDA-4502-B9A1-06FB0575281A}
+		{38DCBDD5-3C61-4C29-B39E-E79B49F51573} = {6A392584-3E07-410C-BBE2-82A54DC01D18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0964F183-CA85-4A78-9685-F1EA65B270E3}

@@ -1,4 +1,5 @@
-﻿using Alaska.Services.Contents.Infrastructure.Settings;
+﻿using Alaska.Services.Contents.Infrastructure.Abstractions;
+using Alaska.Services.Contents.Infrastructure.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -11,10 +12,16 @@ namespace Alaska.Services.Contents.Extensions
     {
         private const string ContentServiceConfigSection = "Alaska:ContentsService";
 
-        public static IServiceCollection AddContentService(this IServiceCollection services, IConfiguration configuration)
+        public static IContentsServiceBuilder AddContentService(this IServiceCollection services, IConfiguration configuration)
         {
-            return services
+            services
+                .AddMvcCore()
+                .AddApplicationPart(typeof(ContentServiceDependencyInjectionExtensions).Assembly);
+
+            services
                 .AddSettings(configuration);
+
+            return new ContentsServiceBuilder(services);
         }
 
         private static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)

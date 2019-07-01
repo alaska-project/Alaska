@@ -9,7 +9,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
     {
         public ContentItem ConvertToContentItem(dynamic entry)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

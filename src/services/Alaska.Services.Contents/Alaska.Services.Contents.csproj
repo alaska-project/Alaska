@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj" />
+    <ProjectReference Include="..\Alaska.Services.Contents.Infrastructure.Abstractions\Alaska.Services.Contents.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

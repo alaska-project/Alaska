@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Alaska.Services.Contents.Controllers
 {
+    [Route("alaska/api/[controller]/[action]")]
     public class ContentsController : ControllerBase
     {
         private readonly ContentsServiceClient _contentsClient;

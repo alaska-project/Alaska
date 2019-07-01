@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\extensions\contentful\Alaska.Extensions.Contents.Contentful\Alaska.Extensions.Contents.Contentful.csproj" />
+    <ProjectReference Include="..\..\services\Alaska.Services.Contents\Alaska.Services.Contents.csproj" />
+  </ItemGroup>
+
+</Project>

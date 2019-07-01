@@ -13,9 +13,9 @@ namespace Alaska.Extensions.Contents.Contentful.Extensions
     {
         private const string ContentfulSectionName = "Alaska:Contents:Contentful";
 
-        public static IServiceCollection AddAlaskaContentfulModule(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddContentfulModule(this IContentsServiceBuilder services, IConfiguration configuration)
         {
-            return services
+            return services.Services
                 .Configure<ContentfulClientOptions>(ContentfulSectionName, configuration)
                 .AddSingleton<ContentsClientFactory>()
                 .AddScoped<ContentsConverter>()

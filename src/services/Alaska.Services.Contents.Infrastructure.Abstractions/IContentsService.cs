@@ -10,7 +10,7 @@ namespace Alaska.Services.Contents.Infrastructure.Abstractions
 {
     public interface IContentsService
     {
-        Task<ContentItem> SearchContent(ContentsSearchRequest contentsSearch);
+        Task<ContentSearchResult> SearchContent(ContentsSearchRequest contentsSearch);
         Task<ContentItem> UpdateContent(ContentItem contentItem);
         Task<ContentItem> PublishContent(PublishContentRequest contentPublish);
     }

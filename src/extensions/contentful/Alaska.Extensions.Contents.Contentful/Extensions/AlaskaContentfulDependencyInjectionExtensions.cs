@@ -7,16 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alaska.Extensions.Contents.Contentful.Extensions
+namespace Alaska.Services.Contents.Extensions
 {
     public static class AlaskaContentfulDependencyInjectionExtensions
     {
         private const string ContentfulSectionName = "Alaska:Contents:Contentful";
 
-        public static IServiceCollection AddContentfulModule(this IContentsServiceBuilder services, IConfiguration configuration)
+        public static IServiceCollection AddContentfulModule(this IContentsServiceBuilder services)
         {
             return services.Services
-                .Configure<ContentfulClientOptions>(ContentfulSectionName, configuration)
+                .Configure<ContentfulClientOptions>(services.Configuration.GetSection(ContentfulSectionName))
                 .AddSingleton<ContentsClientFactory>()
                 .AddScoped<ContentsConverter>()
                 .AddScoped<IContentsService, ContentsService>();

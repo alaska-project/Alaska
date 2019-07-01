@@ -22,14 +22,20 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
         }
 
-        public async Task<ContentItem> SearchContent(ContentsSearchRequest contentsSearch)
+        public async Task<ContentSearchResult> SearchContent(ContentsSearchRequest contentsSearch)
         {
             if (contentsSearch.GetDepth() != ContentsSearchDepth.Item)
                 throw new UnsupportedFeatureException($"{contentsSearch.GetDepth()}  not supported by Contentful provider");
 
             var query = new QueryBuilder<object>().LocaleIs(contentsSearch.Language);
             var entry = await _factory.GetClient().GetEntry<dynamic>(contentsSearch.Id, query);
-            return _converter.ConvertToContentItem(entry);
+            return new ContentSearchResult
+            {
+                Item = new ContentItemResult
+                {
+                    Value = _converter.ConvertToContentItem(entry),
+                },
+            };
         }
 
         public Task<ContentItem> UpdateContent(ContentItem contentItem)
@@ -43,3 +49,4 @@ namespace Alaska.Extensions.Contents.Contentful.Services
         }
     }
 }
+ 

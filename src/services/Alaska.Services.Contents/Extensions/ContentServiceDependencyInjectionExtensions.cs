@@ -21,7 +21,7 @@ namespace Alaska.Services.Contents.Extensions
             services
                 .AddSettings(configuration);
 
-            return new ContentsServiceBuilder(services);
+            return new ContentsServiceBuilder(services, configuration);
         }
 
         private static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)

@@ -15,4 +15,8 @@
     <ProjectReference Include="..\..\..\services\Alaska.Services.Contents.Infrastructure.Abstractions\Alaska.Services.Contents.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using Alaska.Services.Contents.Domain.Exceptions;
+﻿using Alaska.Extensions.Contents.Contentful.Models;
+using Alaska.Services.Contents.Domain.Exceptions;
 using Alaska.Services.Contents.Domain.Models.Items;
 using Alaska.Services.Contents.Domain.Models.Publishing;
 using Alaska.Services.Contents.Domain.Models.Search;
@@ -13,10 +14,10 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 {
     internal class ContentsService : IContentsService
     {
-        private readonly ContentsClientFactory _factory;
+        private readonly ContentfulClientsFactory _factory;
         private readonly ContentsConverter _converter;
 
-        public ContentsService(ContentsClientFactory factory, ContentsConverter converter)
+        public ContentsService(ContentfulClientsFactory factory, ContentsConverter converter)
         {
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
@@ -27,13 +28,17 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             if (contentsSearch.GetDepth() != ContentsSearchDepth.Item)
                 throw new UnsupportedFeatureException($"{contentsSearch.GetDepth()}  not supported by Contentful provider");
 
-            var query = new QueryBuilder<object>().LocaleIs(contentsSearch.Language);
-            var entry = await _factory.GetClient().GetEntry<dynamic>(contentsSearch.Id, query);
+            var query = new QueryBuilder<ContentItemData>().LocaleIs(contentsSearch.Language);
+            var entry = await _factory.GetContentsClient().GetEntry<ContentItemData>(contentsSearch.Id, query);
+
+            var contentTypeId = entry["sys"].contentType.sys.id.Value.ToString();
+            var contentType = await _factory.GetContentManagementClient().GetContentType(contentTypeId);
+
             return new ContentSearchResult
             {
                 Item = new ContentItemResult
                 {
-                    Value = _converter.ConvertToContentItem(entry),
+                    Value = _converter.ConvertToContentItem(entry, contentType),
                 },
             };
         }

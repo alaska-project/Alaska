@@ -9,5 +9,6 @@ namespace Alaska.Extensions.Contents.Contentful.Settings
         public string DeliveryApiKey { get; set; }
         public string PreviewApiKey { get; set; }
         public string SpaceId { get; set; }
+        public string ContentManagementApiToken { get; set; }
     }
 }

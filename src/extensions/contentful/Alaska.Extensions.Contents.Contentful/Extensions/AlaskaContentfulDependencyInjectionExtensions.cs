@@ -17,7 +17,8 @@ namespace Alaska.Services.Contents.Extensions
         {
             return services.Services
                 .Configure<ContentfulClientOptions>(services.Configuration.GetSection(ContentfulSectionName))
-                .AddSingleton<ContentsClientFactory>()
+                .AddSingleton<ContentfulClientsFactory>()
+                .AddSingleton<FieldAdaptersCollection>()
                 .AddScoped<ContentsConverter>()
                 .AddScoped<IContentsService, ContentsService>();
         }

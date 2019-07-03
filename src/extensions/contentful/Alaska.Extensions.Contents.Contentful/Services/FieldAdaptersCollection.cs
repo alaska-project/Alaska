@@ -8,17 +8,22 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 {
     internal class FieldAdaptersCollection
     {
-        private Dictionary<string, IFieldAdapter> _adapters = new Dictionary<string, IFieldAdapter>()
+        private Dictionary<string, IFieldAdapter> _adapters;
+
+        public FieldAdaptersCollection(ContentfulClientsFactory clientsFactory)
         {
-            { "Boolean", new BooleanFieldAdapter() },
-            { "Location", new CoordinatesFieldAdapter() },
-            { "Date", new DateTimeFieldAdapter() },
-            { "Object", new JsonFieldAdapter() },
-            { "Link", new LinkFieldAdapter() },
-            { "RichText", new RichTextFieldAdapter() },
-            { "Symbol", new StringFieldAdapter() },
-            { "Array", new StringListFieldAdapter() },
-        };
+            _adapters = new Dictionary<string, IFieldAdapter>()
+            {
+                { "Boolean", new BooleanFieldAdapter() },
+                { "Location", new CoordinatesFieldAdapter() },
+                { "Date", new DateTimeFieldAdapter() },
+                { "Object", new JsonFieldAdapter() },
+                { "Link", new LinkFieldAdapter(clientsFactory) },
+                { "RichText", new RichTextFieldAdapter() },
+                { "Symbol", new StringFieldAdapter() },
+                { "Array", new StringListFieldAdapter() },
+            };
+        }
 
         public void RegisterAdapter(string fieldType, IFieldAdapter adapter) => _adapters.Add(fieldType, adapter);
 

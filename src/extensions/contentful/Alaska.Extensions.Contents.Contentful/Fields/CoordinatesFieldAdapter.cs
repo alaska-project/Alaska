@@ -1,4 +1,5 @@
 ﻿using Alaska.Extensions.Contents.Contentful.Abstractions;
+using Alaska.Services.Contents.Domain.Models.Fields;
 using Alaska.Services.Contents.Domain.Models.Items;
 using Contentful.Core.Models;
 using System;
@@ -14,7 +15,11 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             return new ContentItemField
             {
                 Type = fieldDefinition.Type,
-                Value = field?.ToString(),
+                Value = field == null ? null : new CoordinatesField
+                {
+                    Latitude = field.lat.Value,
+                    Longitude = field.lon.Value,
+                },
             };
         }
     }

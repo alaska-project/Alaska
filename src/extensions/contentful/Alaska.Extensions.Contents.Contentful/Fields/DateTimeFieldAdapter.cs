@@ -13,9 +13,17 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
         {
             return new ContentItemField
             {
-                Type = fieldDefinition.Type,
-                Value = field?.ToString(),
+                Type = DefaultFieldTypes.DateTime,
+                Value = field?.ToString(), //ParseDateTime(field?.ToString()),
             };
         }
+
+        //private DateTime? ParseDateTime(string value)
+        //{
+        //    if (string.IsNullOrEmpty(value))
+        //        return null;
+
+        //    return DateTime.Parse(value);
+        //}
     }
 }

@@ -14,7 +14,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
         {
             return new ContentItemField
             {
-                Type = fieldDefinition.Type,
+                Type = DefaultFieldTypes.Coordinates,
                 Value = field == null ? null : new CoordinatesField
                 {
                     Latitude = field.lat.Value,

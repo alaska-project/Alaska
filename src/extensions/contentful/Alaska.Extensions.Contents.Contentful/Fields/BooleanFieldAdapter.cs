@@ -13,7 +13,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
         {
             return new ContentItemField
             {
-                Type = fieldDefinition.Type,
+                Type = DefaultFieldTypes.Bool,
                 Value = field == null ? false : (bool)field,
             };
         }

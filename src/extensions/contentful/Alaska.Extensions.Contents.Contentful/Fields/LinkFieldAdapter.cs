@@ -23,7 +23,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
         {
             return new ContentItemField
             {
-                Type = fieldDefinition.Type,
+                Type = DefaultFieldTypes.Link,
                 Value = field == null ? null : GetLinkedAssetObject(field.sys.id.Value),
             };
         }

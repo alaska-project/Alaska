@@ -20,6 +20,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
                 { "Object", new JsonFieldAdapter() },
                 { "Link", new LinkFieldAdapter(clientsFactory) },
                 { "RichText", new RichTextFieldAdapter() },
+                { "Text", new RichTextFieldAdapter() },
                 { "Symbol", new StringFieldAdapter() },
                 { "Array", new StringListFieldAdapter() },
             };

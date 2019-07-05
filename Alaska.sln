@@ -25,13 +25,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extensions", "extensions", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "contentful", "contentful", "{34EFAEC6-3DDA-4502-B9A1-06FB0575281A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Extensions.Contents.Contentful", "src\extensions\contentful\Alaska.Extensions.Contents.Contentful\Alaska.Extensions.Contents.Contentful.csproj", "{9C075B59-FC1A-471B-BFEF-A4BD27E46C19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Extensions.Contents.Contentful", "src\extensions\contentful\Alaska.Extensions.Contents.Contentful\Alaska.Extensions.Contents.Contentful.csproj", "{9C075B59-FC1A-471B-BFEF-A4BD27E46C19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Services.Contents.Infrastructure.Abstractions", "src\services\Alaska.Services.Contents.Infrastructure.Abstractions\Alaska.Services.Contents.Infrastructure.Abstractions.csproj", "{38DCBDD5-3C61-4C29-B39E-E79B49F51573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Services.Contents.Infrastructure.Abstractions", "src\services\Alaska.Services.Contents.Infrastructure.Abstractions\Alaska.Services.Contents.Infrastructure.Abstractions.csproj", "{38DCBDD5-3C61-4C29-B39E-E79B49F51573}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{BC526EEB-8ED0-4784-80C2-0E571E57670E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Web.ContentsDemo", "src\web\Alaska.Web.ContentsDemo\Alaska.Web.ContentsDemo.csproj", "{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Web.ContentsDemo", "src\web\Alaska.Web.ContentsDemo\Alaska.Web.ContentsDemo.csproj", "{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Common", "src\common\Alaska.Common\Alaska.Common.csproj", "{D2E35DA8-3BEF-4D19-B99F-C9247564F425}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2E35DA8-3BEF-4D19-B99F-C9247564F425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2E35DA8-3BEF-4D19-B99F-C9247564F425}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2E35DA8-3BEF-4D19-B99F-C9247564F425}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2E35DA8-3BEF-4D19-B99F-C9247564F425}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,6 +92,7 @@ Global
 		{38DCBDD5-3C61-4C29-B39E-E79B49F51573} = {6A392584-3E07-410C-BBE2-82A54DC01D18}
 		{BC526EEB-8ED0-4784-80C2-0E571E57670E} = {4C244443-600C-4A13-99C3-C7397631907B}
 		{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6} = {BC526EEB-8ED0-4784-80C2-0E571E57670E}
+		{D2E35DA8-3BEF-4D19-B99F-C9247564F425} = {D5D2356E-9403-496D-8A66-548FC0DE67D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0964F183-CA85-4A78-9685-F1EA65B270E3}

@@ -1,0 +1,70 @@
+<div class="container mt-2">
+
+	<div class="search-panel" *ngIf="servers">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<h2 class="content-title">Cache</h2>
+			</div>
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class='col-md-2'>
+			<b>Server</b>
+		</div>
+		<div class="col-md-4">
+			<div class="form-inline">
+				<select class="form-control" [(ngModel)]="selectedServer" (ngChange)="updateCacheList()">
+					<option *ngFor="let server of servers" [value]="server">{{server}}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class='col-md-2'>
+			<b>Cache</b>
+		</div>
+		<div class="col-md-4">
+			<div class="form-inline">
+				<select class="form-control" [(ngModel)]="selectedCacheInstance" (ngChange)="updateCacheInfo()">
+					<option *ngFor="let cache of cacheInstances" [ngValue]="cache">{{cache.cacheId}}</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="row form-group">
+		<div class='col-md-6 col-md-offset-2'>
+			<button class="btn btn-info mr-2" (click)="updateCacheInfo()">Refresh</button>
+			<button class="btn btn-danger" (click)="clearCache()">Clear</button>
+		</div>
+	</div>
+
+
+	<div *ngIf="selectedCacheInstance">
+
+		<hr />
+	
+		<h2>Cache {{selectedCacheInstance.cacheId}}</h2>
+	
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Key</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let cacheKey of cacheKeys">
+					<td>{{cacheKey}}</td>
+					<td>
+						<button class="btn btn-primary mr-2" (click)="displayEntryValue(cacheKey)">Value</button>
+						<button class="btn btn-danger" (click)="deleteEntry(cacheKey)">Delete</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>

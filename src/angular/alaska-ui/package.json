@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:lib": "ng build alaska-ui-lib",
+    "publish:npm": "npm publish .\\dist\\alaska-ui-lib --access public",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

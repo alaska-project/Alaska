@@ -23,7 +23,6 @@ namespace Alaska.Services.Contents.Extensions
                 .Configure<ContentfulClientOptions>(services.Configuration.GetSection(ContentfulSectionName))
                 .AddSingleton<ContentfulClientsFactory>()
                 .AddSingleton<FieldAdaptersCollection>()
-                .AddScoped<ContentsCache>()
                 .AddScoped<ContentsConverter>()
                 .AddMemoryCacheInstance<ContentTypesCache>()
                 .AddScoped<IContentsService, ContentsService>();

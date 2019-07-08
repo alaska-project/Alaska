@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\common\Alaska.Common.Web\Alaska.Common.Web.csproj" />
+    <ProjectReference Include="..\..\common\Alaska.Common\Alaska.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Web.ContentsDemo", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Common", "src\common\Alaska.Common\Alaska.Common.csproj", "{D2E35DA8-3BEF-4D19-B99F-C9247564F425}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Common.Caching", "src\common\Alaska.Common.Caching\Alaska.Common.Caching.csproj", "{72D525F1-98F7-4447-8DED-2085D8ACDFB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{D2E35DA8-3BEF-4D19-B99F-C9247564F425}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E35DA8-3BEF-4D19-B99F-C9247564F425}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2E35DA8-3BEF-4D19-B99F-C9247564F425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D525F1-98F7-4447-8DED-2085D8ACDFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D525F1-98F7-4447-8DED-2085D8ACDFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D525F1-98F7-4447-8DED-2085D8ACDFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D525F1-98F7-4447-8DED-2085D8ACDFB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{BC526EEB-8ED0-4784-80C2-0E571E57670E} = {4C244443-600C-4A13-99C3-C7397631907B}
 		{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6} = {BC526EEB-8ED0-4784-80C2-0E571E57670E}
 		{D2E35DA8-3BEF-4D19-B99F-C9247564F425} = {D5D2356E-9403-496D-8A66-548FC0DE67D2}
+		{72D525F1-98F7-4447-8DED-2085D8ACDFB9} = {D5D2356E-9403-496D-8A66-548FC0DE67D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0964F183-CA85-4A78-9685-F1EA65B270E3}

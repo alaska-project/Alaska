@@ -10,13 +10,18 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 {
     internal class JsonFieldAdapter : IFieldAdapter
     {
-        public ContentItemField AdaptField(dynamic field, Field fieldDefinition)
+        public ContentItemField ReadField(dynamic field, Field fieldDefinition)
         {
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.JsonObject,
                 Value = field == null ? null : JsonConvert.SerializeObject(field),
             };
+        }
+
+        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        {
+            return field.Value == null ? null : JsonConvert.DeserializeObject((string)field.Value);
         }
     }
 }

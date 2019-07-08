@@ -46,14 +46,40 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             return ConvertToContentSearchResult(entry, contentType);
         }
 
-        public Task<ContentItem> UpdateContent(ContentItem contentItem)
+        public async Task<ContentItem> UpdateContent(ContentItem contentItem)
         {
-            throw new NotImplementedException();
+            var contentManagementClient = _factory.GetContentManagementClient();
+
+            var contentType = GetContentType(contentItem.Info.TemplateId);
+
+            var entry = _converter.ConvertToContentEntry(contentItem, contentType);
+
+            await contentManagementClient.UpdateEntryForLocale(entry, contentItem.Info.Id, contentItem.Info.Language);
+
+            return await ReloadContentItem(contentItem);
         }
 
-        public Task<ContentItem> PublishContent(PublishContentRequest contentPublish)
+        public async Task PublishContent(PublishContentRequest contentPublish)
         {
-            throw new NotImplementedException();
+            var contentManagementClient = _factory.GetContentManagementClient();
+
+            var entry = await contentManagementClient.GetEntry(contentPublish.ItemId);
+
+            await contentManagementClient.PublishEntry(entry.SystemProperties.Id, entry.SystemProperties.Version.Value);
+        }
+
+        private async Task<ContentItem> ReloadContentItem(ContentItem contentItem)
+        {
+            var updatedItem = await GetContentItem(new ContentsSearchRequest
+            {
+                Id = contentItem.Info.Id,
+                Language = contentItem.Info.Language,
+                PublishingTarget = contentItem.Info.PublishingTarget,
+            });
+
+            var contentType = GetContentType(contentItem.Info.TemplateId);
+
+            return _converter.ConvertToContentItem(updatedItem, contentType);
         }
 
         private ContentSearchResult ConvertToContentSearchResult(ContentItemData entry, ContentType contentType)
@@ -82,17 +108,22 @@ namespace Alaska.Extensions.Contents.Contentful.Services
         private ContentType GetContentType(ContentItemData entry)
         {
             var contentTypeId = (string)entry["sys"].contentType.sys.id.Value.ToString();
+            return GetContentType((string)contentTypeId);
+        }
+
+        private ContentType GetContentType(string contentTypeId)
+        {
             return _contentTypesCache.RetreiveContentType(contentTypeId, () => GetContentTypeSync(contentTypeId));
         }
 
         private ContentType GetContentTypeSync(string contentTypeId)
         {
-            var t = GetContentType(contentTypeId);
+            var t = ReadContentType(contentTypeId);
             t.Wait();
             return t.Result;
         }
 
-        private async Task<ContentType> GetContentType(string contentTypeId)
+        private async Task<ContentType> ReadContentType(string contentTypeId)
         {
             using (_profiler.Measure(nameof(GetContentType)))
             {

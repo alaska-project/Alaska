@@ -27,6 +27,15 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             };
         }
 
+        public ContentItemData ConvertToContentEntry(ContentItem contentItem, ContentType contentType)
+        {
+            var content = new ContentItemData();
+            contentType.Fields
+                .ToList()
+                .ForEach(x => content.Add(x.Id, GetFieldValue(contentItem, x)));
+            return content;
+        }
+
         private ContentItemFields GetContentItemFields(ContentItemData entry, ContentType contentType)
         {
             var fields = new ContentItemFields();
@@ -36,9 +45,14 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             return fields;
         }
 
+        private dynamic GetFieldValue(ContentItem entry, Field field)
+        {
+            return _fieldAdapters.ResolveAdapter(field.Type).WriteField(entry.Fields[field.Id], field);
+        }
+
         private ContentItemField AdaptField(ContentItemData entry, Field field)
         {
-            return _fieldAdapters.ResolveAdapter(field.Type).AdaptField(entry.GetField(field.Id), field);
+            return _fieldAdapters.ResolveAdapter(field.Type).ReadField(entry.GetField(field.Id), field);
         }
 
         private ContentItemInfo GetContentItemInfo(ContentItemData entry, ContentType contentType)

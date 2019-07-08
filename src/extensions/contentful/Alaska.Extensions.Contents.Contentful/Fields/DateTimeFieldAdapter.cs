@@ -9,13 +9,18 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 {
     internal class DateTimeFieldAdapter : IFieldAdapter
     {
-        public ContentItemField AdaptField(dynamic field, Field fieldDefinition)
+        public ContentItemField ReadField(dynamic field, Field fieldDefinition)
         {
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.DateTime,
                 Value = field?.ToString(), //ParseDateTime(field?.ToString()),
             };
+        }
+
+        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        {
+            return field.Value;
         }
 
         //private DateTime? ParseDateTime(string value)

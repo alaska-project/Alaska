@@ -12,6 +12,6 @@ namespace Alaska.Services.Contents.Infrastructure.Abstractions
     {
         Task<ContentSearchResult> SearchContent(ContentsSearchRequest contentsSearch);
         Task<ContentItem> UpdateContent(ContentItem contentItem);
-        Task<ContentItem> PublishContent(PublishContentRequest contentPublish);
+        Task PublishContent(PublishContentRequest contentPublish);
     }
 }

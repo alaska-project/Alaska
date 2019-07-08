@@ -10,7 +10,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 {
     internal class CoordinatesFieldAdapter : IFieldAdapter
     {
-        public ContentItemField AdaptField(dynamic field, Field fieldDefinition)
+        public ContentItemField ReadField(dynamic field, Field fieldDefinition)
         {
             return new ContentItemField
             {
@@ -20,6 +20,15 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
                     Latitude = field.lat.Value,
                     Longitude = field.lon.Value,
                 },
+            };
+        }
+
+        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        {
+            return new
+            {
+                lat = ((CoordinatesField)field.Value).Latitude,
+                lon = ((CoordinatesField)field.Value).Longitude,
             };
         }
     }

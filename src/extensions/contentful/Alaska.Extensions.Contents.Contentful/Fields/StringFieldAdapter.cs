@@ -9,13 +9,18 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 {
     internal class StringFieldAdapter : IFieldAdapter
     {
-        public ContentItemField AdaptField(dynamic field, Field fieldDefinition)
+        public ContentItemField ReadField(dynamic field, Field fieldDefinition)
         {
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.String,
                 Value = field?.ToString(),
             };
+        }
+
+        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        {
+            return (string)field.Value;
         }
     }
 }

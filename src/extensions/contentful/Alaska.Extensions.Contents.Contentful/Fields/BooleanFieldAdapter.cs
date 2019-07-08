@@ -9,13 +9,18 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 {
     internal class BooleanFieldAdapter : IFieldAdapter
     {
-        public ContentItemField AdaptField(dynamic field, Field fieldDefinition)
+        public ContentItemField ReadField(dynamic field, Field fieldDefinition)
         {
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.Bool,
                 Value = field == null ? false : (bool)field,
             };
+        }
+
+        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        {
+            return field.Value;
         }
     }
 }

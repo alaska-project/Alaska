@@ -19,12 +19,23 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             _clientsFactory = clientsFactory ?? throw new ArgumentNullException(nameof(clientsFactory));
         }
 
-        public ContentItemField AdaptField(dynamic field, Field fieldDefinition)
+        public ContentItemField ReadField(dynamic field, Field fieldDefinition)
         {
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.Link,
                 Value = field == null ? null : GetLinkedAssetObject(field.sys.id.Value),
+            };
+        }
+
+        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        {
+            return new
+            {
+                sys = new
+                {
+                    id = (string)field.Value,
+                }
             };
         }
 

@@ -10,6 +10,7 @@ namespace Alaska.Services.Contents.Domain.Models.Publishing
     {
         public string ItemId { get; set; }
         public string Target { get; set; }
+        public List<string> Language { get; set; }
         public PublishScope Scope { get; set; }
     }
 }

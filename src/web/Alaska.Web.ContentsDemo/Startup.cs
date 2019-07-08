@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Alaska.Services.Contents.Extensions;
+using Alaska.UI.Cache.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,6 +36,9 @@ namespace Alaska.Web.ContentsDemo
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services
+                .AddCacheUI();
 
             services
                 .AddContentService(Configuration)
@@ -74,6 +78,8 @@ namespace Alaska.Web.ContentsDemo
                     .AllowAnyOrigin()
                     .AllowCredentials()
                     );
+
+            app.UseAlaskaCacheUI();
 
             app.UseHttpsRedirection();
             app.UseMvc(routes =>

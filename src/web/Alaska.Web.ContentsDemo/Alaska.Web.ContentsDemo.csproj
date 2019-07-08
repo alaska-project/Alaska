@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\extensions\contentful\Alaska.Extensions.Contents.Contentful\Alaska.Extensions.Contents.Contentful.csproj" />
     <ProjectReference Include="..\..\services\Alaska.Services.Contents\Alaska.Services.Contents.csproj" />
+    <ProjectReference Include="..\..\ui\Alaska.UI.Cache\Alaska.UI.Cache.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="angular\node_modules\**" />
+    <EmbeddedResource Remove="angular\node_modules\**" />
+    <None Remove="angular\node_modules\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="angular/dist/alaska-cache/**/*" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
   </ItemGroup>
 

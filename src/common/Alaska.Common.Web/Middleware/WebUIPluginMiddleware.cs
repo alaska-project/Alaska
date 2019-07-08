@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -54,7 +55,7 @@ namespace Alaska.Common.Web.Middleware
         private async Task RespondWithEmbeddedContent(HttpResponse response, string relativeContentPath)
         {
             response.StatusCode = 200;
-            response.ContentType = "text/html";
+            response.ContentType = GetContentType(relativeContentPath);
 
             var content = GetEmbeddedResource(relativeContentPath);
             await response.WriteAsync(content, Encoding.UTF8);
@@ -78,7 +79,7 @@ namespace Alaska.Common.Web.Middleware
 
         private string GetEmbeddedResource(string relativeResourcePath)
         {
-            var manifestResourcePath = $"{_options.ManifestResourceBasePath}.{relativeResourcePath.TrimStart('/').Replace("-", "_").Replace("/", ".")}";
+            var manifestResourcePath = $"{_options.ManifestResourceBasePath}.{relativeResourcePath.TrimStart('/').Replace("/", ".")}";
 
             using (var stream = _options.ManifestResourceAssembly.GetManifestResourceStream(manifestResourcePath))
             using (var reader = new StreamReader(stream))
@@ -106,6 +107,27 @@ namespace Alaska.Common.Web.Middleware
                 NullValueHandling = NullValueHandling.Include,
                 Formatting = Formatting.None
             });
+        }
+
+        private string GetContentType(string relativeContentPath)
+        {
+
+            switch (GetExtension(relativeContentPath).ToLower())
+            {
+                case "js":
+                    return "application/javascript";
+                case "css":
+                    return "text/css";
+                default:
+                    return "text/html";
+            }
+        }
+
+        private string GetExtension(string path)
+        {
+            return path.Contains(".") ?
+                path.Split('.').LastOrDefault() :
+                string.Empty;
         }
     }
 

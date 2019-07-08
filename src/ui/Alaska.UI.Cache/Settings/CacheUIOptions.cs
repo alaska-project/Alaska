@@ -18,7 +18,7 @@ namespace Alaska.UI.Cache.Settings
         
         public List<string> Endpoints { get; set; } = new List<string>();
 
-        public string DocumentTitle { get; set; } = "Alaska Cahe UI";
+        public string DocumentTitle { get; set; } = "Alaska Cache UI";
 
         public string HeadContent { get; set; } = "";
 

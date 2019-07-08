@@ -21,5 +21,8 @@ namespace Alaska.Common.Caching.Model
 
         [JsonProperty("expirationTimeStr")]
         public string ExpirationTimeStr { get { return ExpirationTime.ToString("yyyy/MM/dd HH:mm:ss"); } }
+
+        [JsonProperty("logicalExpirationTime")]
+        public DateTime LogicalExpirationTime { get; set; }
     }
 }

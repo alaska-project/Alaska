@@ -11,5 +11,6 @@ namespace Alaska.Common.Caching.Abstractions
         string Key { get; }
         TimeSpan Expiration { get; }
         DateTime ExpirationTime { get; }
+        DateTime LogicalExpirationTime { get; }
     }
 }

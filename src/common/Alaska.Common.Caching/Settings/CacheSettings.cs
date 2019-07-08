@@ -31,5 +31,8 @@ namespace Alaska.Common.Caching.Settings
 
         [JsonProperty("connectionString")]
         public string ConnectionString { get; set; }
+
+        [JsonProperty("cacheExpirationMode")]
+        public CacheExpirationMode CacheExpirationMode { get; set; }
     }
 }

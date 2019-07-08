@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace Alaska.Common.Caching.Abstractions
 {
+    public enum CacheExpirationMode { Physical, Logical }
+
     public interface ICacheEngine
     {
         ICacheItem Get(string key);
-
         ICacheItem<T> Get<T>(string key);
 
         void Set<T>(ICacheItem<T> item);
-
         void Remove(string key);
-
         void Clear();
 
         IEnumerable<string> Keys { get; }

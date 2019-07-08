@@ -9,6 +9,7 @@ namespace Alaska.Common.Caching.Abstractions
     public interface ICacheOptions
     {
         TimeSpan DefaultExpiration { get; }
+        CacheExpirationMode CacheExpirationMode { get; }
         bool IsDisabled { get; }
         bool CacheNullItems { get; }
         string ConnectionString { get; }

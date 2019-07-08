@@ -36,6 +36,9 @@ namespace Alaska.Common.Caching.Model
         [JsonProperty("expirationTime")]
         public DateTime ExpirationTime { get; set; }
 
+        [JsonProperty("logicalExpirationTime")]
+        public DateTime LogicalExpirationTime { get; set; }
+
         [JsonIgnore]
         object ICacheItem.Value => Value;
 
@@ -65,5 +68,8 @@ namespace Alaska.Common.Caching.Model
 
         [JsonProperty("expirationTime")]
         public DateTime ExpirationTime { get; set; }
+
+        [JsonProperty("logicalExpirationTime")]
+        public DateTime LogicalExpirationTime { get; set; }
     }
 }

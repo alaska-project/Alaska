@@ -9,10 +9,12 @@ namespace Alaska.Common.Caching
     {
         public TimeSpan DefaultExpiration { get; set; } = TimeSpan.FromMinutes(30);
 
-        public bool IsDisabled => false;
+        public bool IsDisabled { get; set; } = false;
 
-        public bool CacheNullItems => false;
+        public bool CacheNullItems { get; set; } = false;
 
-        public string ConnectionString => throw new NotImplementedException();
+        public string ConnectionString { get; set; }
+
+        public CacheExpirationMode CacheExpirationMode { get; set; } = CacheExpirationMode.Physical;
     }
 }

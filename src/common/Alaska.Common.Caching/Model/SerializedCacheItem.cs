@@ -19,6 +19,7 @@ namespace Alaska.Common.Caching.Model
             SerializedValue = JsonConvert.SerializeObject(entry.Value);
             Expiration = entry.Expiration;
             ExpirationTime = entry.ExpirationTime;
+            LogicalExpirationTime = entry.LogicalExpirationTime;
         }
 
         [JsonProperty("key")]
@@ -35,6 +36,9 @@ namespace Alaska.Common.Caching.Model
 
         [JsonProperty("expirationTime")]
         public DateTime ExpirationTime { get; set; }
+
+        [JsonProperty("logicalExpirationTime")]
+        public DateTime LogicalExpirationTime { get; set; }
 
         [JsonIgnore]
         object ICacheItem.Value => Value;

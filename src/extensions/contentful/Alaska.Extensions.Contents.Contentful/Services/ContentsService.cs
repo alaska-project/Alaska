@@ -1,4 +1,5 @@
 ﻿using Alaska.Common.Diagnostics.Abstractions;
+using Alaska.Extensions.Contents.Contentful.Caching;
 using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Services.Contents.Domain.Exceptions;
 using Alaska.Services.Contents.Domain.Models.Items;
@@ -18,15 +19,18 @@ namespace Alaska.Extensions.Contents.Contentful.Services
     {
         private readonly IProfiler _profiler;
         private readonly ContentfulClientsFactory _factory;
+        private readonly ContentTypesCache _contentTypesCache;
         private readonly ContentsConverter _converter;
 
         public ContentsService(
             IProfiler profiler,
-            ContentfulClientsFactory factory, 
+            ContentfulClientsFactory factory,
+            ContentTypesCache contentTypesCache,
             ContentsConverter converter)
         {
             _profiler = profiler ?? throw new ArgumentNullException(nameof(profiler));
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _contentTypesCache = contentTypesCache ?? throw new ArgumentNullException(nameof(contentTypesCache));
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
         }
 
@@ -37,7 +41,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
             var entry = await GetContentItem(contentsSearch);
 
-            var contentType = await GetContentType(entry);
+            var contentType = GetContentType(entry);
 
             return ConvertToContentSearchResult(entry, contentType);
         }
@@ -75,14 +79,25 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             }
         }
 
-        private async Task<ContentType> GetContentType(ContentItemData entry)
+        private ContentType GetContentType(ContentItemData entry)
+        {
+            var contentTypeId = (string)entry["sys"].contentType.sys.id.Value.ToString();
+            return _contentTypesCache.RetreiveContentType(contentTypeId, () => GetContentTypeSync(contentTypeId));
+        }
+
+        private ContentType GetContentTypeSync(string contentTypeId)
+        {
+            var t = GetContentType(contentTypeId);
+            t.Wait();
+            return t.Result;
+        }
+
+        private async Task<ContentType> GetContentType(string contentTypeId)
         {
             using (_profiler.Measure(nameof(GetContentType)))
             {
-                var contentTypeId = entry["sys"].contentType.sys.id.Value.ToString();
                 return await _factory.GetContentManagementClient().GetContentType(contentTypeId);
             }
         }
     }
 }
- 

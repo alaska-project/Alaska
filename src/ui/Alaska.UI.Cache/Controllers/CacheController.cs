@@ -13,16 +13,16 @@ namespace Alaska.UI.Cache.Controllers
     {
         private ICacheService _cacheService;
 
-        public CacheController(ICacheService cacheService = null)
+        public CacheController(ICacheService cacheService)
         {
-            _cacheService = cacheService;
+            _cacheService = cacheService ?? throw new ArgumentNullException(nameof(cacheService));
         }
 
         [HttpGet]
         [Produces(typeof(IEnumerable<ICacheInstance>))]
         public IActionResult GetCacheInstances()
         {
-            return Ok(_cacheService?.GetAllCaches().ToList() ?? new List<ICacheInstance>());
+            return Ok(_cacheService.GetAllCaches().ToList());
         }
 
         [HttpGet]

@@ -1,4 +1,6 @@
-﻿using Alaska.Common.Extensions;
+﻿using Alaska.Common.Caching.Extensions;
+using Alaska.Common.Extensions;
+using Alaska.Extensions.Contents.Contentful.Caching;
 using Alaska.Extensions.Contents.Contentful.Services;
 using Alaska.Extensions.Contents.Contentful.Settings;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
@@ -23,6 +25,7 @@ namespace Alaska.Services.Contents.Extensions
                 .AddSingleton<FieldAdaptersCollection>()
                 .AddScoped<ContentsCache>()
                 .AddScoped<ContentsConverter>()
+                .AddMemoryCacheInstance<ContentTypesCache>()
                 .AddScoped<IContentsService, ContentsService>();
         }
     }

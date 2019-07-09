@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Alaska.Extensions.Contents.Contentful.Models
 {
-    internal enum PublishingTarget { Preview, Web }
+    public enum PublishingTarget { Preview, Web }
 
-    internal class ContentItemReference
+    public class ContentItemReference
     {
         public string Id { get; set; }
         public string Locale { get; set; }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Alaska.Extensions.Contents.Contentful.Application.Commands
 {
-    public class UpdateItemCommand : IRequest<ContentItem>
+    public class UpdateItemCommand : IRequest<Unit>
     {
         public UpdateItemCommand(ContentItem contentItem)
         {

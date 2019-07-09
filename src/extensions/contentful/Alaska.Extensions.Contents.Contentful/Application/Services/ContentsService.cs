@@ -1,4 +1,5 @@
 ﻿using Alaska.Common.Diagnostics.Abstractions;
+using Alaska.Extensions.Contents.Contentful.Application.Commands;
 using Alaska.Extensions.Contents.Contentful.Application.Extensions;
 using Alaska.Extensions.Contents.Contentful.Application.Query;
 using Alaska.Extensions.Contents.Contentful.Converters;
@@ -11,6 +12,7 @@ using Alaska.Services.Contents.Domain.Models.Search;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +23,20 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 {
     internal class ContentsService : IContentsService
     {
+        private readonly IMediator _mediator;
         private readonly ContentQueries _query;
         private readonly IProfiler _profiler;
-        private readonly ContentfulClientsFactory _factory;
         private readonly ContentsConverter _converter;
 
         public ContentsService(
+            IMediator mediator,
             ContentQueries query,
             IProfiler profiler,
-            ContentfulClientsFactory factory,
             ContentsConverter converter)
         {
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _query = query ?? throw new ArgumentNullException(nameof(query));
             _profiler = profiler ?? throw new ArgumentNullException(nameof(profiler));
-            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
         }
 
@@ -56,32 +58,18 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
         public async Task<ContentItem> UpdateContent(ContentItem contentItem)
         {
-            var contentManagementClient = _factory.GetContentManagementClient();
+            var command = new UpdateItemCommand(contentItem);
+            await _mediator.Send(command);
 
+            var updatedItem = await _query.GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
             var contentType = _query.GetContentType(contentItem.Info.TemplateId);
-
-            var entry = _query.GetContentItem(contentItem.GetReference(), PublishingTarget.Preview);
-            //var entry = _converter.ConvertToContentEntry(contentItem, contentType);
-
-            await contentManagementClient.UpdateEntryForLocale(entry, contentItem.Info.Id, contentItem.Info.Language);
-
-            return await ReloadContentItem(contentItem);
+            return _converter.ConvertToContentItem(updatedItem, contentType, contentItem.Info.PublishingTarget);
         }
 
         public async Task PublishContent(PublishContentRequest contentPublish)
         {
-            var contentManagementClient = _factory.GetContentManagementClient();
-
-            var entry = await contentManagementClient.GetEntry(contentPublish.ItemId);
-
-            await contentManagementClient.PublishEntry(entry.SystemProperties.Id, entry.SystemProperties.Version.Value);
-        }
-
-        private async Task<ContentItem> ReloadContentItem(ContentItem contentItem)
-        {
-            var updatedItem = await _query.GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
-            var contentType = _query.GetContentType(contentItem.Info.TemplateId);
-            return _converter.ConvertToContentItem(updatedItem, contentType, contentItem.Info.PublishingTarget);
+            var command = new PublishContentCommand(contentPublish);
+            await _mediator.Send(command);
         }
 
         private ContentSearchResult ConvertToContentSearchResult(ContentItemData entry, ContentType contentType, string target)

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Alaska.Extensions.Contents.Contentful.Application.Query
 {
-    internal class ContentQueries
+    public class ContentQueries
     {
         private readonly IProfiler _profiler;
         private readonly ContentfulClientsFactory _factory;

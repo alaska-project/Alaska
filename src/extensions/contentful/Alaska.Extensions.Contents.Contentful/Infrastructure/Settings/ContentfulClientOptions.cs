@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alaska.Extensions.Contents.Contentful.Infrastructure.Settings
 {
-    internal class ContentfulClientOptions
+    public class ContentfulClientOptions
     {
         public string DeliveryApiKey { get; set; }
         public string PreviewApiKey { get; set; }

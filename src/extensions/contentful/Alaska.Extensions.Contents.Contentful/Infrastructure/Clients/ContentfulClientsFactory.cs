@@ -11,7 +11,7 @@ namespace Alaska.Extensions.Contents.Contentful.Infrastructure.Clients
 {
     public enum ContentfulPublishingTarget { Staging, Prod }
 
-    internal class ContentfulClientsFactory
+    public class ContentfulClientsFactory
     {
         private readonly IOptions<ContentfulClientOptions> _options;
 

@@ -20,10 +20,12 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             _options = options ?? throw new ArgumentNullException(nameof(options));
         }
 
-        public IContentfulClient GetContentsClient()
+        public IContentfulClient GetContentsClient() => GetContentsClient(false);
+
+        public IContentfulClient GetContentsClient(bool preview)
         {
             var httpClient = new HttpClient();
-            return new ContentfulClient(httpClient, ContentfulOptions());
+            return new ContentfulClient(httpClient, ContentfulOptions(preview));
         }
 
         public IContentfulManagementClient GetContentManagementClient()
@@ -32,13 +34,14 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             return new ContentfulManagementClient(httpClient, _options.Value.ContentManagementApiToken, _options.Value.SpaceId);
         }
 
-        private ContentfulOptions ContentfulOptions()
+        private ContentfulOptions ContentfulOptions(bool preview)
         {
             return new ContentfulOptions()
             {
                 DeliveryApiKey = _options.Value.DeliveryApiKey,
                 PreviewApiKey = _options.Value.PreviewApiKey,
                 SpaceId = _options.Value.SpaceId,
+                UsePreviewApi = preview,
             };
         }
     }

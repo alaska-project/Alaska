@@ -49,7 +49,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
             var contentType = GetContentType(entry);
 
-            return ConvertToContentSearchResult(entry, contentType);
+            return ConvertToContentSearchResult(entry, contentType, contentsSearch.PublishingTarget);
         }
 
         public async Task<ContentItem> UpdateContent(ContentItem contentItem)
@@ -78,10 +78,10 @@ namespace Alaska.Extensions.Contents.Contentful.Services
         {
             var updatedItem = await GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
             var contentType = GetContentType(contentItem.Info.TemplateId);
-            return _converter.ConvertToContentItem(updatedItem, contentType);
+            return _converter.ConvertToContentItem(updatedItem, contentType, contentItem.Info.PublishingTarget);
         }
 
-        private ContentSearchResult ConvertToContentSearchResult(ContentItemData entry, ContentType contentType)
+        private ContentSearchResult ConvertToContentSearchResult(ContentItemData entry, ContentType contentType, string target)
         {
             using (_profiler.Measure(nameof(ConvertToContentSearchResult)))
             {
@@ -89,7 +89,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
                 {
                     Item = new ContentItemResult
                     {
-                        Value = _converter.ConvertToContentItem(entry, contentType),
+                        Value = _converter.ConvertToContentItem(entry, contentType, target),
                     },
                 };
             }
@@ -103,36 +103,18 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
         private async Task<ContentItemData> GetContentItem(ContentItemReference item, PublishingTarget target)
         {
-            switch (target)
-            {
-                case PublishingTarget.Preview:
-                    return await GetPreviewContentItem(item);
-                case PublishingTarget.Web:
-                    return await GetWebContentItem(item);
-                default:
-                    throw new NotImplementedException($"Target {target} not implemented");
-            }
+            return await GetContentItem(item, target == PublishingTarget.Preview);
         }
 
-        private async Task<ContentItemData> GetWebContentItem(ContentItemReference item)
+        private async Task<ContentItemData> GetContentItem(ContentItemReference item, bool preview)
         {
             using (_profiler.Measure(nameof(GetContentItem)))
             {
                 var query = new QueryBuilder<ContentItemData>().LocaleIs(item.Locale);
-                return await _factory.GetContentsClient().GetEntry(item.Id, query);
+                return await _factory.GetContentsClient(preview).GetEntry(item.Id, query);
             }
         }
-
-        private async Task<ContentItemData> GetPreviewContentItem(ContentItemReference item)
-        {
-            using (_profiler.Measure(nameof(GetContentItem)))
-            {
-                var query = new QueryBuilder<ContentItemData>().LocaleIs(item.Locale).FieldEquals("sys.id", item.Id);
-                var results = await _factory.GetContentManagementClient().GetEntriesForLocale(query);
-                return results.Items.FirstOrDefault();
-            }
-        }
-
+        
         private ContentType GetContentType(ContentItemData entry)
         {
             var contentTypeId = (string)entry["sys"].contentType.sys.id.Value.ToString();

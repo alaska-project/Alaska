@@ -18,12 +18,12 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             _fieldAdapters = fieldAdapters ?? throw new ArgumentNullException(nameof(fieldAdapters));
         }
 
-        public ContentItem ConvertToContentItem(ContentItemData entry, ContentType contentType)
+        public ContentItem ConvertToContentItem(ContentItemData entry, ContentType contentType, string target)
         {
             return new ContentItem
             {
                 Fields = GetContentItemFields(entry, contentType),
-                Info = GetContentItemInfo(entry, contentType),
+                Info = GetContentItemInfo(entry, contentType, target),
             };
         }
 
@@ -55,7 +55,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             return _fieldAdapters.ResolveAdapter(field.Type).ReadField(entry.GetField(field.Id), field);
         }
 
-        private ContentItemInfo GetContentItemInfo(ContentItemData entry, ContentType contentType)
+        private ContentItemInfo GetContentItemInfo(ContentItemData entry, ContentType contentType, string target)
         {
             return new ContentItemInfo
             {
@@ -63,6 +63,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
                 Language = GetContentItemLanguage(entry),
                 TemplateId = contentType.SystemProperties.Id,
                 TemplateName = contentType.Name,
+                PublishingTarget = target,
             };
         }
 

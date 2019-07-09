@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alaska.Extensions.Contents.Contentful.Settings
+namespace Alaska.Extensions.Contents.Contentful.Infrastructure.Settings
 {
     internal class ContentfulClientOptions
     {

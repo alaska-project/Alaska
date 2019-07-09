@@ -1,11 +1,10 @@
 ﻿using Alaska.Common.Caching;
-using Contentful.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alaska.Extensions.Contents.Contentful.Caching
+namespace Alaska.Extensions.Contents.Contentful.Infrastructure.Caching
 {
     public class ContentTypesCache : CacheInstance
     {

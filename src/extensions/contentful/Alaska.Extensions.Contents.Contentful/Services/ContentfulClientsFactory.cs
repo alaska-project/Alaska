@@ -1,4 +1,4 @@
-﻿using Alaska.Extensions.Contents.Contentful.Settings;
+﻿using Alaska.Extensions.Contents.Contentful.Infrastructure.Settings;
 using Contentful.Core;
 using Contentful.Core.Configuration;
 using Microsoft.Extensions.Options;

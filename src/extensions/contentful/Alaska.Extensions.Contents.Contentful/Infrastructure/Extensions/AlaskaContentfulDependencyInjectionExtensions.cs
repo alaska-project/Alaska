@@ -1,9 +1,9 @@
 ﻿using Alaska.Common.Caching.Extensions;
 using Alaska.Common.Extensions;
 using Alaska.Extensions.Contents.Contentful.Application.Query;
-using Alaska.Extensions.Contents.Contentful.Caching;
+using Alaska.Extensions.Contents.Contentful.Infrastructure.Caching;
+using Alaska.Extensions.Contents.Contentful.Infrastructure.Settings;
 using Alaska.Extensions.Contents.Contentful.Services;
-using Alaska.Extensions.Contents.Contentful.Settings;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

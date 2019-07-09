@@ -1,5 +1,6 @@
 ﻿using Alaska.Common.Diagnostics.Abstractions;
 using Alaska.Extensions.Contents.Contentful.Caching;
+using Alaska.Extensions.Contents.Contentful.Extensions;
 using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Services.Contents.Domain.Exceptions;
 using Alaska.Services.Contents.Domain.Models.Items;
@@ -10,6 +11,7 @@ using Contentful.Core.Models;
 using Contentful.Core.Search;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,7 +41,11 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             if (contentsSearch.GetDepth() != ContentsSearchDepth.Item)
                 throw new UnsupportedFeatureException($"{contentsSearch.GetDepth()}  not supported by Contentful provider");
 
-            var entry = await GetContentItem(contentsSearch);
+            var entry = await GetContentItem(new ContentItemReference
+            {
+                Id = contentsSearch.Id,
+                Locale = contentsSearch.Language,
+            }, contentsSearch.PublishingTarget);
 
             var contentType = GetContentType(entry);
 
@@ -70,15 +76,8 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
         private async Task<ContentItem> ReloadContentItem(ContentItem contentItem)
         {
-            var updatedItem = await GetContentItem(new ContentsSearchRequest
-            {
-                Id = contentItem.Info.Id,
-                Language = contentItem.Info.Language,
-                PublishingTarget = contentItem.Info.PublishingTarget,
-            });
-
+            var updatedItem = await GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
             var contentType = GetContentType(contentItem.Info.TemplateId);
-
             return _converter.ConvertToContentItem(updatedItem, contentType);
         }
 
@@ -96,12 +95,41 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             }
         }
 
-        private async Task<ContentItemData> GetContentItem(ContentsSearchRequest contentsSearch)
+        private async Task<ContentItemData> GetContentItem(ContentItemReference item, string target)
+        {
+            var t = (PublishingTarget)Enum.Parse(typeof(PublishingTarget), target, true);
+            return await GetContentItem(item, t);
+        }
+
+        private async Task<ContentItemData> GetContentItem(ContentItemReference item, PublishingTarget target)
+        {
+            switch (target)
+            {
+                case PublishingTarget.Preview:
+                    return await GetPreviewContentItem(item);
+                case PublishingTarget.Web:
+                    return await GetWebContentItem(item);
+                default:
+                    throw new NotImplementedException($"Target {target} not implemented");
+            }
+        }
+
+        private async Task<ContentItemData> GetWebContentItem(ContentItemReference item)
         {
             using (_profiler.Measure(nameof(GetContentItem)))
             {
-                var query = new QueryBuilder<ContentItemData>().LocaleIs(contentsSearch.Language);
-                return await _factory.GetContentsClient().GetEntry(contentsSearch.Id, query);
+                var query = new QueryBuilder<ContentItemData>().LocaleIs(item.Locale);
+                return await _factory.GetContentsClient().GetEntry(item.Id, query);
+            }
+        }
+
+        private async Task<ContentItemData> GetPreviewContentItem(ContentItemReference item)
+        {
+            using (_profiler.Measure(nameof(GetContentItem)))
+            {
+                var query = new QueryBuilder<ContentItemData>().LocaleIs(item.Locale).FieldEquals("sys.id", item.Id);
+                var results = await _factory.GetContentManagementClient().GetEntriesForLocale(query);
+                return results.Items.FirstOrDefault();
             }
         }
 

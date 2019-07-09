@@ -34,7 +34,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             {
                 sys = new
                 {
-                    id = (string)field.Value,
+                    id = (string)((dynamic)field.Value).url,
                 }
             };
         }

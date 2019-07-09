@@ -68,6 +68,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
                 Language = item.Language.Name,
                 PublishingTarget = item.Database.Name,
                 TemplateId = item.TemplateID.ToString(),
+                TemplateName = item.TemplateName,
                 Path = GetPathSegments(item.Paths.Path).ToList(),
                 IdPath = GetPathSegments(item.Paths.LongID).ToList(),
             };

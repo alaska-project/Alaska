@@ -1,4 +1,5 @@
 ﻿using Alaska.Extensions.Contents.Contentful.Abstractions;
+using Alaska.Extensions.Contents.Contentful.Utils;
 using Alaska.Services.Contents.Domain.Models.Fields;
 using Alaska.Services.Contents.Domain.Models.Items;
 using Contentful.Core.Models;
@@ -25,10 +26,11 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 
         public dynamic WriteField(ContentItemField field, Field fieldDefinition)
         {
+            var coordinatesField = FieldSerializationUtil.ConvertDeserializedField<CoordinatesField>(field.Value);
             return new
             {
-                lat = ((CoordinatesField)field.Value).Latitude,
-                lon = ((CoordinatesField)field.Value).Longitude,
+                lat = coordinatesField.Latitude,
+                lon = coordinatesField.Longitude,
             };
         }
     }

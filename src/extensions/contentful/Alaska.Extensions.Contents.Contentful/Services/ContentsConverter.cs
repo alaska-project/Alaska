@@ -61,7 +61,8 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             {
                 Id = GetContentItemId(entry),
                 Language = GetContentItemLanguage(entry),
-                TemplateId = contentType.Name,
+                TemplateId = contentType.SystemProperties.Id,
+                TemplateName = contentType.Name,
             };
         }
 

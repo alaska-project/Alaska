@@ -19,6 +19,9 @@ namespace Alaska.Services.Contents.Domain.Models.Items
         [JsonProperty("templateId")]
         public string TemplateId { get; set; }
 
+        [JsonProperty("templateName")]
+        public string TemplateName { get; set; }
+
         [JsonProperty("path")]
         public List<string> Path { get; set; }
 

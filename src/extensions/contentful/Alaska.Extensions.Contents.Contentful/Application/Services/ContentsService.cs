@@ -1,6 +1,8 @@
 ﻿using Alaska.Common.Diagnostics.Abstractions;
 using Alaska.Extensions.Contents.Contentful.Application.Extensions;
 using Alaska.Extensions.Contents.Contentful.Application.Query;
+using Alaska.Extensions.Contents.Contentful.Converters;
+using Alaska.Extensions.Contents.Contentful.Infrastructure.Clients;
 using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Services.Contents.Domain.Exceptions;
 using Alaska.Services.Contents.Domain.Models.Items;

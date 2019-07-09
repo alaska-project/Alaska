@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
-namespace Alaska.Extensions.Contents.Contentful.Services
+namespace Alaska.Extensions.Contents.Contentful.Infrastructure.Clients
 {
     public enum ContentfulPublishingTarget { Staging, Prod }
 

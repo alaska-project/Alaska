@@ -1,10 +1,11 @@
 ﻿using Alaska.Extensions.Contents.Contentful.Abstractions;
 using Alaska.Extensions.Contents.Contentful.Fields;
+using Alaska.Extensions.Contents.Contentful.Infrastructure.Clients;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alaska.Extensions.Contents.Contentful.Services
+namespace Alaska.Extensions.Contents.Contentful.Converters
 {
     internal class FieldAdaptersCollection
     {

@@ -1,5 +1,5 @@
 ﻿using Alaska.Extensions.Contents.Contentful.Abstractions;
-using Alaska.Extensions.Contents.Contentful.Services;
+using Alaska.Extensions.Contents.Contentful.Infrastructure.Clients;
 using Alaska.Services.Contents.Domain.Models.Fields;
 using Alaska.Services.Contents.Domain.Models.Items;
 using Contentful.Core.Models;

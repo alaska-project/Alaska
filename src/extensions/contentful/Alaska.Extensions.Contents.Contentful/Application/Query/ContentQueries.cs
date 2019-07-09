@@ -1,5 +1,6 @@
 ﻿using Alaska.Common.Diagnostics.Abstractions;
 using Alaska.Extensions.Contents.Contentful.Infrastructure.Caching;
+using Alaska.Extensions.Contents.Contentful.Infrastructure.Clients;
 using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Extensions.Contents.Contentful.Services;
 using Contentful.Core.Models;

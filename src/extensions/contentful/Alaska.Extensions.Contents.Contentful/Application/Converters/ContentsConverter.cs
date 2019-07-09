@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Alaska.Extensions.Contents.Contentful.Services
+namespace Alaska.Extensions.Contents.Contentful.Converters
 {
     internal class ContentsConverter
     {

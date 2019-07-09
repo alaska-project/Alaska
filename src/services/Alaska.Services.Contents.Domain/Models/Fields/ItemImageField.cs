@@ -7,6 +7,9 @@ namespace Alaska.Services.Contents.Domain.Models.Fields
 {
     public class ItemImageField
     {
+        [JsonProperty("internalId")]
+        public string InternalId { get; set; }
+
         [JsonProperty("url")]
         public string Url { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using Alaska.Extensions.Contents.Contentful.Application.Extensions;
 using Alaska.Extensions.Contents.Contentful.Application.Query;
+using Alaska.Extensions.Contents.Contentful.Converters;
 using Alaska.Extensions.Contents.Contentful.Infrastructure.Clients;
 using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Services.Contents.Domain.Models.Items;
@@ -15,13 +16,16 @@ namespace Alaska.Extensions.Contents.Contentful.Application.Commands
     public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, Unit>
     {
         private readonly ContentfulClientsFactory _factory;
+        private readonly ContentsConverter _converter;
         private readonly ContentQueries _query;
 
         public UpdateItemCommandHandler(
             ContentfulClientsFactory factory,
+            ContentsConverter converter,
             ContentQueries query)
         {
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _converter = converter ?? throw new ArgumentNullException(nameof(converter));
             _query = query ?? throw new ArgumentNullException(nameof(query));
         }
 
@@ -29,12 +33,13 @@ namespace Alaska.Extensions.Contents.Contentful.Application.Commands
         {
             var contentManagementClient = _factory.GetContentManagementClient();
 
+            var entry = await _query.GetContentItem(request.ContentItem.GetReference(), PublishingTarget.Preview);
+
             var contentType = _query.GetContentType(request.ContentItem.Info.TemplateId);
 
-            var entry = _query.GetContentItem(request.ContentItem.GetReference(), PublishingTarget.Preview);
-            //var entry = _converter.ConvertToContentEntry(contentItem, contentType);
+            var newEntry = _converter.TransformContentItem(entry, request.ContentItem, contentType);
 
-            await contentManagementClient.UpdateEntryForLocale(entry, request.ContentItem.Info.Id, request.ContentItem.Info.Language);
+            await contentManagementClient.UpdateEntryForLocale(newEntry, request.ContentItem.Info.Id, request.ContentItem.Info.Language);
 
             return Unit.Value;
         }

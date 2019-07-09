@@ -1,5 +1,6 @@
 ﻿using Alaska.Extensions.Contents.Contentful.Abstractions;
 using Alaska.Extensions.Contents.Contentful.Infrastructure.Clients;
+using Alaska.Extensions.Contents.Contentful.Utils;
 using Alaska.Services.Contents.Domain.Models.Fields;
 using Alaska.Services.Contents.Domain.Models.Items;
 using Contentful.Core.Models;
@@ -28,15 +29,12 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             };
         }
 
-        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            return new
-            {
-                sys = new
-                {
-                    id = (string)((dynamic)field.Value).url,
-                }
-            };
+            ItemImageField imageField = FieldSerializationUtil.ConvertDeserializedField<ItemImageField>(fieldValue.Value);
+            var newField = FieldSerializationUtil.JsonClone<dynamic>(field);
+            newField.sys.id = imageField.InternalId;
+            return newField;
         }
 
         private object GetLinkedAssetObject(string assetId)
@@ -45,6 +43,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             assetTask.Wait();
             return new ItemImageField
             {
+                InternalId = assetId,
                 Url = assetTask.Result.File.Url,
             };
         }

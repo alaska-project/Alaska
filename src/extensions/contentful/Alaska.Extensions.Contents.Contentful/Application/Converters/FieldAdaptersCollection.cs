@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Alaska.Extensions.Contents.Contentful.Converters
 {
-    internal class FieldAdaptersCollection
+    public class FieldAdaptersCollection
     {
         private Dictionary<string, IFieldAdapter> _adapters;
 

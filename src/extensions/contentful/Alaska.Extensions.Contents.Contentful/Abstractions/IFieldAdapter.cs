@@ -9,6 +9,6 @@ namespace Alaska.Extensions.Contents.Contentful.Abstractions
     public interface IFieldAdapter
     {
         ContentItemField ReadField(dynamic field, Field fieldDefinition);
-        dynamic WriteField(ContentItemField field, Field fieldDefinition);
+        dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue);
     }
 }

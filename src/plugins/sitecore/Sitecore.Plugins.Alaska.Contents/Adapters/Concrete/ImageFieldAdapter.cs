@@ -37,7 +37,13 @@ namespace Sitecore.Plugins.Alaska.Contents.Adapters.Concrete
                 Alt = field.Alt,
                 Class = field.Class,
                 Url = GetImageAbsoluteUrl(field),
+                InternalId = GetImageInternalId(field),
             };
+        }
+
+        private string GetImageInternalId(ImageField imageField)
+        {
+            return imageField.IsInternal ? imageField.MediaID.ToString() : null;
         }
 
         private string GetImageAbsoluteUrl(ImageField imageField)

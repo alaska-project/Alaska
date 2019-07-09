@@ -18,9 +18,9 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             };
         }
 
-        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            return field.Value;
+            return (bool)fieldValue.Value;
         }
     }
 }

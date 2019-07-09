@@ -17,18 +17,10 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
                 Value = field?.ToString(), //ParseDateTime(field?.ToString()),
             };
         }
-
-        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        
+        public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            return field.Value;
+            return (string)fieldValue.Value;
         }
-
-        //private DateTime? ParseDateTime(string value)
-        //{
-        //    if (string.IsNullOrEmpty(value))
-        //        return null;
-
-        //    return DateTime.Parse(value);
-        //}
     }
 }

@@ -24,14 +24,13 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             };
         }
 
-        public dynamic WriteField(ContentItemField field, Field fieldDefinition)
+        public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            var coordinatesField = FieldSerializationUtil.ConvertDeserializedField<CoordinatesField>(field.Value);
-            return new
-            {
-                lat = coordinatesField.Latitude,
-                lon = coordinatesField.Longitude,
-            };
+            CoordinatesField coordinatesField = FieldSerializationUtil.ConvertDeserializedField<CoordinatesField>(fieldValue.Value);
+            var newField = FieldSerializationUtil.JsonClone<dynamic>(field);
+            newField.lat = coordinatesField.Latitude;
+            newField.lon = coordinatesField.Longitude;
+            return newField;
         }
     }
 }

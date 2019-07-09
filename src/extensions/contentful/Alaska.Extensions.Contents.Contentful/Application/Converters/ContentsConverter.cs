@@ -1,7 +1,6 @@
 ﻿using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Services.Contents.Domain.Models.Items;
 using Contentful.Core.Models;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Text;
 
 namespace Alaska.Extensions.Contents.Contentful.Converters
 {
-    internal class ContentsConverter
+    public class ContentsConverter
     {
         private readonly FieldAdaptersCollection _fieldAdapters;
 
@@ -27,13 +26,12 @@ namespace Alaska.Extensions.Contents.Contentful.Converters
             };
         }
 
-        public ContentItemData ConvertToContentEntry(ContentItem contentItem, ContentType contentType)
+        public ContentItemData TransformContentItem(ContentItemData originalItem, ContentItem newValues, ContentType contentType)
         {
-            var content = new ContentItemData();
             contentType.Fields
                 .ToList()
-                .ForEach(x => content.Add(x.Id, GetFieldValue(contentItem, x)));
-            return content;
+                .ForEach(x => originalItem[x.Id] = GetFieldValue(originalItem, newValues, x));
+            return originalItem;
         }
 
         private ContentItemFields GetContentItemFields(ContentItemData entry, ContentType contentType)
@@ -45,9 +43,9 @@ namespace Alaska.Extensions.Contents.Contentful.Converters
             return fields;
         }
 
-        private dynamic GetFieldValue(ContentItem entry, Field field)
+        private dynamic GetFieldValue(ContentItemData currentItem, ContentItem entry, Field field)
         {
-            return _fieldAdapters.ResolveAdapter(field.Type).WriteField(entry.Fields[field.Id], field);
+            return _fieldAdapters.ResolveAdapter(field.Type).WriteField(currentItem.GetField(field.Id), field, entry.Fields[field.Id]);
         }
 
         private ContentItemField AdaptField(ContentItemData entry, Field field)

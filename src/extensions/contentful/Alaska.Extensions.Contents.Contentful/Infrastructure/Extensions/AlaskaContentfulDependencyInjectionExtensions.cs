@@ -6,7 +6,6 @@ using Alaska.Extensions.Contents.Contentful.Services;
 using Alaska.Extensions.Contents.Contentful.Settings;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

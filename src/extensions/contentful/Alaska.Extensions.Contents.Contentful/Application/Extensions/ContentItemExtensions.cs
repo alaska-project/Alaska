@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alaska.Extensions.Contents.Contentful.Extensions
+namespace Alaska.Extensions.Contents.Contentful.Application.Extensions
 {
     internal static class ContentItemExtensions
     {

@@ -1,4 +1,5 @@
 ﻿using Alaska.Common.Diagnostics.Abstractions;
+using Alaska.Extensions.Contents.Contentful.Application.Query;
 using Alaska.Extensions.Contents.Contentful.Caching;
 using Alaska.Extensions.Contents.Contentful.Extensions;
 using Alaska.Extensions.Contents.Contentful.Models;
@@ -19,20 +20,20 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 {
     internal class ContentsService : IContentsService
     {
+        private readonly ContentQueries _query;
         private readonly IProfiler _profiler;
         private readonly ContentfulClientsFactory _factory;
-        private readonly ContentTypesCache _contentTypesCache;
         private readonly ContentsConverter _converter;
 
         public ContentsService(
+            ContentQueries query,
             IProfiler profiler,
             ContentfulClientsFactory factory,
-            ContentTypesCache contentTypesCache,
             ContentsConverter converter)
         {
+            _query = query ?? throw new ArgumentNullException(nameof(query));
             _profiler = profiler ?? throw new ArgumentNullException(nameof(profiler));
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
-            _contentTypesCache = contentTypesCache ?? throw new ArgumentNullException(nameof(contentTypesCache));
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
         }
 
@@ -41,13 +42,13 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             if (contentsSearch.GetDepth() != ContentsSearchDepth.Item)
                 throw new UnsupportedFeatureException($"{contentsSearch.GetDepth()}  not supported by Contentful provider");
 
-            var entry = await GetContentItem(new ContentItemReference
+            var entry = await _query.GetContentItem(new ContentItemReference
             {
                 Id = contentsSearch.Id,
                 Locale = contentsSearch.Language,
             }, contentsSearch.PublishingTarget);
 
-            var contentType = GetContentType(entry);
+            var contentType = _query.GetContentType(entry);
 
             return ConvertToContentSearchResult(entry, contentType, contentsSearch.PublishingTarget);
         }
@@ -56,9 +57,10 @@ namespace Alaska.Extensions.Contents.Contentful.Services
         {
             var contentManagementClient = _factory.GetContentManagementClient();
 
-            var contentType = GetContentType(contentItem.Info.TemplateId);
+            var contentType = _query.GetContentType(contentItem.Info.TemplateId);
 
-            var entry = _converter.ConvertToContentEntry(contentItem, contentType);
+            var entry = _query.GetContentItem(contentItem.GetReference(), PublishingTarget.Preview);
+            //var entry = _converter.ConvertToContentEntry(contentItem, contentType);
 
             await contentManagementClient.UpdateEntryForLocale(entry, contentItem.Info.Id, contentItem.Info.Language);
 
@@ -76,8 +78,8 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
         private async Task<ContentItem> ReloadContentItem(ContentItem contentItem)
         {
-            var updatedItem = await GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
-            var contentType = GetContentType(contentItem.Info.TemplateId);
+            var updatedItem = await _query.GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
+            var contentType = _query.GetContentType(contentItem.Info.TemplateId);
             return _converter.ConvertToContentItem(updatedItem, contentType, contentItem.Info.PublishingTarget);
         }
 
@@ -92,52 +94,6 @@ namespace Alaska.Extensions.Contents.Contentful.Services
                         Value = _converter.ConvertToContentItem(entry, contentType, target),
                     },
                 };
-            }
-        }
-
-        private async Task<ContentItemData> GetContentItem(ContentItemReference item, string target)
-        {
-            var t = (PublishingTarget)Enum.Parse(typeof(PublishingTarget), target, true);
-            return await GetContentItem(item, t);
-        }
-
-        private async Task<ContentItemData> GetContentItem(ContentItemReference item, PublishingTarget target)
-        {
-            return await GetContentItem(item, target == PublishingTarget.Preview);
-        }
-
-        private async Task<ContentItemData> GetContentItem(ContentItemReference item, bool preview)
-        {
-            using (_profiler.Measure(nameof(GetContentItem)))
-            {
-                var query = new QueryBuilder<ContentItemData>().LocaleIs(item.Locale);
-                return await _factory.GetContentsClient(preview).GetEntry(item.Id, query);
-            }
-        }
-        
-        private ContentType GetContentType(ContentItemData entry)
-        {
-            var contentTypeId = (string)entry["sys"].contentType.sys.id.Value.ToString();
-            return GetContentType((string)contentTypeId);
-        }
-
-        private ContentType GetContentType(string contentTypeId)
-        {
-            return _contentTypesCache.RetreiveContentType(contentTypeId, () => GetContentTypeSync(contentTypeId));
-        }
-
-        private ContentType GetContentTypeSync(string contentTypeId)
-        {
-            var t = ReadContentType(contentTypeId);
-            t.Wait();
-            return t.Result;
-        }
-
-        private async Task<ContentType> ReadContentType(string contentTypeId)
-        {
-            using (_profiler.Measure(nameof(GetContentType)))
-            {
-                return await _factory.GetContentManagementClient().GetContentType(contentTypeId);
             }
         }
     }

@@ -60,6 +60,29 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return await GetContainerDirectories(root);
         }
 
+        public async Task DeleteDirectoryContent(CloudBlobDirectory directory)
+        {
+            BlobContinuationToken continuationToken = null;
+
+            do
+            {
+                var result = await directory.ListBlobsSegmentedAsync(continuationToken);
+
+                result.Results
+                    .Where(x => x is CloudBlockBlob)
+                    .ToList()
+                    .ForEach(async x => await ((CloudBlockBlob)x).DeleteIfExistsAsync());
+
+                result.Results
+                    .Where(x => x is CloudBlobDirectory)
+                    .ToList()
+                    .ForEach(async x => await DeleteDirectoryContent((CloudBlobDirectory)x));
+
+                continuationToken = result.ContinuationToken;
+            }
+            while (continuationToken != null);
+        }
+
         public async Task<IEnumerable<MediaFolder>> GetChildrenDirectories(CloudBlobDirectory directory)
         {
             var blobs = new List<MediaFolder>();

@@ -21,9 +21,9 @@ namespace Alaska.Extensions.Media.Azure.IntegrationTests.Scenarios
                 var folders = await client.GetJsonAsync<List<MediaFolder>>($"{MediaLibraryApi}/GetRootFolders");
 
                 if (folders.Any())
-                    folders.ToList().ForEach(x => 
+                    folders.ToList().ForEach(async x => 
                     {
-                        
+                        await client.PostJsonAsync($"{MediaLibraryApi}/DeleteFolder?folderId={x.Id}");
                     });
 
                 var rootFolderName = Guid.NewGuid().ToString();

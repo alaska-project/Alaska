@@ -9,6 +9,11 @@ namespace Alaska.Web.Extensions
 {
     public static class HttpClientExtensions
     {
+        public static async Task PostJsonAsync(this HttpClient client, string uri)
+        {
+            await PostJsonAsync(client, uri, null);
+        }
+
         public static async Task PostJsonAsync(this HttpClient client, string uri, object body)
         {
             var response = await client.PostAsync(uri, JsonContent(body));

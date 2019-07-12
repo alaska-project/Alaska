@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Application\" />
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

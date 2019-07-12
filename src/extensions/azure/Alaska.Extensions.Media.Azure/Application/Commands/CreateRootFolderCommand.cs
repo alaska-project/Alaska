@@ -6,16 +6,13 @@ using System.Text;
 
 namespace Alaska.Extensions.Media.Azure.Application.Commands
 {
-    internal class CreateFolderCommand : IRequest<MediaFolder>
+    internal class CreateRootFolderCommand : IRequest<MediaFolder>
     {
-        public CreateFolderCommand(string folderName, string parentFolderId)
+        public CreateRootFolderCommand(string folderName)
         {
             FolderName = folderName ?? throw new ArgumentNullException(nameof(folderName));
-            ParentFolderId = parentFolderId;
         }
 
         public string FolderName { get; }
-        public string ParentFolderId { get; }
-        public MediaFolder Parent { get; }
     }
 }

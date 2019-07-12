@@ -26,9 +26,14 @@ namespace Alaska.Extensions.Media.Azure.Application.Services
             return await _mediator.Send(new AddMediaCommand(mediaName, mediaContent, mediaContentType));
         }
 
-        public async Task<MediaFolder> CreateFolder(string folderName, MediaFolder parent)
+        public async Task<MediaFolder> CreateFolder(string folderName, string parentId)
         {
-            return await _mediator.Send(new CreateFolderCommand(folderName, parent));
+            return await _mediator.Send(new CreateFolderCommand(folderName, parentId));
+        }
+
+        public async Task<MediaFolder> CreateRootFolder(string folderName)
+        {
+            return await _mediator.Send(new CreateRootFolderCommand(folderName));
         }
 
         public async Task DeleteFolder(string folderId)
@@ -41,14 +46,14 @@ namespace Alaska.Extensions.Media.Azure.Application.Services
             await _mediator.Send(new DeleteMediaCommand(mediaId));
         }
 
-        public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(MediaFolder folder)
+        public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(string folderId)
         {
-            return await _query.GetChildrenFolders(folder);
+            return await _query.GetChildrenFolders(folderId);
         }
 
-        public async Task<IEnumerable<MediaContent>> GetFolderContents(MediaFolder folder)
+        public async Task<IEnumerable<MediaContent>> GetFolderContents(string folderId)
         {
-            return await _query.GetFolderContents(folder);
+            return await _query.GetFolderContents(folderId);
         }
 
         public async Task<IEnumerable<MediaFolder>> GetRootFolders()

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\Alaska.Common.Web\Alaska.Common.Web.csproj" />
+    <ProjectReference Include="..\..\..\services\Alaska.Services.Contents.Domain\Alaska.Services.Contents.Domain.csproj" />
+    <ProjectReference Include="..\..\..\services\Alaska.Services.Contents.Infrastructure.Abstractions\Alaska.Services.Contents.Infrastructure.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\services\Alaska.Services.Contents\Alaska.Services.Contents.csproj" />
+    <ProjectReference Include="..\Alaska.Extensions.Media.Azure\Alaska.Extensions.Media.Azure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

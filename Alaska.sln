@@ -45,11 +45,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.UI.Cache", "src\ui\A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "firebase", "firebase", "{CBB3D1C1-0C55-4894-851F-72F5CF26BAA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Extensions.Media.Firebase", "src\extensions\firebase\Alaska.Extensions.Media.Firebase\Alaska.Extensions.Media.Firebase.csproj", "{E142B10E-8C8B-4DD4-9093-F08DC508496E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Extensions.Media.Firebase", "src\extensions\firebase\Alaska.Extensions.Media.Firebase\Alaska.Extensions.Media.Firebase.csproj", "{E142B10E-8C8B-4DD4-9093-F08DC508496E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure", "azure", "{D5D60DF5-87BB-4969-A713-7041AC40F8F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Extensions.Media.Azure", "src\extensions\azure\Alaska.Extensions.Media.Azure\Alaska.Extensions.Media.Azure.csproj", "{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Extensions.Media.Azure", "src\extensions\azure\Alaska.Extensions.Media.Azure\Alaska.Extensions.Media.Azure.csproj", "{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Extensions.Media.Azure.IntegrationTests", "src\extensions\azure\Alaska.Extensions.Media.Azure.IntegrationTests\Alaska.Extensions.Media.Azure.IntegrationTests.csproj", "{BDBEE3B4-82B2-4080-ABF4-677DBCE94225}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +111,10 @@ Global
 		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDBEE3B4-82B2-4080-ABF4-677DBCE94225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDBEE3B4-82B2-4080-ABF4-677DBCE94225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDBEE3B4-82B2-4080-ABF4-677DBCE94225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDBEE3B4-82B2-4080-ABF4-677DBCE94225}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +143,7 @@ Global
 		{E142B10E-8C8B-4DD4-9093-F08DC508496E} = {CBB3D1C1-0C55-4894-851F-72F5CF26BAA4}
 		{D5D60DF5-87BB-4969-A713-7041AC40F8F3} = {87C6B212-6A32-4ED1-9C2E-88DF4D1123F3}
 		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F} = {D5D60DF5-87BB-4969-A713-7041AC40F8F3}
+		{BDBEE3B4-82B2-4080-ABF4-677DBCE94225} = {D5D60DF5-87BB-4969-A713-7041AC40F8F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0964F183-CA85-4A78-9685-F1EA65B270E3}

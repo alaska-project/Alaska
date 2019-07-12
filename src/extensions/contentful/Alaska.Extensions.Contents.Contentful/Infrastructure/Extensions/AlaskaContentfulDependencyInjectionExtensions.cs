@@ -19,9 +19,9 @@ namespace Alaska.Services.Contents.Extensions
     {
         private const string ContentfulSectionName = "Alaska:Contents:Contentful";
 
-        public static IServiceCollection AddContentfulModule(this IContentsServiceBuilder services)
+        public static IContentsServiceBuilder AddContentfulModule(this IContentsServiceBuilder services)
         {
-            return services.Services
+            services.Services
                 .AddMediatR(typeof(ContentsService))
                 .AddAlaskaCommon()
                 .Configure<ContentfulClientOptions>(services.Configuration.GetSection(ContentfulSectionName))
@@ -31,6 +31,8 @@ namespace Alaska.Services.Contents.Extensions
                 .AddScoped<ContentQueries>()
                 .AddMemoryCacheInstance<ContentTypesCache>()
                 .AddScoped<IContentsService, ContentsService>();
+
+            return services;
         }
     }
 }

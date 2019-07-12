@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Alaska.Services.Contents.Domain.Models.Media;
 using Microsoft.WindowsAzure.Storage.Blob;
@@ -8,12 +9,12 @@ namespace Alaska.Extensions.Media.Azure.Application.Converters
 {
     internal class MediaFolderConverter
     {
-        public MediaFolder ConvertToMediaFolder(CloudBlobDirectory container)
+        public MediaFolder ConvertToMediaFolder(CloudBlobDirectory directory)
         {
             return new MediaFolder
             {
-                Id = container.Container.Uri.ToString(),
-                Name = container.Container.Name,
+                Id = directory.Prefix,
+                Name = directory.Prefix.TrimEnd('/').Split('/').Last(),
             };
         }
     }

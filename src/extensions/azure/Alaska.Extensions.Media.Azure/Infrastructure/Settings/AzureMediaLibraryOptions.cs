@@ -7,6 +7,6 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Settings
     public class AzureMediaStorageOptions
     {
         public AzureStorageConnectionSettings StorageConnection { get; set; }
-        public string RootContainer { get; set; }
+        public string RootContainerName { get; set; }
     }
 }

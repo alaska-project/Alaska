@@ -16,16 +16,16 @@ namespace Alaska.Extensions.Media.Azure.Application.Query
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(MediaFolder folder)
+        public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(string folderId)
         {
-            var container = _repository.GetContainer(folder.Id);
-            if (container == null)
-                throw new InvalidOperationException($"Container {folder.Id} not found");
+            if (!await _repository.ExistsContainer(folderId))
+                throw new InvalidOperationException($"Container {folderId} not found");
 
+            var container = await _repository.GetContainer(folderId);
             return await _repository.GetContainerDirectories(container);
         }
 
-        public Task<IEnumerable<MediaContent>> GetFolderContents(MediaFolder folder)
+        public Task<IEnumerable<MediaContent>> GetFolderContents(string folderId)
         {
             throw new NotImplementedException();
         }

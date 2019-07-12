@@ -1,4 +1,5 @@
-﻿using Alaska.Services.Contents.Domain.Models.Media;
+﻿using Alaska.Extensions.Media.Azure.Infrastructure.Repository;
+using Alaska.Services.Contents.Domain.Models.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +9,20 @@ namespace Alaska.Extensions.Media.Azure.Application.Query
 {
     internal class AzureMediaLibraryQuery
     {
-        public Task<IEnumerable<MediaFolder>> GetChildrenFolders(MediaFolder folder)
+        private readonly AzureStorageRepository _repository;
+
+        public AzureMediaLibraryQuery(AzureStorageRepository repository)
         {
-            throw new NotImplementedException();
+            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        }
+
+        public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(MediaFolder folder)
+        {
+            var container = _repository.GetContainer(folder.Id);
+            if (container == null)
+                throw new InvalidOperationException($"Container {folder.Id} not found");
+
+            return await _repository.GetContainerDirectories(container);
         }
 
         public Task<IEnumerable<MediaContent>> GetFolderContents(MediaFolder folder)
@@ -18,9 +30,11 @@ namespace Alaska.Extensions.Media.Azure.Application.Query
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<MediaFolder>> GetRootFolders()
+        public async Task<IEnumerable<MediaFolder>> GetRootFolders()
         {
-            throw new NotImplementedException();
+            return await _repository.GetRootContainerDirectories();
         }
+
+        
     }
 }

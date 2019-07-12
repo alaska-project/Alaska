@@ -36,7 +36,7 @@ namespace Alaska.Services.Contents.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PublishContent([FromQuery]PublishContentRequest publishingRequest)
+        public async Task<ActionResult> PublishContent([FromBody]PublishContentRequest publishingRequest)
         {
             await _contentsService.PublishContent(publishingRequest);
             return Ok();

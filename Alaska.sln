@@ -33,15 +33,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{BC526EEB-8ED
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Web.ContentsDemo", "src\web\Alaska.Web.ContentsDemo\Alaska.Web.ContentsDemo.csproj", "{9BBD093A-5BC6-4D1C-AF72-245F47E4ADB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Common", "src\common\Alaska.Common\Alaska.Common.csproj", "{D2E35DA8-3BEF-4D19-B99F-C9247564F425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Common", "src\common\Alaska.Common\Alaska.Common.csproj", "{D2E35DA8-3BEF-4D19-B99F-C9247564F425}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Common.Caching", "src\common\Alaska.Common.Caching\Alaska.Common.Caching.csproj", "{72D525F1-98F7-4447-8DED-2085D8ACDFB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Common.Caching", "src\common\Alaska.Common.Caching\Alaska.Common.Caching.csproj", "{72D525F1-98F7-4447-8DED-2085D8ACDFB9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{4C63A011-FE9F-4B0F-A6A5-B4889388AD2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Common.Web", "src\common\Alaska.Common.Web\Alaska.Common.Web.csproj", "{B578C02C-7850-450D-82AA-77D1EBB88EA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.Common.Web", "src\common\Alaska.Common.Web\Alaska.Common.Web.csproj", "{B578C02C-7850-450D-82AA-77D1EBB88EA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.UI.Cache", "src\ui\Alaska.UI.Cache\Alaska.UI.Cache.csproj", "{DD533B3F-C30F-4B43-8964-29FD51242010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alaska.UI.Cache", "src\ui\Alaska.UI.Cache\Alaska.UI.Cache.csproj", "{DD533B3F-C30F-4B43-8964-29FD51242010}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "firebase", "firebase", "{CBB3D1C1-0C55-4894-851F-72F5CF26BAA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Extensions.Media.Firebase", "src\extensions\firebase\Alaska.Extensions.Media.Firebase\Alaska.Extensions.Media.Firebase.csproj", "{E142B10E-8C8B-4DD4-9093-F08DC508496E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "azure", "azure", "{D5D60DF5-87BB-4969-A713-7041AC40F8F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alaska.Extensions.Media.Azure", "src\extensions\azure\Alaska.Extensions.Media.Azure\Alaska.Extensions.Media.Azure.csproj", "{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +101,14 @@ Global
 		{DD533B3F-C30F-4B43-8964-29FD51242010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD533B3F-C30F-4B43-8964-29FD51242010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD533B3F-C30F-4B43-8964-29FD51242010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E142B10E-8C8B-4DD4-9093-F08DC508496E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E142B10E-8C8B-4DD4-9093-F08DC508496E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E142B10E-8C8B-4DD4-9093-F08DC508496E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E142B10E-8C8B-4DD4-9093-F08DC508496E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +133,10 @@ Global
 		{4C63A011-FE9F-4B0F-A6A5-B4889388AD2A} = {4C244443-600C-4A13-99C3-C7397631907B}
 		{B578C02C-7850-450D-82AA-77D1EBB88EA2} = {D5D2356E-9403-496D-8A66-548FC0DE67D2}
 		{DD533B3F-C30F-4B43-8964-29FD51242010} = {4C63A011-FE9F-4B0F-A6A5-B4889388AD2A}
+		{CBB3D1C1-0C55-4894-851F-72F5CF26BAA4} = {87C6B212-6A32-4ED1-9C2E-88DF4D1123F3}
+		{E142B10E-8C8B-4DD4-9093-F08DC508496E} = {CBB3D1C1-0C55-4894-851F-72F5CF26BAA4}
+		{D5D60DF5-87BB-4969-A713-7041AC40F8F3} = {87C6B212-6A32-4ED1-9C2E-88DF4D1123F3}
+		{3CAE2AB8-6A0D-4FA6-9182-435D8418798F} = {D5D60DF5-87BB-4969-A713-7041AC40F8F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0964F183-CA85-4A78-9685-F1EA65B270E3}

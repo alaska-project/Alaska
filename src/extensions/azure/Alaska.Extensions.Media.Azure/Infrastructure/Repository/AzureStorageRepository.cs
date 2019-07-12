@@ -49,21 +49,25 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return blob.Parent;
         }
 
+        public CloudBlobDirectory GetDirectoryReference(string id)
+        {
+            return RootContainerReference().GetDirectoryReference(id);
+        }
+
         public async Task<IEnumerable<MediaFolder>> GetRootContainerDirectories()
         {
             var root = await RootContainer();
             return await GetContainerDirectories(root);
         }
 
-        public async Task<IEnumerable<MediaFolder>> GetContainerDirectories(CloudBlobContainer container)
+        public async Task<IEnumerable<MediaFolder>> GetChildrenDirectories(CloudBlobDirectory directory)
         {
             var blobs = new List<MediaFolder>();
             BlobContinuationToken continuationToken = null;
 
             do
             {
-                var root = await RootContainer();
-                var result = await root.ListBlobsSegmentedAsync(continuationToken);
+                var result = await directory.ListBlobsSegmentedAsync(continuationToken);
                 blobs.AddRange(result.Results
                     .Where(x => x is CloudBlobDirectory)
                     .Select(x => _mediaFolderConverter.ConvertToMediaFolder((CloudBlobDirectory)x)));
@@ -74,12 +78,24 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return blobs;
         }
 
-        public async Task<bool> ExistsContainer(string id)
+        public async Task<IEnumerable<MediaFolder>> GetContainerDirectories(CloudBlobContainer container)
         {
-            var container = _client.CreateBlobClient().GetContainerReference(id);
-            return await container.ExistsAsync();
-        }
+            var blobs = new List<MediaFolder>();
+            BlobContinuationToken continuationToken = null;
 
+            do
+            {
+                var result = await container.ListBlobsSegmentedAsync(continuationToken);
+                blobs.AddRange(result.Results
+                    .Where(x => x is CloudBlobDirectory)
+                    .Select(x => _mediaFolderConverter.ConvertToMediaFolder((CloudBlobDirectory)x)));
+                continuationToken = result.ContinuationToken;
+            }
+            while (continuationToken != null);
+
+            return blobs;
+        }
+        
         public async Task<CloudBlobContainer> GetContainer(string id)
         {
             var container = _client.CreateBlobClient().GetContainerReference(id);
@@ -89,9 +105,14 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
 
         public async Task<CloudBlobContainer> RootContainer()
         {
-            var root = _client.CreateBlobClient().GetContainerReference(_storageConfig.Value.RootContainerName);
-            await root.CreateIfNotExistsAsync();
+            var root = RootContainerReference();
+            await RootContainerReference().CreateIfNotExistsAsync();
             return root;
+        }
+
+        private CloudBlobContainer RootContainerReference()
+        {
+            return _client.CreateBlobClient().GetContainerReference(_storageConfig.Value.RootContainerName);
         }
     }
 }

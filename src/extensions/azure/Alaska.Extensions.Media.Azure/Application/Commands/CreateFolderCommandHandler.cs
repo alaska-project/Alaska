@@ -24,13 +24,9 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
 
         public async Task<MediaFolder> Handle(CreateFolderCommand request, CancellationToken cancellationToken)
         {
-            if (!await _repository.ExistsContainer(request.ParentFolderId))
-                throw new InvalidOperationException($"Container {request.ParentFolderId} not found");
-
-            var container = await _repository.GetContainer(request.ParentFolderId);
-
-            var newContainer = await _repository.CreateDirectory(request.FolderName, container);
-            return _folderConverter.ConvertToMediaFolder(newContainer);
+            var parentDirectory = _repository.GetDirectoryReference(request.ParentFolderId);
+            var newDirectory = await _repository.CreateDirectory(request.FolderName, parentDirectory);
+            return _folderConverter.ConvertToMediaFolder(newDirectory);
         }
     }
 }

@@ -18,11 +18,8 @@ namespace Alaska.Extensions.Media.Azure.Application.Query
 
         public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(string folderId)
         {
-            if (!await _repository.ExistsContainer(folderId))
-                throw new InvalidOperationException($"Container {folderId} not found");
-
-            var container = await _repository.GetContainer(folderId);
-            return await _repository.GetContainerDirectories(container);
+            var directory = _repository.GetDirectoryReference(folderId);
+            return await _repository.GetChildrenDirectories(directory);
         }
 
         public Task<IEnumerable<MediaContent>> GetFolderContents(string folderId)

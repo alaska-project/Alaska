@@ -26,10 +26,17 @@ namespace Alaska.Extensions.Media.Azure.IntegrationTests.Scenarios
                         
                     });
 
-                var newFolderName = Guid.NewGuid().ToString();
-                var rootFolder = await client.PostJsonAsync<MediaFolder>($"{MediaLibraryApi}/CreateRootFolder?folderName={newFolderName}");
+                var rootFolderName = Guid.NewGuid().ToString();
+                var rootFolder = await client.PostJsonAsync<MediaFolder>($"{MediaLibraryApi}/CreateRootFolder?folderName={rootFolderName}");
 
+                var rootFolders = await client.GetJsonAsync<List<MediaFolder>>($"{MediaLibraryApi}/GetRootFolders");
+                Assert.Contains(rootFolders, x => x.Id == rootFolder.Id);
 
+                var childFolderName = Guid.NewGuid().ToString();
+                var childFolder = await client.PostJsonAsync<MediaFolder>($"{MediaLibraryApi}/CreateFolder?folderName={childFolderName}&parentFolderId={rootFolder.Id}");
+
+                var childrenFolders = await client.GetJsonAsync<List<MediaFolder>>($"{MediaLibraryApi}/GetChildrenFolders?folderId={rootFolder.Id}");
+                Assert.Contains(childrenFolders, x => x.Id == childFolder.Id);
             }
         }
     }

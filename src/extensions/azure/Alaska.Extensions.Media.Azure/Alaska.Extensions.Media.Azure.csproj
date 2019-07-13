@@ -17,4 +17,14 @@
     <ProjectReference Include="..\..\..\services\Alaska.Services.Contents.Infrastructure.Abstractions\Alaska.Services.Contents.Infrastructure.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestContents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestContents\alaska.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

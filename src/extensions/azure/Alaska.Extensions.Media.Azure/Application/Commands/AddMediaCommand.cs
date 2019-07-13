@@ -8,15 +8,17 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
 {
     internal class AddMediaCommand : IRequest<MediaContent>
     {
-        public AddMediaCommand(string mediaName, byte[] mediaContent, string mediaContentType)
+        public AddMediaCommand(string name, string contentType, byte[] mediaContent, string folderId)
         {
-            Name = mediaName ?? throw new ArgumentNullException(nameof(mediaName));
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            ContentType = contentType ?? throw new ArgumentNullException(nameof(contentType));
             Content = mediaContent ?? throw new ArgumentNullException(nameof(mediaContent));
-            ContentType = mediaContentType;
+            FolderId = folderId ?? throw new ArgumentNullException(nameof(folderId));
         }
 
         public string Name { get; }
-        public byte[] Content { get; }
         public string ContentType { get; }
+        public byte[] Content { get; }
+        public string FolderId { get; }
     }
 }

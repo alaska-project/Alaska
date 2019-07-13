@@ -61,10 +61,10 @@ namespace Alaska.Services.Contents.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MediaContent>> AddMedia([FromQuery]string mediaName, [FromQuery]string mediaContentType, [FromBody]byte[] mediaContent)
+        public async Task<ActionResult<MediaContent>> AddMedia([FromQuery]string name, [FromQuery]string contentType, [FromQuery]string folderId, [FromBody]string mediaContent)
         {
-            await _mediaLibrary.AddMedia(mediaName, mediaContent, mediaContentType);
-            return Ok();
+            var media = await _mediaLibrary.AddMedia(name, contentType, Convert.FromBase64String(mediaContent), folderId);
+            return Ok(media);
         }
 
         [HttpPost]

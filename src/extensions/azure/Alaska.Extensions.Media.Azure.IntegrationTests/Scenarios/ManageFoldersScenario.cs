@@ -3,8 +3,10 @@ using Alaska.Services.Contents.Domain.Models.Media;
 using Alaska.Web.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -19,12 +21,12 @@ namespace Alaska.Extensions.Media.Azure.IntegrationTests.Scenarios
             using (var client = server.CreateClient())
             {
                 var folders = await client.GetJsonAsync<List<MediaFolder>>($"{MediaLibraryApi}/GetRootFolders");
+                foreach (var folder in folders)
+                    await client.PostJsonAsync($"{MediaLibraryApi}/DeleteFolder?folderId={folder.Id}");
 
-                if (folders.Any())
-                    folders.ToList().ForEach(async x => 
-                    {
-                        await client.PostJsonAsync($"{MediaLibraryApi}/DeleteFolder?folderId={x.Id}");
-                    });
+                Thread.Sleep(1000);
+                folders = await client.GetJsonAsync<List<MediaFolder>>($"{MediaLibraryApi}/GetRootFolders");
+                Assert.Empty(folders);
 
                 var rootFolderName = Guid.NewGuid().ToString();
                 var rootFolder = await client.PostJsonAsync<MediaFolder>($"{MediaLibraryApi}/CreateRootFolder?folderName={rootFolderName}");
@@ -37,6 +39,13 @@ namespace Alaska.Extensions.Media.Azure.IntegrationTests.Scenarios
 
                 var childrenFolders = await client.GetJsonAsync<List<MediaFolder>>($"{MediaLibraryApi}/GetChildrenFolders?folderId={rootFolder.Id}");
                 Assert.Contains(childrenFolders, x => x.Id == childFolder.Id);
+
+                var fileName = "alaska.jpg";
+                var contentType = "image/jpeg";
+                var testImageContent = File.ReadAllBytes($"TestContents\\{fileName}");
+                var uploadedContent = await client.PostJsonAsync<MediaContent>($"{MediaLibraryApi}/AddMedia?name={fileName}&contentType={contentType}&folderId={childFolder.Id}", Convert.ToBase64String(testImageContent));
+
+                Assert.Equal(fileName, uploadedContent.Name);
             }
         }
     }

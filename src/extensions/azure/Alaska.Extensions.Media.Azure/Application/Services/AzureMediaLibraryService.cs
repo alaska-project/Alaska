@@ -21,9 +21,9 @@ namespace Alaska.Extensions.Media.Azure.Application.Services
             _query = query ?? throw new ArgumentNullException(nameof(query));
         }
 
-        public async Task<MediaContent> AddMedia(string mediaName, byte[] mediaContent, string mediaContentType)
+        public async Task<MediaContent> AddMedia(string name, string contentType, byte[] mediaContent, string folderId)
         {
-            return await _mediator.Send(new AddMediaCommand(mediaName, mediaContent, mediaContentType));
+            return await _mediator.Send(new AddMediaCommand(name, contentType, mediaContent, folderId));
         }
 
         public async Task<MediaFolder> CreateFolder(string folderName, string parentId)

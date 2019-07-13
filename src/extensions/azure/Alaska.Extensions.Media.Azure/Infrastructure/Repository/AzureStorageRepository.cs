@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,15 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             var blob = container.GetBlockBlobReference(placeholderPath);
             await blob.UploadTextAsync("_");
             return blob.Parent;
+        }
+
+        public async Task<CloudBlockBlob> UploadContent(CloudBlobDirectory folder, string name, byte[] content, string contentType)
+        {
+            var blob = folder.GetBlockBlobReference(name);
+            await blob.UploadFromStreamAsync(new MemoryStream(content));
+            blob.Properties.ContentType = contentType;
+            await blob.SetPropertiesAsync();
+            return blob;
         }
 
         public async Task<CloudBlobDirectory> CreateDirectory(string name, CloudBlobDirectory parent)
@@ -129,8 +139,21 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
         public async Task<CloudBlobContainer> RootContainer()
         {
             var root = RootContainerReference();
-            await RootContainerReference().CreateIfNotExistsAsync();
+            if (await root.ExistsAsync())
+                return root;
+
+            await root.CreateIfNotExistsAsync();
+            await SetContainerPublicAccess(root, BlobContainerPublicAccessType.Blob);
+
             return root;
+        }
+
+        private async Task SetContainerPublicAccess(CloudBlobContainer container, BlobContainerPublicAccessType accessType)
+        {
+            var permissions = await container.GetPermissionsAsync();
+            permissions.PublicAccess = accessType;
+            await container.SetPermissionsAsync(permissions);
+
         }
 
         private CloudBlobContainer RootContainerReference()

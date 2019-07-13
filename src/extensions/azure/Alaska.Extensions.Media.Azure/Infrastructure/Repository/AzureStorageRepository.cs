@@ -59,6 +59,11 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return blob.Parent;
         }
 
+        public CloudBlockBlob GetBlobReference(string id)
+        {
+            return RootContainerReference().GetBlockBlobReference(id);
+        }
+
         public CloudBlobDirectory GetDirectoryReference(string id)
         {
             return RootContainerReference().GetDirectoryReference(id);
@@ -91,6 +96,26 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
                 continuationToken = result.ContinuationToken;
             }
             while (continuationToken != null);
+        }
+
+        public async Task<IEnumerable<MediaContent>> GetChildrenBlobs(CloudBlobDirectory directory)
+        {
+            var blobs = new List<MediaContent>();
+            BlobContinuationToken continuationToken = null;
+
+            do
+            {
+                var result = await directory.ListBlobsSegmentedAsync(continuationToken);
+                blobs.AddRange(result.Results
+                    .Where(x => x is CloudBlockBlob)
+                    .Cast<CloudBlockBlob>()
+                    .Select(x => _mediaContentConverter.ConvertContent(x))
+                    .Where(x => x.Name != PlaceholderFile));
+                continuationToken = result.ContinuationToken;
+            }
+            while (continuationToken != null);
+
+            return blobs;
         }
 
         public async Task<IEnumerable<MediaFolder>> GetChildrenDirectories(CloudBlobDirectory directory)

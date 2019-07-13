@@ -46,6 +46,22 @@ namespace Alaska.Extensions.Media.Azure.IntegrationTests.Scenarios
                 var uploadedContent = await client.PostJsonAsync<MediaContent>($"{MediaLibraryApi}/AddMedia?name={fileName}&contentType={contentType}&folderId={childFolder.Id}", Convert.ToBase64String(testImageContent));
 
                 Assert.Equal(fileName, uploadedContent.Name);
+
+                var folderContents = await client.GetJsonAsync<List<MediaContent>>($"{MediaLibraryApi}/GetFolderContents?folderId={childFolder.Id}");
+                Assert.Single(folderContents);
+                Assert.Equal(fileName, folderContents.First().Name);
+                Assert.Equal(uploadedContent.Id, folderContents.First().Id);
+                Assert.Equal(uploadedContent.Url, folderContents.First().Url);
+
+                await client.PostJsonAsync($"{MediaLibraryApi}/DeleteMedia?mediaId={uploadedContent.Id}");
+                folderContents = await client.GetJsonAsync<List<MediaContent>>($"{MediaLibraryApi}/GetFolderContents?folderId={childFolder.Id}");
+
+                Assert.Empty(folderContents);
+
+                await client.PostJsonAsync($"{MediaLibraryApi}/DeleteFolder?folderId={rootFolder.Id}");
+
+                rootFolders = await client.GetJsonAsync<List<MediaFolder>>($"{MediaLibraryApi}/GetRootFolders");
+                Assert.Empty(rootFolders);
             }
         }
     }

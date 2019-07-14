@@ -1,4 +1,5 @@
-﻿using Alaska.Services.Contents.Infrastructure.Abstractions;
+﻿using Alaska.Services.Contents.Application.Services;
+using Alaska.Services.Contents.Infrastructure.Abstractions;
 using Alaska.Services.Contents.Infrastructure.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace Alaska.Services.Contents.Extensions
                 .AddApplicationPart(typeof(ContentServiceDependencyInjectionExtensions).Assembly);
 
             services
+                .AddScoped<IImageTransformer, DefaultImageTransformer>()
                 .AddSettings(configuration);
 
             return new ContentsServiceBuilder(services, configuration);

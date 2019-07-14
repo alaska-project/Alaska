@@ -24,7 +24,7 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
 
         public async Task<MediaFolder> Handle(CreateFolderCommand request, CancellationToken cancellationToken)
         {
-            var parentDirectory = _repository.GetDirectoryReference(request.ParentFolderId);
+            var parentDirectory = _repository.GetMediaDirectoryReference(request.ParentFolderId);
             var newDirectory = await _repository.CreateDirectory(request.FolderName, parentDirectory);
             return _folderConverter.ConvertToMediaFolder(newDirectory);
         }

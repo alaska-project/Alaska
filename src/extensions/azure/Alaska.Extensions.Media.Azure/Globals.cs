@@ -7,4 +7,7 @@ using System.Text;
 [assembly: InternalsVisibleTo("MediatR.Extensions.Microsoft.DependencyInjection")]
 namespace Alaska.Extensions.Media.Azure
 {
+    internal static class Variables
+    {
+    }
 }

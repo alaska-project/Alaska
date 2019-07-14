@@ -16,6 +16,9 @@ namespace Alaska.Services.Contents.Domain.Models.Media
         [JsonProperty("url")]
         public string Url { get; set; }
 
+        [JsonProperty("thumbnailUrl")]
+        public string ThumbnailUrl { get; set; }
+
         [JsonProperty("contentType")]
         public string ContentType { get; set; }
     }

@@ -23,7 +23,7 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
 
         public async Task<MediaContent> Handle(AddMediaCommand request, CancellationToken cancellationToken)
         {
-            var folder = _repository.GetDirectoryReference(request.FolderId);
+            var folder = _repository.GetMediaDirectoryReference(request.FolderId);
             var content = await _repository.UploadContent(folder, request.Name, request.Content, request.ContentType);
             return _contentConverter.ConvertContent(content);
         }

@@ -19,7 +19,7 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
 
         public async Task<Unit> Handle(DeleteFolderCommand request, CancellationToken cancellationToken)
         {
-            var directory = _repository.GetDirectoryReference(request.FolderId);
+            var directory = _repository.GetMediaDirectoryReference(request.FolderId);
             await _repository.DeleteDirectoryContent(directory);
 
             return Unit.Value;

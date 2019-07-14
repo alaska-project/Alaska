@@ -19,13 +19,13 @@ namespace Alaska.Extensions.Media.Azure.Application.Query
 
         public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(string folderId)
         {
-            var directory = _repository.GetDirectoryReference(folderId);
+            var directory = _repository.GetMediaDirectoryReference(folderId);
             return await _repository.GetChildrenDirectories(directory);
         }
 
         public async Task<IEnumerable<MediaContent>> GetFolderContents(string folderId)
         {
-            var directory = _repository.GetDirectoryReference(folderId);
+            var directory = _repository.GetMediaDirectoryReference(folderId);
             return await _repository.GetChildrenBlobs(directory);
         }
 

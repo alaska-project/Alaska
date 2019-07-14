@@ -23,7 +23,7 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
 
         public async Task<MediaFolder> Handle(CreateRootFolderCommand request, CancellationToken cancellationToken)
         {
-            var rootContainer = await _repository.RootContainer();
+            var rootContainer = await _repository.MediaContainer();
             var newContainer = await _repository.CreateDirectory(request.FolderName, rootContainer);
             return _folderConverter.ConvertToMediaFolder(newContainer);
         }

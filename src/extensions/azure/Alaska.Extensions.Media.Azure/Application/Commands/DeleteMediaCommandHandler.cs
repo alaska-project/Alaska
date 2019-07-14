@@ -19,7 +19,7 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
 
         public async Task<Unit> Handle(DeleteMediaCommand request, CancellationToken cancellationToken)
         {
-            var blob = _repository.GetBlobReference(request.MediaId);
+            var blob = _repository.GetMediaBlobReference(request.MediaId);
             await blob.DeleteIfExistsAsync();
 
             return Unit.Value;

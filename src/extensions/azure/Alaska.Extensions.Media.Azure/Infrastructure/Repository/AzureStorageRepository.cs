@@ -59,19 +59,19 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return blob.Parent;
         }
 
-        public CloudBlockBlob GetBlobReference(string id)
+        public CloudBlockBlob GetMediaBlobReference(string id)
         {
-            return RootContainerReference().GetBlockBlobReference(id);
+            return RootContainerReference(MainContainerName).GetBlockBlobReference(id);
         }
 
-        public CloudBlobDirectory GetDirectoryReference(string id)
+        public CloudBlobDirectory GetMediaDirectoryReference(string id)
         {
-            return RootContainerReference().GetDirectoryReference(id);
+            return RootContainerReference(MainContainerName).GetDirectoryReference(id);
         }
 
         public async Task<IEnumerable<MediaFolder>> GetRootContainerDirectories()
         {
-            var root = await RootContainer();
+            var root = await RootContainer(MainContainerName);
             return await GetContainerDirectories(root);
         }
 
@@ -161,9 +161,14 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return container;
         }
 
-        public async Task<CloudBlobContainer> RootContainer()
+        public async Task<CloudBlobContainer> MediaContainer()
         {
-            var root = RootContainerReference();
+            return await RootContainer(MainContainerName);
+        }
+
+        private async Task<CloudBlobContainer> RootContainer(string containerName)
+        {
+            var root = RootContainerReference(containerName);
             if (await root.ExistsAsync())
                 return root;
 
@@ -178,12 +183,14 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             var permissions = await container.GetPermissionsAsync();
             permissions.PublicAccess = accessType;
             await container.SetPermissionsAsync(permissions);
-
         }
 
-        private CloudBlobContainer RootContainerReference()
+        private CloudBlobContainer RootContainerReference(string name)
         {
-            return _client.CreateBlobClient().GetContainerReference(_storageConfig.Value.RootContainerName);
+            return _client.CreateBlobClient().GetContainerReference(name);
         }
+
+        private string MainContainerName => _storageConfig.Value.Containers.MainContainerName;
+        private string ThumbnailsContainerName => _storageConfig.Value.Containers.ThumbnailsContainerName;
     }
 }

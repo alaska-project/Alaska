@@ -20,7 +20,8 @@ namespace Alaska.Services.Contents.Extensions
                 .AddApplicationPart(typeof(ContentServiceDependencyInjectionExtensions).Assembly);
 
             services
-                .AddScoped<IImageTransformer, DefaultImageTransformer>()
+                .AddSingleton<IImageHelper, DefaultImageHelper>()
+                .AddSingleton<IImageTransformer, DefaultImageTransformer>()
                 .AddSettings(configuration);
 
             return new ContentsServiceBuilder(services, configuration);

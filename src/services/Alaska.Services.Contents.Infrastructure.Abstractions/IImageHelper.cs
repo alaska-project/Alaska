@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Alaska.Services.Contents.Infrastructure.Abstractions
 {
-    public interface IImageTransformer
+    public interface IImageHelper
     {
-        byte[] CreateImageThumbnail(byte[] originalImage, int size, int quality);
+        bool IsImage(string contentType, string fileName);
     }
 }

@@ -59,9 +59,19 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return blob.Parent;
         }
 
+        public CloudBlockBlob GetThumbnailBlobReference(string id)
+        {
+            return RootContainerReference(ThumbnailsContainerName).GetBlockBlobReference(id);
+        }
+
         public CloudBlockBlob GetMediaBlobReference(string id)
         {
             return RootContainerReference(MainContainerName).GetBlockBlobReference(id);
+        }
+
+        public async Task<CloudBlobDirectory> GetThumbnailsDirectoryReference(string id)
+        {
+            return (await RootContainer(ThumbnailsContainerName)).GetDirectoryReference(id);
         }
 
         public CloudBlobDirectory GetMediaDirectoryReference(string id)
@@ -106,16 +116,37 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             do
             {
                 var result = await directory.ListBlobsSegmentedAsync(continuationToken);
-                blobs.AddRange(result.Results
+                var folderBlobs = result.Results
                     .Where(x => x is CloudBlockBlob)
                     .Cast<CloudBlockBlob>()
-                    .Select(x => _mediaContentConverter.ConvertContent(x))
-                    .Where(x => x.Name != PlaceholderFile));
+                    .ToList();
+                foreach (var blobItem in folderBlobs)
+                {
+                    var media = await ConvertToMediaContent(blobItem);
+                    if (media.Name != PlaceholderFile)
+                        blobs.Add(media);
+                }
+
                 continuationToken = result.ContinuationToken;
             }
             while (continuationToken != null);
 
             return blobs;
+        }
+
+        private async Task<MediaContent> ConvertToMediaContent(CloudBlockBlob blob)
+        {
+            var thumb = await GetThumbnailIfExists(blob);
+            return _mediaContentConverter.ConvertContent(blob, thumb);
+        }
+
+        private async Task<CloudBlockBlob> GetThumbnailIfExists(CloudBlockBlob blob)
+        {
+            var thumbUriSegments = blob.Uri.Segments.Skip(2).ToList();
+            var thumb = GetThumbnailBlobReference(string.Join("", thumbUriSegments));
+            if (await thumb.ExistsAsync())
+                return thumb;
+            return null;
         }
 
         public async Task<IEnumerable<MediaFolder>> GetChildrenDirectories(CloudBlobDirectory directory)

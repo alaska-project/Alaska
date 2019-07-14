@@ -15,7 +15,9 @@ namespace Alaska.Extensions.Media.Azure.Application.Services
         private readonly IMediator _mediator;
         private readonly AzureMediaLibraryQuery _query;
 
-        public AzureMediaLibraryService(IMediator mediator, AzureMediaLibraryQuery query)
+        public AzureMediaLibraryService(
+            IMediator mediator,
+            AzureMediaLibraryQuery query)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _query = query ?? throw new ArgumentNullException(nameof(query));
@@ -24,7 +26,6 @@ namespace Alaska.Extensions.Media.Azure.Application.Services
         public async Task<MediaContent> AddMedia(string name, string contentType, byte[] mediaContent, string folderId)
         {
             return await _mediator.Send(new AddMediaCommand(name, contentType, mediaContent, folderId));
-
         }
 
         public async Task<MediaFolder> CreateFolder(string folderName, string parentId)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Alaska.Extensions.Media.Azure.Infrastructure.Extensions;
 using Alaska.Services.Contents.Extensions;
 using Alaska.UI.Cache.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -42,7 +43,8 @@ namespace Alaska.Web.ContentsDemo
 
             services
                 .AddContentService(Configuration)
-                .AddContentfulModule();
+                .AddContentfulModule()
+                .AddAzureMediaLibrary();
 
             services.AddSwaggerGen(c =>
             {

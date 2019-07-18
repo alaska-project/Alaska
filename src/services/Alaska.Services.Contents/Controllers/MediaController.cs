@@ -1,4 +1,5 @@
-﻿using Alaska.Services.Contents.Domain.Models.Media;
+﻿using Alaska.Services.Contents.Controllers.Dto;
+using Alaska.Services.Contents.Domain.Models.Media;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -61,9 +62,9 @@ namespace Alaska.Services.Contents.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<MediaContent>> AddMedia([FromQuery]string name, [FromQuery]string contentType, [FromQuery]string folderId, [FromBody]string mediaContent)
+        public async Task<ActionResult<MediaContent>> AddMedia([FromBody]MediaCreationRequest mediaContent)
         {
-            var media = await _mediaLibrary.AddMedia(name, contentType, Convert.FromBase64String(mediaContent), folderId);
+            var media = await _mediaLibrary.AddMedia(mediaContent.Name, mediaContent.ContentType, Convert.FromBase64String(mediaContent.MediaContent), mediaContent.FolderId);
             return Ok(media);
         }
 

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -142,7 +143,10 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
 
         private async Task<CloudBlockBlob> GetThumbnailIfExists(CloudBlockBlob blob)
         {
-            var thumbUriSegments = blob.Uri.Segments.Skip(2).ToList();
+            var thumbUriSegments = blob.Uri.Segments
+                .Skip(2)
+                .Select(x => WebUtility.UrlDecode(x))
+                .ToList();
             var thumb = GetThumbnailBlobReference(string.Join("", thumbUriSegments));
             if (await thumb.ExistsAsync())
                 return thumb;

@@ -5,6 +5,8 @@ using Alaska.Services.Contents.Infrastructure.Abstractions;
 using MediatR;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,9 +36,9 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
         {
             var folder = _repository.GetMediaDirectoryReference(request.FolderId);
             var content = await _repository.UploadContent(folder, request.Name, request.Content, request.ContentType);
-
+            
             var thumbnail = _imageHelper.IsImage(request.ContentType, request.Name) ?
-                await _mediator.Send(new AddImageThumbnailCommand(request.Name, request.ContentType, request.Content, request.FolderId)) :
+                await _mediator.Send(new AddImageThumbnailCommand(content.Uri.Segments.Select(x => WebUtility.UrlDecode(x)).Last(), request.ContentType, request.Content, request.FolderId)) :
                 null;
 
             return _contentConverter.ConvertContent(content, thumbnail);

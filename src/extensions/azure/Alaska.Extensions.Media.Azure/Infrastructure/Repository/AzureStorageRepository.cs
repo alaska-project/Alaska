@@ -16,6 +16,7 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
 {
     internal class AzureStorageRepository
     {
+        private const int RandomHashLength = 5;
         private const string PlaceholderFile = "_.txt";
 
         private readonly AzureStorageClientFactory _client;
@@ -45,7 +46,8 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
 
         public async Task<CloudBlockBlob> UploadContent(CloudBlobDirectory folder, string name, byte[] content, string contentType)
         {
-            var blob = folder.GetBlockBlobReference(name);
+            var blob = await GetAvailableBlob(folder, name);
+
             await blob.UploadFromStreamAsync(new MemoryStream(content));
             blob.Properties.ContentType = contentType;
             await blob.SetPropertiesAsync();
@@ -133,6 +135,24 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             while (continuationToken != null);
 
             return blobs;
+        }
+
+        private async Task<CloudBlockBlob> GetAvailableBlob(CloudBlobDirectory folder, string name)
+        {
+            if (await folder.GetBlockBlobReference(name).ExistsAsync())
+                return await GetAvailableBlob(folder, RandomizeBlobName(name));
+
+            return folder.GetBlockBlobReference(name);
+        }
+
+        private string RandomizeBlobName(string name)
+        {
+            return $"{Path.GetFileNameWithoutExtension(name)}_{GenerateRandomHash(RandomHashLength)}{Path.GetExtension(name)}";
+        }
+
+        private string GenerateRandomHash(int length)
+        {
+            return Guid.NewGuid().ToString().Replace("-", "").Substring(0, length);
         }
 
         private async Task<MediaContent> ConvertToMediaContent(CloudBlockBlob blob)

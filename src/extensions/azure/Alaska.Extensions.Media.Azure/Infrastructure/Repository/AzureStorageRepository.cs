@@ -141,7 +141,7 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return _mediaContentConverter.ConvertContent(blob, thumb);
         }
 
-        private async Task<CloudBlockBlob> GetThumbnailIfExists(CloudBlockBlob blob)
+        public async Task<CloudBlockBlob> GetThumbnailIfExists(CloudBlockBlob blob)
         {
             var thumbUriSegments = blob.Uri.Segments
                 .Skip(2)

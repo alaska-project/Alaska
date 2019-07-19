@@ -20,7 +20,13 @@ namespace Alaska.Extensions.Media.Azure.Application.Commands
         public async Task<Unit> Handle(DeleteMediaCommand request, CancellationToken cancellationToken)
         {
             var blob = _repository.GetMediaBlobReference(request.MediaId);
+
+            var thumb = await _repository.GetThumbnailIfExists(blob);
+
             await blob.DeleteIfExistsAsync();
+
+            if (thumb != null)
+                await thumb.DeleteIfExistsAsync();
 
             return Unit.Value;
         }

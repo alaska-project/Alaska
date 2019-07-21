@@ -6,7 +6,7 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Settings
 {
     public class ImageThumbnailsSettings
     {
-        public int Size { get; set; } = 400;
+        public int Size { get; set; } = 1000;
         public int Quality { get; set; } = 95;
     }
 }

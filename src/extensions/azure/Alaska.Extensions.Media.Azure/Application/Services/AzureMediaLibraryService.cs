@@ -58,6 +58,11 @@ namespace Alaska.Extensions.Media.Azure.Application.Services
             return await _query.GetFolderContents(folderId);
         }
 
+        public async Task<MediaContent> GetMedia(string mediaId)
+        {
+            return await _query.GetMedia(mediaId);
+        }
+
         public async Task<IEnumerable<MediaFolder>> GetRootFolders()
         {
             return await _query.GetRootFolders();

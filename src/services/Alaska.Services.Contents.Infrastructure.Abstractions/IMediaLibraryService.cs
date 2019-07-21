@@ -15,6 +15,7 @@ namespace Alaska.Services.Contents.Infrastructure.Abstractions
         Task<MediaFolder> CreateFolder(string folderName, string parentFolderId);
         Task DeleteFolder(string folderId);
 
+        Task<MediaContent> GetMedia(string mediaId);
         Task<MediaContent> AddMedia(string name, string contentType, byte[] mediaContent, string folderId);
         Task DeleteMedia(string mediaId);
     }

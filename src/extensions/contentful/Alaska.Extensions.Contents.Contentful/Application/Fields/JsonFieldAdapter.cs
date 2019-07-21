@@ -15,7 +15,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.JsonObject,
-                Value = field == null ? null : JsonConvert.SerializeObject(field),
+                Value = JsonConvert.SerializeObject(field ?? new { }),
             };
         }
 

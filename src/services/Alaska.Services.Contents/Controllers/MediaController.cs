@@ -61,6 +61,13 @@ namespace Alaska.Services.Contents.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<ActionResult<MediaContent>> GetMedia([FromQuery]string mediaId)
+        {
+            var media = await _mediaLibrary.GetMedia(mediaId);
+            return Ok(media);
+        }
+
         [HttpPost]
         public async Task<ActionResult<MediaContent>> AddMedia([FromBody]MediaCreationRequest mediaContent)
         {

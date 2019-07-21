@@ -54,6 +54,14 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Repository
             return blob;
         }
 
+        public async Task<MediaContent> GetMediaContent(string id)
+        {
+            var blob = GetMediaBlobReference(id);
+            if (!await blob.ExistsAsync())
+                return null;
+            return await ConvertToMediaContent(blob);
+        }
+
         public async Task<CloudBlobDirectory> CreateDirectory(string name, CloudBlobDirectory parent)
         {
             var placeholderPath = $"{name}/{PlaceholderFile}";

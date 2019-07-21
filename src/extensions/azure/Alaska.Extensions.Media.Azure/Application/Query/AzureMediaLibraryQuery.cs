@@ -17,6 +17,11 @@ namespace Alaska.Extensions.Media.Azure.Application.Query
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
+        public async Task<MediaContent> GetMedia(string mediaId)
+        {
+            return await _repository.GetMediaContent(mediaId);
+        }
+
         public async Task<IEnumerable<MediaFolder>> GetChildrenFolders(string folderId)
         {
             var directory = _repository.GetMediaDirectoryReference(folderId);

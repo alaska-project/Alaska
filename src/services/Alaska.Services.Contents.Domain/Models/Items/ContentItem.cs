@@ -12,5 +12,7 @@ namespace Alaska.Services.Contents.Domain.Models.Items
 
         [JsonProperty("fields")]
         public ContentItemFields Fields { get; set; }
+
+        public ContentItemField GetField(string fieldId) => Fields.ContainsKey(fieldId) ? Fields[fieldId] : null;
     }
 }

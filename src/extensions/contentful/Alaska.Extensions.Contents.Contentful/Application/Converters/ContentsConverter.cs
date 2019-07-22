@@ -30,8 +30,16 @@ namespace Alaska.Extensions.Contents.Contentful.Converters
         {
             contentType.Fields
                 .ToList()
-                .ForEach(x => originalItem[x.Id] = GetFieldValue(originalItem, newValues, x));
+                .ForEach(x => SetField(originalItem, x.Id, GetFieldValue(originalItem, newValues, x)));
             return originalItem;
+        }
+
+        private void SetField(ContentItemData item, string fieldId, dynamic fieldValue)
+        {
+            if (!item.ContainsKey(fieldId))
+                item.Add(fieldId, fieldValue);
+            else
+                item[fieldId] = fieldValue;
         }
 
         private ContentItemFields GetContentItemFields(ContentItemData entry, ContentType contentType)
@@ -45,7 +53,7 @@ namespace Alaska.Extensions.Contents.Contentful.Converters
 
         private dynamic GetFieldValue(ContentItemData currentItem, ContentItem entry, Field field)
         {
-            return _fieldAdapters.ResolveAdapter(field.Type).WriteField(currentItem.GetField(field.Id), field, entry.Fields[field.Id]);
+            return _fieldAdapters.ResolveAdapter(field.Type).WriteField(currentItem.GetField(field.Id), field, entry.GetField(field.Id));
         }
 
         private ContentItemField AdaptField(ContentItemData entry, Field field)

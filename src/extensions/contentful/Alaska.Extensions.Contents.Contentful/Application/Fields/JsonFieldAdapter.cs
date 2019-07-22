@@ -15,13 +15,16 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
             return new ContentItemField
             {
                 Type = DefaultFieldTypes.JsonObject,
-                Value = JsonConvert.SerializeObject(field ?? new { }),
+                //Value = JsonConvert.SerializeObject(field ?? new { }),
+                Value = field ?? new { },
             };
         }
 
         public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            return JsonConvert.DeserializeObject((string)fieldValue.Value);
+            //return JsonConvert.SerializeObject(fieldValue?.Value);
+            return fieldValue?.Value; 
+            //JsonConvert.DeserializeObject((string)fieldValue.Value);
         }
     }
 }

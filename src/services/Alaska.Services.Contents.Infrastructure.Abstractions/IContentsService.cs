@@ -1,5 +1,6 @@
 ﻿using Alaska.Services.Contents.Domain.Models.Items;
 using Alaska.Services.Contents.Domain.Models.Publishing;
+using Alaska.Services.Contents.Domain.Models.Requests;
 using Alaska.Services.Contents.Domain.Models.Search;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Alaska.Services.Contents.Infrastructure.Abstractions
     public interface IContentsService
     {
         Task<ContentSearchResult> SearchContent(ContentsSearchRequest contentsSearch);
+        Task<ContentItem> CreateContent(ContentCreationRequest creationRequest);
         Task<ContentItem> UpdateContent(ContentItem contentItem);
         Task PublishContent(PublishContentRequest contentPublish);
     }

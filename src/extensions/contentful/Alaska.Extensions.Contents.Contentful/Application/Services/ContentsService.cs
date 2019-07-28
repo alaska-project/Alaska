@@ -8,6 +8,7 @@ using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Services.Contents.Domain.Exceptions;
 using Alaska.Services.Contents.Domain.Models.Items;
 using Alaska.Services.Contents.Domain.Models.Publishing;
+using Alaska.Services.Contents.Domain.Models.Requests;
 using Alaska.Services.Contents.Domain.Models.Search;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using Contentful.Core.Models;
@@ -54,6 +55,17 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             var contentType = _query.GetContentType(entry);
 
             return ConvertToContentSearchResult(entry, contentType, contentsSearch.PublishingTarget);
+        }
+
+        public async Task<ContentItem> CreateContent(ContentCreationRequest creationRequest)
+        {
+            var command = new CreateContentCommand(creationRequest);
+            await _mediator.Send(command);
+
+            throw new NotImplementedException();
+            //var updatedItem = await _query.GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
+            //var contentType = _query.GetContentType(contentItem.Info.TemplateId);
+            //return _converter.ConvertToContentItem(updatedItem, contentType, contentItem.Info.PublishingTarget);
         }
 
         public async Task<ContentItem> UpdateContent(ContentItem contentItem)

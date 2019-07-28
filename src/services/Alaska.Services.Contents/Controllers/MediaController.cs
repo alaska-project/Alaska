@@ -1,5 +1,5 @@
-﻿using Alaska.Services.Contents.Controllers.Dto;
-using Alaska.Services.Contents.Domain.Models.Media;
+﻿using Alaska.Services.Contents.Domain.Models.Media;
+using Alaska.Services.Contents.Domain.Models.Requests;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using System;

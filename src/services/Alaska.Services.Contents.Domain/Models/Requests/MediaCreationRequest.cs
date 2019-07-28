@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alaska.Services.Contents.Controllers.Dto
+namespace Alaska.Services.Contents.Domain.Models.Requests
 {
     public class MediaCreationRequest
     {

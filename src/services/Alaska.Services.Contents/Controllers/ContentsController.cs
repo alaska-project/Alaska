@@ -1,8 +1,11 @@
-﻿using Alaska.Services.Contents.Domain.Models.Items;
+﻿using Alaska.Services.Contents.Application.Commands;
+using Alaska.Services.Contents.Application.Queries;
+using Alaska.Services.Contents.Domain.Models.Items;
 using Alaska.Services.Contents.Domain.Models.Publishing;
+using Alaska.Services.Contents.Domain.Models.Requests;
 using Alaska.Services.Contents.Domain.Models.Search;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
-using Alaska.Services.Contents.Infrastructure.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,31 +17,40 @@ namespace Alaska.Services.Contents.Controllers
     [Route("alaska/api/[controller]/[action]")]
     public class ContentsController : ControllerBase
     {
-        private readonly IContentsService _contentsService;
+        private readonly IMediator _mediator;
+        private readonly IContentQueries _contentQueries;
 
-        public ContentsController(IContentsService contentsService)
+        public ContentsController(
+            IMediator mediator,
+            IContentQueries contentQueries)
         {
-            _contentsService = contentsService ?? throw new ArgumentNullException(nameof(contentsService));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _contentQueries = contentQueries ?? throw new ArgumentNullException(nameof(contentQueries));
         }
 
         [HttpGet]
         public async Task<ActionResult<ContentSearchResult>> GetContents([FromQuery]ContentsSearchRequest searchRequest)
         {
-            var content = await _contentsService.SearchContent(searchRequest);
+            return Ok(await _contentQueries.GetContents(searchRequest));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ContentItem>> CreateContent([FromBody]ContentCreationRequest request)
+        {
+            var content = await _mediator.Send(new CreateContentCommand(request));
             return Ok(content);
         }
 
         [HttpPost]
         public async Task<ActionResult<ContentItem>> UpdateContent([FromBody]ContentItem item)
         {
-            var content = await _contentsService.UpdateContent(item);
-            return Ok(content);
+            return Ok(await _mediator.Send(new UpdateContentCommand(item)));
         }
 
         [HttpPost]
         public async Task<ActionResult> PublishContent([FromBody]PublishContentRequest publishingRequest)
         {
-            await _contentsService.PublishContent(publishingRequest);
+            await _mediator.Send(new PublishContentCommand(publishingRequest));
             return Ok();
         }
     }

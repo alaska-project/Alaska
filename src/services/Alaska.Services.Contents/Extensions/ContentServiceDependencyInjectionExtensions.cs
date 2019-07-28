@@ -1,12 +1,17 @@
-﻿using Alaska.Services.Contents.Application.Services;
+﻿using Alaska.Services.Contents.Application.Queries;
+using Alaska.Services.Contents.Application.Services;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using Alaska.Services.Contents.Infrastructure.Settings;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly: InternalsVisibleTo("MediatR")]
+[assembly: InternalsVisibleTo("MediatR.Extensions.Microsoft.DependencyInjection")]
 namespace Alaska.Services.Contents.Extensions
 {
     public static class ContentServiceDependencyInjectionExtensions
@@ -20,6 +25,9 @@ namespace Alaska.Services.Contents.Extensions
                 .AddApplicationPart(typeof(ContentServiceDependencyInjectionExtensions).Assembly);
 
             services
+                .AddMediatR(typeof(ContentServiceDependencyInjectionExtensions))
+                .AddScoped<IContentQueries, ContentQueries>()
+                .AddScoped<IMediaQueries, MediaQueries>()
                 .AddSingleton<IImageHelper, DefaultImageHelper>()
                 .AddSingleton<IImageTransformer, DefaultImageTransformer>()
                 .AddSettings(configuration);

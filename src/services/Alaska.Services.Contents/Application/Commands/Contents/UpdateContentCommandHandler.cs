@@ -12,16 +12,23 @@ namespace Alaska.Services.Contents.Application.Commands
     internal class UpdateContentCommandHandler : IRequestHandler<UpdateContentCommand, ContentItem>
     {
         private readonly IContentsService _contentsService;
+        private readonly IContentsAuthorizationMiddleware _auth;
 
-        public UpdateContentCommandHandler(IContentsService contentsService)
+        public UpdateContentCommandHandler(
+            IContentsService contentsService,
+            IContentsAuthorizationMiddleware auth = null)
         {
             _contentsService = contentsService ?? throw new ArgumentNullException(nameof(contentsService));
+            _auth = auth;
         }
 
         public async Task<ContentItem> Handle(UpdateContentCommand request, CancellationToken cancellationToken)
         {
-            var content = await _contentsService.UpdateContent(request.Item);
+            if (_auth != null && !_auth.CanWrite(request.Item))
+                throw new UnauthorizedAccessException($"Item {request.Item.Info.Id} update not allowed");
 
+            var content = await _contentsService.UpdateContent(request.Item);
+            
             return content;
         }
     }

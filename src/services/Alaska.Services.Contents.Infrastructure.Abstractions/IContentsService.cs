@@ -11,6 +11,7 @@ namespace Alaska.Services.Contents.Infrastructure.Abstractions
 {
     public interface IContentsService
     {
+        Task<ContentItem> GetPreviewItem(string itemId, string language);
         Task<ContentSearchResult> SearchContent(ContentsSearchRequest contentsSearch);
         Task<ContentItem> CreateContent(ContentCreationRequest creationRequest);
         Task<ContentItem> UpdateContent(ContentItem contentItem);

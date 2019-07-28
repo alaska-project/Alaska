@@ -41,6 +41,17 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             _converter = converter ?? throw new ArgumentNullException(nameof(converter));
         }
 
+        public async Task<ContentItem> GetPreviewItem(string itemId, string language)
+        {
+            var result = await SearchContent(new ContentsSearchRequest
+            {
+                Id = itemId,
+                Language = language,
+                PublishingTarget = PublishingTarget.Preview.ToString(),
+            });
+            return result?.Item?.Value;
+        }
+
         public async Task<ContentSearchResult> SearchContent(ContentsSearchRequest contentsSearch)
         {
             if (contentsSearch.GetDepth() != ContentsSearchDepth.Item)

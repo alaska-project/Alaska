@@ -35,6 +35,20 @@ namespace Alaska.Services.Contents.Extensions
             return new ContentsServiceBuilder(services, configuration);
         }
 
+        public static IContentsServiceBuilder AddContentsAuthorization<T>(this IContentsServiceBuilder services)
+            where T : class, IContentsAuthorizationMiddleware
+        {
+            services.Services.AddScoped<IContentsAuthorizationMiddleware, T>();
+            return services;
+        }
+
+        public static IContentsServiceBuilder AddMediaAuthorization<T>(this IContentsServiceBuilder services)
+            where T : class, IMediaLibraryAuthorizationMiddleware
+        {
+            services.Services.AddScoped<IMediaLibraryAuthorizationMiddleware, T>();
+            return services;
+        }
+
         private static IServiceCollection AddSettings(this IServiceCollection services, IConfiguration configuration)
         {
             return services

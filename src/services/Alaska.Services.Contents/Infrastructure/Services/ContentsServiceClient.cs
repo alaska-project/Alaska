@@ -20,7 +20,7 @@ namespace Alaska.Services.Contents.Infrastructure.Services
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public async Task<ContentSearchResult> GetContents(ContentsSearchRequest searchRequest)
+        public async Task<ContentSearchResult> GetContents(ContentSearchRequest searchRequest)
         {
             using (var client = new HttpClient())
             {
@@ -29,7 +29,7 @@ namespace Alaska.Services.Contents.Infrastructure.Services
             }
         }
 
-        private Uri GetSearchUrl(ContentsSearchRequest searchRequest)
+        private Uri GetSearchUrl(ContentSearchRequest searchRequest)
         {
             return UriHelper.Build(GetContentsBaseUrl(), new Dictionary<string, object>
             {

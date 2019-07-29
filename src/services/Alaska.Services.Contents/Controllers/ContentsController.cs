@@ -29,9 +29,15 @@ namespace Alaska.Services.Contents.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ContentSearchResult>> GetContents([FromQuery]ContentsSearchRequest searchRequest)
+        public async Task<ActionResult<ContentSearchResult>> GetContent([FromQuery]ContentSearchRequest searchRequest)
         {
-            return Ok(await _contentQueries.GetContents(searchRequest));
+            return Ok(await _contentQueries.GetContent(searchRequest));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ContentSearchResult>> SearchContents([FromBody]ContentsSearchRequest searchRequest)
+        {
+            return Ok(await _contentQueries.SearchContents(searchRequest));
         }
 
         [HttpPost]

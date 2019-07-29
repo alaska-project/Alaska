@@ -3,10 +3,12 @@ using Alaska.Extensions.Contents.Contentful.Infrastructure.Caching;
 using Alaska.Extensions.Contents.Contentful.Infrastructure.Clients;
 using Alaska.Extensions.Contents.Contentful.Models;
 using Alaska.Extensions.Contents.Contentful.Services;
+using Alaska.Services.Contents.Domain.Models.Search;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +28,31 @@ namespace Alaska.Extensions.Contents.Contentful.Application.Query
             _profiler = profiler ?? throw new ArgumentNullException(nameof(profiler));
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
             _contentTypesCache = contentTypesCache ?? throw new ArgumentNullException(nameof(contentTypesCache));
+        }
+
+        public async Task<IEnumerable<ContentItemData>> SearchContentItems(ContentsSearchRequest contentsSearch)
+        {
+            return await SearchContentItems<ContentItemData>(contentsSearch.Filters, contentsSearch.Language, contentsSearch.PublishingTarget.Equals(PublishingTarget.Preview.ToString()));
+        }
+
+        private async Task<IEnumerable<T>> SearchContentItems<T>(ContentItemFieldsFilter filters, string language, bool isPreview)
+        {
+            var query = new QueryBuilder<T>().LocaleIs(language);
+
+            filters?
+                .ToList()
+                .ForEach(x => query = AddFilter(query, x));
+
+            return await _factory.GetContentsClient(isPreview).GetEntries(query);
+        }
+
+        private async Task<T> SearchContentItems<T>(ContentItemReference item, bool preview)
+        {
+            using (_profiler.Measure(nameof(GetContentItem)))
+            {
+                var query = new QueryBuilder<T>().LocaleIs(item.Locale);
+                return await _factory.GetContentsClient(preview).GetEntry(item.Id, query);
+            }
         }
 
         public async Task<ContentItemData> GetContentItem(ContentItemReference item, string target)
@@ -78,5 +105,22 @@ namespace Alaska.Extensions.Contents.Contentful.Application.Query
                 return await _factory.GetContentManagementClient().GetContentType(contentTypeId);
             }
         }
+
+        private QueryBuilder<T> AddFilter<T>(QueryBuilder<T> query, ContentItemFieldFilter filter)
+        {
+            switch (filter.Operator)
+            {
+                case FieldFilterOperator.Equals:
+                    return query.FieldEquals(filter.Name, filter.Value);
+                case FieldFilterOperator.NotEquals:
+                    return query.FieldDoesNotEqual(filter.Name, filter.Value);
+                case FieldFilterOperator.Matches:
+                    return query.FieldMatches(filter.Name, filter.Value);
+                default:
+                    throw new NotImplementedException($"Filter operator {filter.Operator} not implemented");
+            }
+        }
+
+        private QueryBuilder<T> BuildQuery<T>(string language) => new QueryBuilder<T>().LocaleIs(language);
     }
 }

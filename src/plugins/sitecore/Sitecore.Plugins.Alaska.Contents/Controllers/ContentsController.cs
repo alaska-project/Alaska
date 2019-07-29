@@ -22,7 +22,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Controllers
 
         [HttpGet]
         [ResponseType(typeof(ContentSearchResult))]
-        public IHttpActionResult GetContents([FromUri]ContentsSearchRequest searchRequest)
+        public IHttpActionResult GetContents([FromUri]ContentSearchRequest searchRequest)
         {
             return Ok(_searchService.Search(searchRequest));
         }

@@ -3,6 +3,7 @@ using Alaska.Services.Contents.Domain.Models.Search;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,14 +22,36 @@ namespace Alaska.Services.Contents.Application.Queries
             _auth = auth;
         }
 
-        public async Task<ContentSearchResult> GetContents(ContentsSearchRequest searchRequest)
+        public async Task<ContentSearchResult> GetContent(ContentSearchRequest searchRequest)
         {
-            var content = await _contentsService.SearchContent(searchRequest);
+            var result = await _contentsService.SearchContent(searchRequest);
 
-            if (content.Item == null || !CanRead(content.Item.Value))
+            return FilterSearchResult(result);
+        }
+
+        public async Task<ContentsSearchResult> SearchContents(ContentsSearchRequest searchRequest)
+        {
+            var result = await _contentsService.SearchContents(searchRequest);
+
+            return FilterSearchResults(result);
+        }
+
+        private ContentsSearchResult FilterSearchResults(ContentsSearchResult searchResults)
+        {
+            return new ContentsSearchResult
+            {
+                Items = searchResults.Items
+                    .Where(x => CanRead(x))
+                    .ToList(),
+            };
+        }
+
+        private ContentSearchResult FilterSearchResult(ContentSearchResult searchResult)
+        {
+            if (searchResult.Item == null || !CanRead(searchResult.Item.Value))
                 return null;
 
-            return content;
+            return searchResult;
         }
 
         private bool CanRead(ContentItem item)

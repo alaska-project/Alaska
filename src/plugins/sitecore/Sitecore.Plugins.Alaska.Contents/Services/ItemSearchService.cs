@@ -14,7 +14,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
         private readonly ItemAdapterService _adapter = new ItemAdapterService();
         private readonly ItemQueries _query = new ItemQueries();
 
-        public ContentSearchResult Search(ContentsSearchRequest search)
+        public ContentSearchResult Search(ContentSearchRequest search)
         {
             return new ContentSearchResult
             {
@@ -22,7 +22,7 @@ namespace Sitecore.Plugins.Alaska.Contents.Services
             };
         }
 
-        public ContentItemResult SearchItems(ContentsSearchRequest search)
+        public ContentItemResult SearchItems(ContentSearchRequest search)
         {
             var item = _query.GetItem(search.Id, search.Language, search.PublishingTarget);
             if (item == null)

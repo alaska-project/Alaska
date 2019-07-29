@@ -8,6 +8,7 @@ namespace Alaska.Services.Contents.Infrastructure.Abstractions
 {
     public interface IContentQueries
     {
-        Task<ContentSearchResult> GetContents(ContentsSearchRequest searchRequest);
+        Task<ContentSearchResult> GetContent(ContentSearchRequest searchRequest);
+        Task<ContentsSearchResult> SearchContents(ContentsSearchRequest searchRequest);
     }
 }

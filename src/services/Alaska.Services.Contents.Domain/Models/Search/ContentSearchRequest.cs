@@ -7,7 +7,7 @@ namespace Alaska.Services.Contents.Domain.Models.Search
 {
     public enum ContentsSearchDepth { Item, Children, Descendants }
 
-    public class ContentsSearchRequest
+    public class ContentSearchRequest
     {
         private const ContentsSearchDepth DefaultDepth = ContentsSearchDepth.Item;
 
@@ -30,8 +30,5 @@ namespace Alaska.Services.Contents.Domain.Models.Search
 
         [JsonProperty("language")]
         public string Language { get; set; }
-
-        [JsonProperty("includeInfo")]
-        public bool IncludeInfo { get; set; }
     }
 }

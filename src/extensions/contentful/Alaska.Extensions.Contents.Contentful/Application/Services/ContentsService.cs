@@ -43,7 +43,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
         public async Task<ContentItem> GetPreviewItem(string itemId, string language)
         {
-            var result = await SearchContent(new ContentsSearchRequest
+            var result = await SearchContent(new ContentSearchRequest
             {
                 Id = itemId,
                 Language = language,
@@ -52,7 +52,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             return result?.Item?.Value;
         }
 
-        public async Task<ContentSearchResult> SearchContent(ContentsSearchRequest contentsSearch)
+        public async Task<ContentSearchResult> SearchContent(ContentSearchRequest contentsSearch)
         {
             if (contentsSearch.GetDepth() != ContentsSearchDepth.Item)
                 throw new UnsupportedFeatureException($"{contentsSearch.GetDepth()}  not supported by Contentful provider");
@@ -65,18 +65,23 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
             var contentType = _query.GetContentType(entry);
 
-            return ConvertToContentSearchResult(entry, contentType, contentsSearch.PublishingTarget);
+            return ConvertToContentSearchResult(entry, contentType, ParsePublishingTarget(contentsSearch.PublishingTarget));
+        }
+
+        public async Task<ContentsSearchResult> SearchContents(ContentsSearchRequest contentsSearch)
+        {
+            var items = await _query.SearchContentItems(contentsSearch);
+
+            return ConvertToContentsSearchResult(items, ParsePublishingTarget(contentsSearch.PublishingTarget));
         }
 
         public async Task<ContentItem> CreateContent(ContentCreationRequest creationRequest)
         {
             var command = new CreateContentCommand(creationRequest);
-            await _mediator.Send(command);
 
-            throw new NotImplementedException();
-            //var updatedItem = await _query.GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
-            //var contentType = _query.GetContentType(contentItem.Info.TemplateId);
-            //return _converter.ConvertToContentItem(updatedItem, contentType, contentItem.Info.PublishingTarget);
+            var itemReference = await _mediator.Send(command);
+
+            return await GetContentItem(itemReference, PublishingTarget.Preview);
         }
 
         public async Task<ContentItem> UpdateContent(ContentItem contentItem)
@@ -86,7 +91,7 @@ namespace Alaska.Extensions.Contents.Contentful.Services
 
             var updatedItem = await _query.GetContentItem(contentItem.GetReference(), contentItem.Info.PublishingTarget);
             var contentType = _query.GetContentType(contentItem.Info.TemplateId);
-            return _converter.ConvertToContentItem(updatedItem, contentType, contentItem.Info.PublishingTarget);
+            return _converter.ConvertToContentItem(updatedItem, contentType, ParsePublishingTarget(contentItem.Info.PublishingTarget));
         }
 
         public async Task PublishContent(PublishContentRequest contentPublish)
@@ -95,7 +100,36 @@ namespace Alaska.Extensions.Contents.Contentful.Services
             await _mediator.Send(command);
         }
 
-        private ContentSearchResult ConvertToContentSearchResult(ContentItemData entry, ContentType contentType, string target)
+        private async Task<ContentItem> GetContentItem(ContentItemReference itemReference, PublishingTarget publishingTarget)
+        {
+            var entry = await _query.GetContentItem(itemReference, publishingTarget);
+
+            var contentType = _query.GetContentType(entry);
+
+            return ConvertToContentItem(entry, contentType, publishingTarget);
+        }
+
+        private PublishingTarget ParsePublishingTarget(string target)
+        {
+            return (PublishingTarget)Enum.Parse(typeof(PublishingTarget), target, true);
+        }
+
+        private ContentsSearchResult ConvertToContentsSearchResult(IEnumerable<ContentItemData> items, PublishingTarget publishingTarget)
+        {
+            return new ContentsSearchResult
+            {
+                Items = items.Select(x => ConvertToContentsSearchResultItem(x, publishingTarget)).ToList(),
+            };
+        }
+
+        private ContentItem ConvertToContentsSearchResultItem(ContentItemData entry, PublishingTarget publishingTarget)
+        {
+            var contentType = _query.GetContentType(entry);
+
+            return ConvertToContentItem(entry, contentType, publishingTarget);
+        }
+
+        private ContentSearchResult ConvertToContentSearchResult(ContentItemData entry, ContentType contentType, PublishingTarget target)
         {
             using (_profiler.Measure(nameof(ConvertToContentSearchResult)))
             {
@@ -103,10 +137,15 @@ namespace Alaska.Extensions.Contents.Contentful.Services
                 {
                     Item = new ContentItemResult
                     {
-                        Value = _converter.ConvertToContentItem(entry, contentType, target),
+                        Value = ConvertToContentItem(entry, contentType, target),
                     },
                 };
             }
+        }
+
+        private ContentItem ConvertToContentItem(ContentItemData entry, ContentType contentType, PublishingTarget target)
+        {
+            return _converter.ConvertToContentItem(entry, contentType, target);
         }
     }
 }

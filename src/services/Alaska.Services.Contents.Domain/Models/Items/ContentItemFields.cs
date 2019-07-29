@@ -14,5 +14,7 @@ namespace Alaska.Services.Contents.Domain.Models.Items
         {
             fields.ToList().ForEach(x => Add(x.Key, x.Value));
         }
+
+        public ContentItemField GetField(string fieldId) => ContainsKey(fieldId) ? this[fieldId] : null;
     }
 }

@@ -33,6 +33,7 @@ namespace Alaska.Extensions.Media.Azure.IntegrationTests.Infrastructure
 
             services
                 .AddContentService(Configuration)
+                .AddContentsApi()
                 .AddAzureMediaLibrary();
         }
 

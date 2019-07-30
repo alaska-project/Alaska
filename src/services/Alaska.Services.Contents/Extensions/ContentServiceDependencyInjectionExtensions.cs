@@ -21,10 +21,6 @@ namespace Alaska.Services.Contents.Extensions
         public static IContentsServiceBuilder AddContentService(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .AddMvcCore()
-                .AddApplicationPart(typeof(ContentServiceDependencyInjectionExtensions).Assembly);
-
-            services
                 .AddMediatR(typeof(ContentServiceDependencyInjectionExtensions))
                 .AddScoped<IContentQueries, ContentQueries>()
                 .AddScoped<IMediaQueries, MediaQueries>()
@@ -33,6 +29,15 @@ namespace Alaska.Services.Contents.Extensions
                 .AddSettings(configuration);
 
             return new ContentsServiceBuilder(services, configuration);
+        }
+
+        public static IContentsServiceBuilder AddContentsApi(this IContentsServiceBuilder services)
+        {
+            services.Services
+                .AddMvcCore()
+                .AddApplicationPart(typeof(ContentServiceDependencyInjectionExtensions).Assembly);
+
+            return services;
         }
 
         public static IContentsServiceBuilder AddContentsAuthorization<T>(this IContentsServiceBuilder services)

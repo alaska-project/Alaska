@@ -43,6 +43,7 @@ namespace Alaska.Web.ContentsDemo
 
             services
                 .AddContentService(Configuration)
+                .AddContentsApi()
                 .AddContentfulModule()
                 .AddAzureMediaLibrary();
 

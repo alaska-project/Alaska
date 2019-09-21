@@ -22,7 +22,7 @@ namespace Alaska.Extensions.Media.Azure.Infrastructure.Extensions
             services.Services
                 .AddMediatR(typeof(AzureMediaLibraryService))
                 .Configure<AzureMediaStorageOptions>(services.Configuration.GetSection(AzureMediaSectionName))
-                .AddScoped<IMediaLibraryService, AzureMediaLibraryService>()
+                .AddScoped<IMediaLibraryProvider, AzureMediaLibraryService>()
                 .AddScoped<AzureStorageClientFactory>()
                 .AddScoped<AzureMediaLibraryQuery>()
                 .AddScoped<AzureStorageRepository>()

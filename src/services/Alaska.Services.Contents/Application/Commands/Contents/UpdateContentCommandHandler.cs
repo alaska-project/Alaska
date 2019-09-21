@@ -11,11 +11,11 @@ namespace Alaska.Services.Contents.Application.Commands
 {
     internal class UpdateContentCommandHandler : IRequestHandler<UpdateContentCommand, ContentItem>
     {
-        private readonly IContentsService _contentsService;
+        private readonly IContentsProvider _contentsService;
         private readonly IContentsAuthorizationMiddleware _auth;
 
         public UpdateContentCommandHandler(
-            IContentsService contentsService,
+            IContentsProvider contentsService,
             IContentsAuthorizationMiddleware auth = null)
         {
             _contentsService = contentsService ?? throw new ArgumentNullException(nameof(contentsService));

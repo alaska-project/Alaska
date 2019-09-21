@@ -1,5 +1,6 @@
 ﻿using Alaska.Extensions.Media.Azure.IntegrationTests.Infrastructure;
 using Alaska.Services.Contents.Domain.Models.Media;
+using Alaska.Services.Contents.Domain.Models.Requests;
 using Alaska.Web.Extensions;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,14 @@ namespace Alaska.Extensions.Media.Azure.IntegrationTests.Scenarios
                 Assert.Contains(childrenFolders, x => x.Id == childFolder.Id);
 
                 var fileName = "alaska.jpg";
-                var contentType = "image/jpeg";
-                var testImageContent = File.ReadAllBytes($"TestContents\\{fileName}");
-                var uploadedContent = await client.PostJsonAsync<MediaContent>($"{MediaLibraryApi}/AddMedia?name={fileName}&contentType={contentType}&folderId={childFolder.Id}", Convert.ToBase64String(testImageContent));
+                var mediaCreationRequest = new MediaCreationRequest
+                {
+                    Name = fileName,
+                    ContentType = "image/jpeg",
+                    FolderId = childFolder.Id,
+                    MediaContent = Convert.ToBase64String(File.ReadAllBytes($"TestContents\\{fileName}")),
+                };
+                var uploadedContent = await client.PostJsonAsync<MediaContent>($"{MediaLibraryApi}/AddMedia", mediaCreationRequest);
 
                 Assert.Equal(fileName, uploadedContent.Name);
                 Assert.False(string.IsNullOrEmpty(uploadedContent.ThumbnailUrl));

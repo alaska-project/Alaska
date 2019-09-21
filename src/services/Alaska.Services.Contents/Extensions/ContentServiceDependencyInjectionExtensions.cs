@@ -22,7 +22,9 @@ namespace Alaska.Services.Contents.Extensions
         {
             services
                 .AddMediatR(typeof(ContentServiceDependencyInjectionExtensions))
+                .AddScoped<IContentsService, ContentsService>()
                 .AddScoped<IContentQueries, ContentQueries>()
+                .AddScoped<IMediaLibraryService, MediaLibraryService>()
                 .AddScoped<IMediaQueries, MediaQueries>()
                 .AddSingleton<IImageHelper, DefaultImageHelper>()
                 .AddSingleton<IImageTransformer, DefaultImageTransformer>()

@@ -11,11 +11,11 @@ namespace Alaska.Services.Contents.Application.Queries
 {
     internal class ContentQueries : IContentQueries
     {
-        private readonly IContentsService _contentsService;
+        private readonly IContentsProvider _contentsService;
         private readonly IContentsAuthorizationMiddleware _auth;
 
         public ContentQueries(
-            IContentsService contentsService,
+            IContentsProvider contentsService,
             IContentsAuthorizationMiddleware auth = null)
         {
             _contentsService = contentsService ?? throw new ArgumentNullException(nameof(contentsService));

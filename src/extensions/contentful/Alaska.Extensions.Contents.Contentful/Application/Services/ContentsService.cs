@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace Alaska.Extensions.Contents.Contentful.Services
 {
-    internal class ContentsService : IContentsService
+    internal class ContentsService : IContentsProvider
     {
         private readonly IMediator _mediator;
         private readonly ContentQueries _query;

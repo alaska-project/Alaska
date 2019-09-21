@@ -10,9 +10,9 @@ namespace Alaska.Services.Contents.Application.Commands.Media
 {
     internal class DeleteFolderCommandHandler : IRequestHandler<DeleteFolderCommand, Unit>
     {
-        private readonly IMediaLibraryService _mediaLibrary;
+        private readonly IMediaLibraryProvider _mediaLibrary;
 
-        public DeleteFolderCommandHandler(IMediaLibraryService mediaLibrary)
+        public DeleteFolderCommandHandler(IMediaLibraryProvider mediaLibrary)
         {
             _mediaLibrary = mediaLibrary ?? throw new ArgumentNullException(nameof(mediaLibrary));
         }

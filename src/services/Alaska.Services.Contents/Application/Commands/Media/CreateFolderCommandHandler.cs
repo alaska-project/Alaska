@@ -11,9 +11,9 @@ namespace Alaska.Services.Contents.Application.Commands.Media
 {
     internal class CreateFolderCommandHandler : IRequestHandler<CreateFolderCommand, MediaFolder>
     {
-        private readonly IMediaLibraryService _mediaLibrary;
+        private readonly IMediaLibraryProvider _mediaLibrary;
 
-        public CreateFolderCommandHandler(IMediaLibraryService mediaLibrary)
+        public CreateFolderCommandHandler(IMediaLibraryProvider mediaLibrary)
         {
             _mediaLibrary = mediaLibrary ?? throw new ArgumentNullException(nameof(mediaLibrary));
         }

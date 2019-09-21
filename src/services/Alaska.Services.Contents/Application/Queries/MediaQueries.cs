@@ -9,9 +9,9 @@ namespace Alaska.Services.Contents.Application.Queries
 {
     internal class MediaQueries : IMediaQueries
     {
-        private readonly IMediaLibraryService _mediaLibrary;
+        private readonly IMediaLibraryProvider _mediaLibrary;
 
-        public MediaQueries(IMediaLibraryService mediaLibrary)
+        public MediaQueries(IMediaLibraryProvider mediaLibrary)
         {
             _mediaLibrary = mediaLibrary ?? throw new ArgumentNullException(nameof(mediaLibrary));
         }

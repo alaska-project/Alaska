@@ -30,7 +30,7 @@ namespace Alaska.Services.Contents.Extensions
                 .AddScoped<ContentsConverter>()
                 .AddScoped<ContentQueries>()
                 .AddMemoryCacheInstance<ContentTypesCache>()
-                .AddScoped<IContentsService, ContentsService>();
+                .AddScoped<IContentsProvider, ContentsService>();
 
             return services;
         }

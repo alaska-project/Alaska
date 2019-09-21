@@ -11,9 +11,9 @@ namespace Alaska.Services.Contents.Application.Commands.Media
 {
     internal class AddMediaCommandHandler : IRequestHandler<AddMediaCommand, MediaContent>
     {
-        private readonly IMediaLibraryService _mediaLibrary;
+        private readonly IMediaLibraryProvider _mediaLibrary;
 
-        public AddMediaCommandHandler(IMediaLibraryService mediaLibrary)
+        public AddMediaCommandHandler(IMediaLibraryProvider mediaLibrary)
         {
             _mediaLibrary = mediaLibrary ?? throw new ArgumentNullException(nameof(mediaLibrary));
         }

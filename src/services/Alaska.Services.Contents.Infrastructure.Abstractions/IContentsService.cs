@@ -11,11 +11,11 @@ namespace Alaska.Services.Contents.Infrastructure.Abstractions
 {
     public interface IContentsService
     {
-        Task<ContentItem> GetPreviewItem(string itemId, string language);
-        Task<ContentSearchResult> SearchContent(ContentSearchRequest contentsSearch);
-        Task<ContentsSearchResult> SearchContents(ContentsSearchRequest contentsSearch);
-        Task<ContentItem> CreateContent(ContentCreationRequest creationRequest);
-        Task<ContentItem> UpdateContent(ContentItem contentItem);
-        Task PublishContent(PublishContentRequest contentPublish);
+        Task<ContentSearchResult> GetContent(ContentSearchRequest searchRequest);
+        Task<ContentsSearchResult> SearchContents(ContentsSearchRequest searchRequest);
+        Task<ContentItem> CreateContent(ContentCreationRequest request);
+        Task<ContentItem> UpdateContent(ContentItem item);
+        Task PublishContent(PublishContentRequest publishingRequest);
+
     }
 }

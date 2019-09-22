@@ -122,11 +122,11 @@ namespace Alaska.Extensions.Contents.Contentful.Application.Query
             switch (filter.Operator)
             {
                 case FieldFilterOperator.Equals:
-                    return query.FieldEquals(filter.Name, filter.Value);
+                    return query.FieldEquals($"fields.{filter.Name}", filter.Value);
                 case FieldFilterOperator.NotEquals:
-                    return query.FieldDoesNotEqual(filter.Name, filter.Value);
+                    return query.FieldDoesNotEqual($"fields.{filter.Name}", filter.Value);
                 case FieldFilterOperator.Matches:
-                    return query.FieldMatches(filter.Name, filter.Value);
+                    return query.FieldMatches($"fields.{filter.Name}", filter.Value);
                 default:
                     throw new NotImplementedException($"Filter operator {filter.Operator} not implemented");
             }

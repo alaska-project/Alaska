@@ -17,6 +17,9 @@ namespace Alaska.Services.Contents.Domain.Models.Search
 
         [JsonProperty("language")]
         public string Language { get; set; }
+
+        [JsonProperty("templateId")]
+        public string TemplateId { get; set; }
     }
 
     public class ContentItemFieldsFilter : List<ContentItemFieldFilter>

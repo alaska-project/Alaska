@@ -32,18 +32,29 @@ namespace Alaska.Extensions.Contents.Contentful.Application.Query
 
         public async Task<IEnumerable<ContentItemData>> SearchContentItems(ContentsSearchRequest contentsSearch)
         {
-            return await SearchContentItems<ContentItemData>(contentsSearch.Filters, contentsSearch.Language, contentsSearch.PublishingTarget.Equals(PublishingTarget.Preview.ToString()));
+            return await SearchContentItems<ContentItemData>(contentsSearch);
         }
 
-        private async Task<IEnumerable<T>> SearchContentItems<T>(ContentItemFieldsFilter filters, string language, bool isPreview)
+        private async Task<IEnumerable<T>> SearchContentItems<T>(ContentsSearchRequest contentsSearch)
         {
-            var query = new QueryBuilder<T>().LocaleIs(language);
+            var query = new QueryBuilder<T>();
 
-            filters?
+            if (!string.IsNullOrEmpty(contentsSearch.Language))
+                query = query.LocaleIs(contentsSearch.Language);
+
+            if (!string.IsNullOrEmpty(contentsSearch.TemplateId))
+                query = query.ContentTypeIs(contentsSearch.TemplateId);
+
+            contentsSearch.Filters?
                 .ToList()
                 .ForEach(x => query = AddFilter(query, x));
 
-            return await _factory.GetContentsClient(isPreview).GetEntries(query);
+            return await _factory.GetContentsClient(IsPreview(contentsSearch.PublishingTarget)).GetEntries(query);
+        }
+
+        private bool IsPreview(string target)
+        {
+            return target.Equals(PublishingTarget.Preview.ToString());
         }
 
         private async Task<T> SearchContentItems<T>(ContentItemReference item, bool preview)

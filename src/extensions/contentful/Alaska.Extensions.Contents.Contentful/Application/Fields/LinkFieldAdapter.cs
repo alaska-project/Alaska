@@ -31,7 +31,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 
         public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            ItemImageField imageField = FieldSerializationUtil.ConvertDeserializedField<ItemImageField>(fieldValue.Value);
+            ItemImageField imageField = FieldSerializationUtil.ConvertDeserializedField<ItemImageField>(fieldValue?.Value);
             var newField = FieldSerializationUtil.JsonClone<dynamic>(field);
             newField.sys.id = imageField.InternalId;
             return newField;

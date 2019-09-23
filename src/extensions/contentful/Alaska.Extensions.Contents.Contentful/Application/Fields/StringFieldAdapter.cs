@@ -20,7 +20,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 
         public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            return (string)fieldValue.Value;
+            return (string)fieldValue?.Value;
         }
     }
 }

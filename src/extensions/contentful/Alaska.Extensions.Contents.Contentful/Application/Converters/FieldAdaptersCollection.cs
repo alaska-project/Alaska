@@ -16,6 +16,7 @@ namespace Alaska.Extensions.Contents.Contentful.Converters
             _adapters = new Dictionary<string, IFieldAdapter>()
             {
                 { "Boolean", new BooleanFieldAdapter() },
+                { "Integer", new IntegerFieldAdapter() },
                 { "Location", new CoordinatesFieldAdapter() },
                 { "Date", new DateTimeFieldAdapter() },
                 { "Object", new JsonFieldAdapter() },

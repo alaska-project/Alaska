@@ -7,20 +7,20 @@ using System.Text;
 
 namespace Alaska.Extensions.Contents.Contentful.Fields
 {
-    internal class RichTextFieldAdapter : IFieldAdapter
+    internal class IntegerFieldAdapter : IFieldAdapter
     {
         public ContentItemField ReadField(dynamic field, Field fieldDefinition)
         {
             return new ContentItemField
             {
-                Type = DefaultFieldTypes.Html,
-                Value = field?.ToString(),
+                Type = DefaultFieldTypes.Integer,
+                Value = field == null ? null : (int?)field,
             };
         }
 
         public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            return (string)fieldValue?.Value;
+            return (int?)fieldValue?.Value;
         }
     }
 }

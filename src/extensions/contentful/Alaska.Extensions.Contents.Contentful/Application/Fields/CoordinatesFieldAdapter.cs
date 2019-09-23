@@ -26,7 +26,7 @@ namespace Alaska.Extensions.Contents.Contentful.Fields
 
         public dynamic WriteField(dynamic field, Field fieldDefinition, ContentItemField fieldValue)
         {
-            CoordinatesField coordinatesField = FieldSerializationUtil.ConvertDeserializedField<CoordinatesField>(fieldValue.Value);
+            CoordinatesField coordinatesField = FieldSerializationUtil.ConvertDeserializedField<CoordinatesField>(fieldValue?.Value);
             var newField = FieldSerializationUtil.JsonClone<dynamic>(field);
             newField.lat = coordinatesField.Latitude;
             newField.lon = coordinatesField.Longitude;

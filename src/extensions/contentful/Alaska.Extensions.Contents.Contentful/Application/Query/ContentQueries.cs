@@ -54,7 +54,7 @@ namespace Alaska.Extensions.Contents.Contentful.Application.Query
 
         private bool IsPreview(string target)
         {
-            return target.Equals(PublishingTarget.Preview.ToString());
+            return target.Equals(PublishingTarget.Preview.ToString(), StringComparison.InvariantCultureIgnoreCase);
         }
 
         private async Task<T> SearchContentItems<T>(ContentItemReference item, bool preview)

@@ -1,6 +1,8 @@
 ﻿using Alaska.Services.Contents.Domain.Models.Media;
 using Alaska.Services.Contents.Domain.Models.Requests;
 using Alaska.Services.Contents.Infrastructure.Abstractions;
+using Alaska.Services.Contents.Infrastructure.Utils;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -68,6 +70,23 @@ namespace Alaska.Services.Contents.Controllers
         public async Task<ActionResult<MediaContent>> AddMedia([FromBody]MediaCreationRequest mediaContent)
         {
             return Ok(await _mediaLibraryService.AddMedia(mediaContent));
+        }
+
+        [HttpPost]
+        [RequestFormLimits(MultipartBodyLengthLimit = 4294967295)]
+        [RequestSizeLimit(4294967295)]
+        public async Task<ActionResult<MediaContent>> AddMediaStreamed([FromForm(Name = "mediaContent")]IFormFile mediaFile, string folderId)
+        {
+            if (mediaFile == null || mediaFile.Length == 0)
+                throw new InvalidOperationException("Empty input file");
+
+            return Ok(await _mediaLibraryService.AddMedia(new MediaCreationRequest 
+            {
+                Name = mediaFile.FileName,
+                ContentType = mediaFile.ContentType,
+                FolderId = folderId,
+                MediaContent = MediaHelper.GetBase64FileContent(mediaFile),
+            }));
         }
 
         [HttpPost]

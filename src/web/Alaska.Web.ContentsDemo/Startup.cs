@@ -78,7 +78,7 @@ namespace Alaska.Web.ContentsDemo
                 builder => builder
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowAnyOrigin()
+                    .WithOrigins(Configuration["AllowedCORSDomains"].Split(',').ToArray())
                     .AllowCredentials()
                     );
 

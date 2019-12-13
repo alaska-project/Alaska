@@ -63,8 +63,7 @@ namespace Alaska.Services.Contents.Controllers
         }
 
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = 209715200)]
-        [RequestSizeLimit(209715200)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 4294967295)]
         public async Task<ActionResult<MediaContent>> AddMedia([FromBody]MediaCreationRequest mediaContent)
         {
             return Ok(await _mediaLibraryService.AddMedia(mediaContent));
